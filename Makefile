@@ -18,7 +18,7 @@ MINILIBX_PATH = minilibx-linux/
 MINILIBX_NAME = libmlx.a
 MINILIBX = $(MINILIBX_PATH)$(MINILIBX_NAME)
 
-LIBFT_PATH = libft/
+LIBFT_PATH = lib/
 LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
 
@@ -27,7 +27,10 @@ SRC_PATH = src/
 OBJ_PATH = obj/
 
 SRC = $(addprefix $(SRC_PATH), \
-	main.c \
+	main.c	\
+	map.c	\
+	help.c	\
+	engine.c	\
 )
 
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
@@ -48,8 +51,8 @@ $(MINILIBX):
 	@make -sC $(MINILIBX_PATH)
 
 $(NAME): $(MINILIBX) $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -L$(MINILIBX_PATH) -lmlx
-	@printf  "\n$(EMOJI_PACKAGE)	$(WHITE)$(NAME)$(RESET)			$(YELLOW)compiled$(WHITE)\n"
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -L$(MINILIBX_PATH) -lmlx -L/usr/X11/lib -lX11 -lXext
+	@printf  "\n$(EMOJI_PACKAGE)	$(WHITE)$(NAME)			$(YELLOW)compiled$(WHITE)\n"
 
 clean:
 	@rm -rf $(OBJ_PATH)
@@ -60,8 +63,11 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(LIBFT)
 	@rm -f $(MINILIBX)
-	@printf "$(EMOJI_TRASH)	$(WHITE)$(NAME)$(RESET)		$(RED)removed$(WHITE)\n"
+	@printf "$(EMOJI_TRASH)	$(WHITE)$(NAME)			$(RED)removed$(WHITE)\n"
 
 re: fclean all
 
-.PHONY: all re clean fclean
+run: all
+	@./$(NAME)
+
+.PHONY: all re clean fclean run

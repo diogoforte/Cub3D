@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 17:08:35 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 01:14:04 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/03 19:49:41 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/04 01:19:43 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-int	main(int ac, char **av)
+# include <stdbool.h>
+
+typedef struct s_engine	t_engine;
+typedef struct s_map	t_map;
+
+struct					s_engine
 {
-	if (ac < 2)
-		return (help_message(1));
-	engine()->start = &engine_start;
-	engine()->start();
-	map_loader(av);
-	sleep(15);
-	engine()->free();
-}
+	void				*mlx;
+	void				*win;
+	t_map				*map;
+	void				(*start)(void);
+	void				(*free)(void);
+};
+
+struct					s_map
+{
+	int					fd;
+	char				*line;
+	char				**grid;
+	bool				playable;
+	t_map				*next;
+};
+
+#endif

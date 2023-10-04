@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 17:08:35 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 01:14:04 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/03 20:30:00 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/04 01:22:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int	main(int ac, char **av)
+t_engine	*engine(void)
 {
-	if (ac < 2)
-		return (help_message(1));
-	engine()->start = &engine_start;
-	engine()->start();
-	map_loader(av);
-	sleep(15);
-	engine()->free();
+	static t_engine	engine;
+
+	return (&engine);
+}
+
+void	engine_start(void)
+{
+	engine()->mlx = mlx_init();
+	engine()->win = mlx_new_window(engine()->mlx, WIDTH, HEIGHT, "cub3D");
+	engine()->free = &engine_free;
+}
+
+void	engine_free(void)
+{
+	mlx_destroy_window(engine()->mlx, engine()->win);
+	free(engine()->map);
+	free(engine()->mlx);
 }

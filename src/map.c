@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 17:08:35 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 01:14:04 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/03 19:12:14 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/04 01:20:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int	main(int ac, char **av)
+void	map_loader(char **av)
 {
-	if (ac < 2)
-		return (help_message(1));
-	engine()->start = &engine_start;
-	engine()->start();
-	map_loader(av);
-	sleep(15);
-	engine()->free();
+	map_opener(*++av);
+}
+
+void	map_opener(char *map_path)
+{
+	static t_map	map;
+
+	if (!map_path || ft_strlen(map_path) < 4 || ft_strncmp(map_path
+			+ ft_strlen(map_path) - 4, ".cub", 4))
+	{
+		help_message(3);
+		return ;
+	}
+	map.fd = open(map_path, O_RDONLY);
+	if (map.fd == -1)
+		help_message(2);
+	engine()->map = &map;
 }

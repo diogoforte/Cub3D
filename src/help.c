@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:39:46 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 01:20:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/05 04:20:10 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,16 @@ int	help_message(int instance)
 	else if (instance == 8)
 		ft_dprintf(2, "Error: Invalid player.\n");
 	return (1);
+}
+
+void	print_vars(void)
+{
+	printf("NO: (%s)\n", engine()->map->NO);
+	printf("SO: (%s)\n", engine()->map->SO);
+	printf("WE: (%s)\n", engine()->map->WE);
+	printf("EA: (%s)\n", engine()->map->EA);
+	printf("F: (%s)\n", engine()->map->F);
+	printf("C: (%s)\n", engine()->map->C);
+	for (int i = 0; engine()->map->grid[i]; i++)
+		printf("%s", engine()->map->grid[i]);
 }

@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   erro.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 17:08:35 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 03:35:23 by plopes-c         ###   ########.fr       */
+/*   Created: 2023/10/05 04:07:52 by plopes-c          #+#    #+#             */
+/*   Updated: 2023/10/05 04:32:04 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int	main(int ac, char **av)
+int	err(char *str)
 {
-	if (ac < 2)
-		return (help_message(1));
-	engine_start();
-	map_loader(av);
-	// sleep(1);
-	engine()->free();
+	while (str && *str)
+		write(2, str++, 1);
+	return (1);
+}
+
+void	do_exit(char *str)
+{
+	err(str);
+	exit(1);
 }

@@ -70,4 +70,7 @@ re: fclean all
 run: all
 	@./$(NAME)
 
+v: all
+	@valgrind --leak-check=full --track-origins=yes ./$(NAME) maps/test.cub
+
 .PHONY: all re clean fclean run

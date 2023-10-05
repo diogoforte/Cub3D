@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:49:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 00:52:08 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/05 06:40:31 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ struct					s_engine
 {
 	void				*mlx;
 	void				*win;
-	t_map				*map;
+	t_map				**map;
 	void				(*start)(void);
-	void				(*free)(void);
+	void				(*free)(t_map *map);
 };
 
 struct					s_map
@@ -38,6 +38,7 @@ struct					s_map
 	char				*F;
 	char				*C;
 	char				**grid;
+	char				**map;
 	int					rows;
 	int					cols;
 	t_map				*next;

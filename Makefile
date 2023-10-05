@@ -31,6 +31,7 @@ SRC = $(addprefix $(SRC_PATH), \
 	map.c	\
 	help.c	\
 	engine.c	\
+	error.c	\
 )
 
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)

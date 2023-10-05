@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:08:35 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 03:35:23 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/05 06:48:01 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 int	main(int ac, char **av)
 {
 	if (ac < 2)
-		return (help_message(1));
+		do_exit("Usage: ./cub3D <map.cub> ...");
 	engine_start();
-	map_loader(av);
-	// sleep(1);
-	engine()->free();
+	map_loader(av, ac);
+	return (0);
 }

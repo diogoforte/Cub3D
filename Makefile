@@ -27,12 +27,16 @@ SRC_PATH = src/
 OBJ_PATH = obj/
 
 SRC = $(addprefix $(SRC_PATH), \
-	main.c	\
-	map.c	\
-	help.c	\
-	engine.c	\
-	error.c	\
+		main/engine.c \
+		main/exit.c \
+		main/main.c \
+		map/map_check.c \
+		map/map_create.c \
+		utils/map_utils.c \
+		utils/utils.c	\
 )
+
+$(OBJ): $(OBJ_PATH)
 
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
@@ -44,6 +48,9 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)/main
+	@mkdir -p $(OBJ_PATH)/map
+	@mkdir -p $(OBJ_PATH)/utils
 
 $(LIBFT):
 	@make -sC $(LIBFT_PATH)

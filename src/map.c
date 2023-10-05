@@ -6,120 +6,119 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:12:14 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 04:39:42 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/05 07:19:18 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 #include <string.h>
 
-static void	map_opener(char *map_path);
-static void	map_reader(void);
-// static void	map_splitter(void);
-static void	map_checker(void);
-static void	types_fill(void);
+t_map	*map_opener(char *map_path);
+static void	map_reader(t_map *map);
+static void	types_fill(t_map *map);
+static void	map_fill(char **grid, t_map *map);
+// static void	map_checker(t_map *map);
 
-void	map_loader(char **av)
+void	map_loader(char **av, int argc)
 {
-	map_opener(*++av);
-	map_reader();
-	types_fill();
-	map_checker();
-
+	int i;
+	
+	i = 0;
+	engine()->map = ft_calloc(argc - 1, sizeof(t_map *));
+	while (*++av)
+	{	
+		engine()->map[i] = map_opener(*av);
+		if (engine()->map[i]->playable)
+		{
+			map_reader(engine()->map[i]);
+			types_fill(engine()->map[i]);
+			// map_checker();
+			// print_vars(engine()->map[i]);
+		}
+		i++;
+	}
 }
 
-static void	map_opener(char *map_path)
+t_map	*map_opener(char *map_path)
 {
-	static t_map	map;
+	t_map	*map;
 
-	map.playable = true;
+	map = ft_calloc(1, sizeof(t_map));
+	map->playable = true;
 	if (!map_path || ft_strlen(map_path) < 4 || ft_strncmp(map_path
 			+ ft_strlen(map_path) - 4, ".cub", 4))
-	{
-		help_message(3);
-		map.playable = false;
-		return ;
-	}
-	map.fd = open(map_path, O_RDONLY);
-	if (map.fd == -1)
-	{
-		help_message(2);
-		map.playable = false;
-	}
-	engine()->map = &map;
+		err("Invalid map file extension.", map);
+	map->fd = open(map_path, O_RDONLY);
+	if (map->fd == -1)
+		err("Invalid map file.", map);
+	return (map);
 }
 
-static void	types_fill(void)
+static void	types_fill(t_map *map)
 {
 	static char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
-	char **arr_type[6];
 	int	i[2];
 
-	arr_type[0] = &engine()->map->NO;
-	arr_type[1] = &engine()->map->SO;
-	arr_type[2] = &engine()->map->WE;
-	arr_type[3] = &engine()->map->EA;
-	arr_type[4] = &engine()->map->F;
-	arr_type[5] = &engine()->map->C;
 	i[0] = 0;
-	while (engine()->map->grid[i[0]])
+	while (map->grid[i[0]] && all_filled(map))
 	{
 		i[1] = 0;
-		while (arr[i[1]])
+		while (arr[i[1]] && all_filled(map))
 		{
-			if (!ft_strncmp(engine()->map->grid[i[0]], arr[i[1]], ft_strlen(arr[i[1]])))
-				if (!*arr_type[i[1]])
-					*arr_type[i[1]] = ft_strdup(engine()->map->grid[i[0]]
-										+ ft_strlen(arr[i[1]]));
+			if (!ft_strncmp(map->grid[i[0]], arr[i[1]], ft_strlen(arr[i[1]])))
+			{
+				if (*arr_type(map)[i[1]])
+					err("Duplicate type.", map);
+				*arr_type(map)[i[1]] = ft_strtrim(map->grid[i[0]]
+										+ ft_strlen(arr[i[1]]), " \n	");
+			}
 			i[1]++;
 		}
 		i[0]++;
 	}
+	map_fill(&map->grid[i[0]], map);
 }
 
-static void	map_checker(void)
-{
-}
-
-void    *ft_realloc(void *ptr, size_t nitems, size_t size)
-{
-    void    *new_ptr;
-
-    if (!ptr)
-        return (ft_calloc(nitems * size, size));
-    if (nitems == 0)
-    {
-        free(ptr);
-        return (NULL);
-    }
-    new_ptr = ft_calloc(nitems * size, size);
-    if (!new_ptr)
-        return (NULL);
-    ft_memmove(new_ptr, ptr, nitems * size);
-    free(ptr);
-    return (new_ptr);
-}
-
-static void    map_reader(void)
+static void    map_reader(t_map *map)
 {
     char    *line;
 
-    engine()->map->rows = 0;
-    while (get_next_line2(engine()->map->fd, &line))
+    map->rows = 0;
+    while (get_next_line2(map->fd, &line))
     {
-        engine()->map->grid = ft_realloc(engine()->map->grid,
-            (engine()->map->rows + 1), sizeof(char *));
-        engine()->map->grid[engine()->map->rows] = ft_strdup(line);
-        if (engine()->map->cols < (int)ft_strlen(line))
-            engine()->map->cols = ft_strlen(line);
+        map->grid = ft_realloc(map->grid,
+            (map->rows + 1), sizeof(char *));
+        map->grid[map->rows] = ft_strtrim(line, " 	");
+        if (map->cols < (int)ft_strlen(line))
+            map->cols = ft_strlen(line);
         free(line);
-        engine()->map->rows++;
+        map->rows++;
     }
-    // engine()->map->grid = ft_realloc(engine()->map->grid, (engine()->map->rows + 1) * sizeof(char *));
-    close(engine()->map->fd);
+    close(map->fd);
 }
 
-void	map_loader(void)
+static void	map_fill(char **grid, t_map *map)
 {
+	char 	*tmp;
+	int 	lenght;
 	
+	lenght = 0;
+	while (grid && *grid)
+	{
+		tmp = ft_strtrim(*grid, " \n	");
+		if (tmp && *tmp)
+		{
+			map->map = ft_realloc(map->map,
+				(lenght + 1), sizeof(char *));
+			map->map[lenght] = tmp;
+			lenght++;
+		}
+		else
+			free(tmp);
+		grid++;
+	}
 }
+
+// static void	map_checker(void)
+// {
+// }

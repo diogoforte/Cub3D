@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/03 19:21:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:46:27 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#  define DECIMAL "0123456789"
-#  define HEXA "0123456789abcdef"
-#  define HEXA2 "0123456789ABCDEF"
-#  define BUFFER_SIZE 100
+# define DECIMAL "0123456789"
+# define HEXA "0123456789abcdef"
+# define HEXA2 "0123456789ABCDEF"
+# define BUFFER_SIZE 100
 
 typedef struct s_list
 {
@@ -87,5 +87,7 @@ int					ft_strcmp(const char *s1, const char *s2);
 int					ft_dprintf(int fd, const char *str, ...);
 char				*ft_strjoinfree(char *s1, char *s2);
 char				*get_next_line(int fd);
+int					get_next_line2(int fd, char **line);
+off_t				ft_lseek(int fd, off_t offset, int whence);
 
 #endif

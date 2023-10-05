@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 20:30:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 01:22:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/04 03:13:28 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	engine_start(void)
 void	engine_free(void)
 {
 	mlx_destroy_window(engine()->mlx, engine()->win);
-	free(engine()->map);
-	free(engine()->mlx);
+	if (engine()->mlx)
+		free(engine()->mlx);
 }

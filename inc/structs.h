@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 19:49:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 01:19:43 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/05 00:52:08 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,17 @@ struct					s_engine
 
 struct					s_map
 {
-	int					fd;
-	char				*line;
-	char				**grid;
 	bool				playable;
+	int					fd;
+	char				*NO;
+	char				*SO;
+	char				*WE;
+	char				*EA;
+	char				*F;
+	char				*C;
+	char				**grid;
+	int					rows;
+	int					cols;
 	t_map				*next;
 };
 

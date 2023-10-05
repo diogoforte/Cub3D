@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:08:53 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 00:49:03 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/04 21:52:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ void		engine_start(void);
 void		engine_free(void);
 int			help_message(int instance);
 void		map_loader(char **av);
-void		map_opener(char *map_path);
 
 #endif

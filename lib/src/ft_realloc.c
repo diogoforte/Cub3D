@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lseek.c                                         :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 21:43:53 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/04 21:46:21 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/05 02:01:32 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/05 04:49:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-off_t	ft_lseek(int fd, off_t offset, int whence)
+void    *ft_realloc(void *ptr, size_t nitems, size_t size)
 {
-    off_t	new_offset;
+    void    *new_ptr;
 
-    new_offset = -1;
-    if (whence == SEEK_SET)
-        new_offset = offset;
-    else if (whence == SEEK_CUR)
-        new_offset = lseek(fd, 0, SEEK_CUR) + offset;
-    else if (whence == SEEK_END)
-        new_offset = lseek(fd, 0, SEEK_END) + offset;
-    if (new_offset >= 0)
-        lseek(fd, new_offset, SEEK_SET);
-    return (new_offset);
+    if (!ptr)
+        return (ft_calloc(nitems * size, size));
+    if (nitems == 0)
+    {
+        free(ptr);
+        return (NULL);
+    }
+    new_ptr = ft_calloc(nitems * size, size);
+    if (!new_ptr)
+        return (NULL);
+    ft_memmove(new_ptr, ptr, nitems * size);
+    free(ptr);
+    return (new_ptr);
 }

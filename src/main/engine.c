@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 20:30:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/06 03:21:23 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/06 19:34:51 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_engine	*engine(void)
 
 void	engine_start(int argc)
 {
-	engine()->map = ft_calloc(argc - 1, sizeof(t_map));
+	engine()->map = ft_calloc(argc, sizeof(t_map *));
 	engine()->maps_init = &maps_loader;
 	engine()->free = &engine_free;
 	engine()->exit = &do_exit;

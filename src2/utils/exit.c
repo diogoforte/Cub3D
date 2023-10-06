@@ -1,0 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
+/*   Updated: 2023/10/06 23:01:09 by chaleira         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d2.h"
+
+int	err(char *str)
+{
+	while (str && *str)
+		write(2, str++, 1);
+	write(2, "\n", 1);
+	cub()->status = 1;
+	return (1);
+}
+
+void	exit_cub(char *str)
+{
+	cub()->maps_destroy();
+	if (str)
+		exit(err(str));
+	else
+		exit(cub()->status);
+}
+
+void	maps_destroy(void)
+{
+	t_map	*tmp;
+	t_map	**map;
+	
+	map = &cub()->map;
+	while (*map)
+	{
+		tmp = (*map)->next;
+		if ((*map)->file)
+			ft_freematrix((*map)->file);
+		if (*map)
+			free(*map);
+		*map = tmp;
+	}
+	*map = NULL;
+}

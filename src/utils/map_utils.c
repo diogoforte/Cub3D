@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 20:00:30 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/10/05 20:05:01 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/06 21:59:35 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int ft_matrix_len(char **str)
 	int i;
 
 	i = 0;
-	while (str[i])
+	HERE;
+	while (str && str[i])
 		i++;
+	THERE;
 	return (i);
 }
 

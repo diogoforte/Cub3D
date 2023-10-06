@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:08:53 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/06 03:21:10 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/06 19:47:21 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			err(char *str, t_map *map);
 //	UITLS
 // 		MAP_UTILS
 int			matrix_biggest_string(char **str);
-int 		ft_matrix_len(char **str);
+int 		ft_matrix_len(void **str);
 char 		***arr_type(t_map	*map);
 int 		all_filled(t_map *map);
 // 		UTILS

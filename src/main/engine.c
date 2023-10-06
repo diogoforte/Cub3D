@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 20:30:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 22:16:33 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/06 03:21:23 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ t_engine	*engine(void)
 	return (&engine);
 }
 
-void	engine_start(void)
+void	engine_start(int argc)
 {
+	engine()->map = ft_calloc(argc - 1, sizeof(t_map));
+	engine()->maps_init = &maps_loader;
+	engine()->free = &engine_free;
+	engine()->exit = &do_exit;
 	// engine()->mlx = mlx_init();
 	// engine()->win = mlx_new_window(engine()->mlx, WIDTH, HEIGHT, "cub3D");
-	engine()->free = &engine_free;
 }
 
 static void	free_split(char **split)
@@ -62,20 +65,3 @@ void	engine_free(t_map *map)
 		free_split(map->map);
 }
 
-// void	engine_free(t_map *map)
-// {
-// 	// mlx_destroy_window(engine()->mlx, engine()->win);
-// 	// if (engine()->mlx)
-// 	// 	free(engine()->mlx);
-// 	free(map->cords[NO]);
-// 	free(map->cords[SO]);
-// 	free(map->cords[WE]);
-// 	free(map->cords[EA]);
-// 	free(map->cords[F]);
-// 	free(map->cords[C]);
-// 	if (map->grid)
-// 		free_split(map->grid);
-// 	if (map->map)
-// 		free_split(map->map);
-// 	ft_bzero(map, sizeof(t_map));
-// }

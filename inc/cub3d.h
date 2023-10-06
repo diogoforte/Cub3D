@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:08:53 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 22:12:11 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/06 03:21:10 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define F 4
 # define C 5
 
+typedef void					(*t_exe)();
 typedef struct s_map			t_map;
 typedef struct s_engine			t_engine;
 
@@ -49,6 +50,9 @@ struct					s_map
 	char				**map;
 	int					rows;
 	int					cols;
+	int 				(*error)(char *, t_map *);
+	t_exe				add;
+	t_exe				move;
 	t_map				*next;
 };
 
@@ -57,19 +61,20 @@ struct					s_engine
 	void				*mlx;
 	void				*win;
 	t_map				**map;
-	void				(*start)(void);
-	void				(*free)(t_map *map);
+	t_exe				maps_init;
+	t_exe				free;
+	t_exe				exit;
 };
 
 //	MAP
 // 		MAP_CREATE
-void		maps_loader(char **av, int argc);
+void		maps_loader(char **av);
 // 		MAP_CHECK
 void	map_checker(t_map	*map);
 
 //	ENGINE
 t_engine	*engine(void);
-void		engine_start(void);
+void		engine_start(int argc);
 void		engine_free(t_map *map);
 
 //	EXIT

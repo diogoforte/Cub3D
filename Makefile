@@ -13,6 +13,7 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
+ARGS = maps/test.cub
 
 MINILIBX_PATH = minilibx-linux/
 MINILIBX_NAME = libmlx.a
@@ -79,6 +80,9 @@ run: all
 	@./$(NAME)
 
 v: all
-	@valgrind --leak-check=full --track-origins=yes ./$(NAME) maps/test.cub
+	@valgrind --leak-check=full --track-origins=yes ./$(NAME) $(ARGS)
+
+v2: all
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(ARGS) maps/test.cub
 
 .PHONY: all re clean fclean run

@@ -1,22 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map_manipulation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 17:08:35 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 06:48:01 by plopes-c         ###   ########.fr       */
+/*   Created: 2023/10/06 19:38:29 by chaleira          #+#    #+#             */
+/*   Updated: 2023/10/06 23:24:42 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
-
-int	main(int ac, char **av)
-{
-	if (ac < 2)
-		do_exit("Usage: ./cub3D <map.cub> ...");
-	engine_start();
-	map_loader(av, ac);
-	return (0);
-}
+#include "cub3d.h"

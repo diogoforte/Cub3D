@@ -13,6 +13,7 @@ NAME = cub3d
 
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
+ARGS = maps/test.cub
 
 MINILIBX_PATH = minilibx-linux/
 MINILIBX_NAME = libmlx.a
@@ -23,16 +24,29 @@ LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
 
 INC = -I ./inc/
-SRC_PATH = src/
+# SRC_PATH = src/
+SRC_PATH = src2/
 OBJ_PATH = obj/
 
+# SRC = $(addprefix $(SRC_PATH), \
+# 		main/engine.c \
+# 		main/exit.c \
+# 		main/main.c \
+# 		map/map_check.c \
+# 		map/map_create.c \
+# 		utils/map_utils.c \
+# 		utils/utils.c	\
+# )
+
 SRC = $(addprefix $(SRC_PATH), \
-	main.c	\
-	map.c	\
-	help.c	\
-	engine.c	\
-	error.c	\
+		main.c \
+		map/map_create.c \
+		utils/exit.c \
+		utils/struct_calls.c \
+		utils/utils.c \
 )
+
+$(OBJ): $(OBJ_PATH)
 
 OBJ = $(SRC:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
@@ -42,8 +56,18 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 	@printf "$(EMOJI_HAMMER)	$(BLUE)Compiling $(WHITE)$(NAME)		$(BLUE)%-33s$(WHITE)\r" $(notdir $@)
 
+# $(OBJ_PATH):
+# 	@mkdir -p $(OBJ_PATH)
+# 	@mkdir -p $(OBJ_PATH)/main
+# 	@mkdir -p $(OBJ_PATH)/map
+# 	@mkdir -p $(OBJ_PATH)/utils
+
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)/game
+	@mkdir -p $(OBJ_PATH)/map
+	@mkdir -p $(OBJ_PATH)/utils
+	@mkdir -p $(OBJ_PATH)/window
 
 $(LIBFT):
 	@make -sC $(LIBFT_PATH)
@@ -72,6 +96,9 @@ run: all
 	@./$(NAME)
 
 v: all
-	@valgrind --leak-check=full --track-origins=yes ./$(NAME) maps/test.cub
+	@valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) $(ARGS)
+
+v2: all
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(ARGS) maps/test.cub abc
 
 .PHONY: all re clean fclean run

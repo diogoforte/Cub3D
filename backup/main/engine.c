@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 20:30:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/05 07:04:20 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/06 19:34:51 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "cub3d.h"
 
 t_engine	*engine(void)
 {
@@ -19,11 +19,14 @@ t_engine	*engine(void)
 	return (&engine);
 }
 
-void	engine_start(void)
+void	engine_start(int argc)
 {
-	engine()->mlx = mlx_init();
-	engine()->win = mlx_new_window(engine()->mlx, WIDTH, HEIGHT, "cub3D");
+	engine()->map = ft_calloc(argc, sizeof(t_map *));
+	engine()->maps_init = &maps_loader;
 	engine()->free = &engine_free;
+	engine()->exit = &do_exit;
+	// engine()->mlx = mlx_init();
+	// engine()->win = mlx_new_window(engine()->mlx, WIDTH, HEIGHT, "cub3D");
 }
 
 static void	free_split(char **split)
@@ -32,7 +35,10 @@ static void	free_split(char **split)
 
 	i = 0;
 	while (split[i])
-		free(split[i++]);
+	{
+		free(split[i]);
+		i++;
+	}
 	free(split);
 }
 
@@ -41,19 +47,21 @@ void	engine_free(t_map *map)
 	// mlx_destroy_window(engine()->mlx, engine()->win);
 	// if (engine()->mlx)
 	// 	free(engine()->mlx);
-	if (map->C)
-		free(map->C);
-	if (map->F)
-		free(map->F);
-	if (map->EA)
-		free(map->EA);
-	if (map->WE)
-		free(map->WE);
-	if (map->SO)
-		free(map->SO);
-	if (map->NO)
-		free(map->NO);
+	if (map->cords[NO])
+		free(map->cords[NO]);
+	if (map->cords[SO])
+		free(map->cords[SO]);
+	if (map->cords[WE])
+		free(map->cords[WE]);
+	if (map->cords[EA])
+		free(map->cords[EA]);
+	if (map->cords[F])
+		free(map->cords[F]);
+	if (map->cords[C])
+		free(map->cords[C]);
 	if (map->grid)
 		free_split(map->grid);
-	
+	if (map->map)
+		free_split(map->map);
 }
+

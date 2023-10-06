@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 19:52:52 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/10/05 22:17:49 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/06 03:16:19 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	map_extract_data(t_map *map)
 			if (!ft_strncmp(map->grid[i[0]], arr[i[1]], ft_strlen(arr[i[1]])))
 			{
 				if (*arr_type(map)[i[1]])
-					err("Duplicate type.", map);
+					map->error("Duplicate type.", map);
 				*arr_type(map)[i[1]] = ft_strtrim(map->grid[i[0]]
 										+ ft_strlen(arr[i[1]]), " \n	");
 			}
@@ -77,7 +77,7 @@ static void	map_extract_data(t_map *map)
 	if (!all_filled(map))
 		map_create(&map->grid[i[0]], map);
 	else
-		err("Missing type.", map);
+		map->error("Missing type.", map);
 }
 
 t_map	*map_opener(char *map_path)
@@ -87,22 +87,22 @@ t_map	*map_opener(char *map_path)
 
 	map = ft_calloc(1, sizeof(t_map));
 	map->playable = true;
+	map->error = &err;
 	map->map_number = ++map_number;
 	if (!map_path || ft_strlen(map_path) < 4 || ft_strncmp(map_path
 			+ ft_strlen(map_path) - 4, ".cub", 4))
-		err("Invalid map file extension.", map);
+		map->error("Invalid map file extension.", map);
 	map->fd = open(map_path, O_RDONLY);
 	if (map->fd == -1)
-		err("Invalid map file.", map);
+		map->error("Invalid map file.", map);
 	return (map);
 }
 
-void	maps_loader(char **av, int argc)
+void	maps_loader(char **av)
 {
 	int i;
 	
 	i = 0;
-	engine()->map = ft_calloc(argc - 1, sizeof(t_map));
 	while (*++av)
 	{	
 		engine()->map[i] = map_opener(*av);

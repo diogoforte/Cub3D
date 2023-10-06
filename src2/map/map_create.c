@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/06 23:16:35 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/06 23:22:32 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	map_add_list(char *file_path)
 {
-	map_add_back(&cub()->map, map_create(file_path));
+	map_add_back(&cub()->map, map_new(file_path));
 }
 
-t_map	*map_create(char *file_path)
+t_map	*map_new(char *file_path)
 {
 	t_map	*map;
 	static	int	number_of_maps;
@@ -28,7 +28,7 @@ t_map	*map_create(char *file_path)
 	map->playable = 1;
 	map->map_number = ++number_of_maps;
 	map_extract_file(map, file_path);
-	map_set_variables(map);
+	// map_set_variables(map);
 	// map->print_variables = &print_variables;
 	return (map);
 }

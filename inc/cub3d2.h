@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/06 23:16:20 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/06 23:21:45 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ struct s_cub
 	void		(*load_all_maps)(char **av);
 	void		(*exit)(char *str);
 	void		(*maps_destroy)();
-	t_map		*(*map_create)(char *file_path);
+	t_map		*(*map_new)(char *file_path);
 };
 
 
 t_cub	*cub(void);
-t_map	*map_create(char *file_path);
+t_map	*map_new(char *file_path);
 void	map_add_list(char *file_path);
 void	map_extract_file(t_map *map, char *file_path);
 int		err(char *str);

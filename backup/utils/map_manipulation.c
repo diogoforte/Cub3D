@@ -6,15 +6,8 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:38:29 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/06 19:48:22 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/06 23:24:42 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void	map_new(void)
-// {
-	 = ft_calloc(1, sizeof(t_map));
-	
-	map = map->next;
-// }

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 15:30:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 20:42:43 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,31 @@ int	map_extract_map(char **grid, t_map *map)
 
 void	map_extract_data(t_map *map)
 {
-	static char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
-	int			i[2];
+	static char	*arr[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", 0};
+	int			j = 0;
+	int			i = 0;
+	char 		*tmp;
+	int			flag = 0;
 
-	i[0] = 0;
-	while (map->file && map->file[i[0]] && !all_filled(map))
+	while (map->file[j] && flag < 6)
 	{
-		i[1] = 0;
-		while (arr[i[1]] && !all_filled(map))
+		tmp = ft_strtrim(map->file[j++], " \n\t\r\b\v\f");
+		if (tmp && *tmp)
 		{
-			if (!ft_strncmp(map->file[i[0]], arr[i[1]], ft_strlen(arr[i[1]])))
+			i = -1;
+			while (arr[++i])
 			{
-				if (map->cords[i[1]] != NULL)
-					err("Duplicate type.", map);
-				else
-					map->cords[i[1]] = ft_strtrim(map->file[i[0]]
-						+ ft_strlen(arr[i[1]]), " \n\t");
+				if (tmp[0] == arr[i][0] && tmp[1] == arr[i][1] \
+				&& (i > 3 || tmp[2] == arr[i][2]))
+				{	
+					flag += (map->cords[i] == NULL);
+					free(map->cords[i]);
+					map->cords[i] = ft_strtrim(tmp + 2, " \n\t\r\b\v\f");
+				}	
 			}
-			i[1]++;
 		}
-		i[0]++;
+		free(tmp);
 	}
 	if (all_filled(map) || err("Missing texture.", map))
-		map_extract_map(&map->file[i[0]], map);
+		map_extract_map(&map->file[j], map);
 }

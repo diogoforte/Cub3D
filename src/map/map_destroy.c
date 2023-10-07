@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 05:32:33 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 15:57:32 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 23:08:52 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void map_destroy_file(t_map *map)
 
 void map_destroy_map(t_map *map)
 {
-	if (map->map)
-		ft_freematrix(map->map);
+	ft_freematrix(map->map);
 	map->map = NULL;
 }
 

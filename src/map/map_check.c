@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 16:20:14 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 23:21:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	map_add_outline(t_map *map)
 				tmp[i[1] + 1] = map->map[i[0]][i[1]];
 		new_map[i[0] + 1] = tmp;
 	}
-	ft_freematrix(map->map);
+	map_destroy_map(map);
 	map->map = new_map;
 }
 

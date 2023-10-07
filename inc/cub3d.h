@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 13:44:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 21:06:04 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,15 @@ struct s_window
 struct s_cub
 {
 	t_map		*map;
-	t_window	window;
 	int			status;
-
 	void		(*map_add_list)(char *file_path);
 	void		(*map_load)(char **av);
 	void		(*exit)(char *str);
 	void		(*maps_destroy)();
 	t_map		*(*map_new)(char *file_path);
 	void		(*map_extract_data)(t_map *map);
+	t_window	window;
+
 };
 
 

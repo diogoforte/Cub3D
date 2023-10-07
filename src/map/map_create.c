@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 15:24:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 22:50:38 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,30 @@ t_map	*map_new(char *file_path)
 	return (map);
 }
 
+
+void load_files(int fd, t_map *map, int i)
+{
+	char *line;
+
+	line = get_next_line(fd);
+	if (line)
+		load_files(fd, map, i + 1);
+	else if (i)
+		map->file = ft_calloc(sizeof(char *) , i + 1);
+	if (map->file)
+		map->file[i] = line;
+}
+
 void	map_extract_file(t_map *map, char *file_path)
 {
 	int		fd;
-	char	*line;
 
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 		err("File not found", map);
 	else
 	{
-		while (get_next_line2(fd, &line))
-		{
-			ft_matrixadd_back(&map->file, line);
-			free(line);
-		}
+		load_files(fd, map, 0);
 		close(fd);
 		if (!map->file)
 			err("Empty file", map);

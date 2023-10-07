@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 21:02:12 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 00:33:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 05:05:51 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,27 @@ void	map_add_back(t_map **map, t_map *new_map)
 	while (last->next)
 		last = last->next;
 	last->next = new_map;
+}
+
+char	*ft_stradd(char **original, char *add)
+{
+	int		i;
+	int		j;
+	char	*joined;
+
+	if (!original || !(*original) || !add)
+		return (NULL);
+	joined = ft_calloc(sizeof(char),
+			(ft_strlen((*original)) + ft_strlen(add) + 1));
+	if (!joined)
+		return (NULL);
+	i = -1;
+	while ((*original)[++i])
+		joined[i] = (*original)[i];
+	j = -1;
+	while (add[++j])
+		joined[i + j] = add[j];
+	free((*original));
+	*original = joined;
+	return (joined);
 }

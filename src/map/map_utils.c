@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 20:00:30 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/10/06 21:59:35 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/07 06:05:51 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,42 +32,48 @@ int	matrix_biggest_string(char **str)
 	return (biggest);
 }
 
-int ft_matrix_len(char **str)
+int	all_filled(t_map *map)
 {
-	int i;
+	int		i;
 
 	i = 0;
-	HERE;
-	while (str && str[i])
-		i++;
-	THERE;
-	return (i);
-}
-
-char ***arr_type(t_map	*map)
-{
-	static char **arr_type[6];
-
-	arr_type[0] = &map->cords[NO];
-	arr_type[1] = &map->cords[SO];
-	arr_type[2] = &map->cords[WE];
-	arr_type[3] = &map->cords[EA];
-	arr_type[4] = &map->cords[F];
-	arr_type[5] = &map->cords[C];
-	return (arr_type);
-}
-int all_filled(t_map *map)
-{
-	char ***arr_type2;
-	int i;
-
-	i = 0;
-	arr_type2 = arr_type(map);
 	while (i < 6)
 	{
-		if (!*arr_type2[i])
-			return (1);
+		if (!map->cords[i])
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
+}
+
+void	map_print(t_map *map)
+{
+	static char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
+
+	printf("Map number: %d\n", map->map_number);
+	if (map->playable)
+	{
+		printf("Playeable: Yes\n");
+		printf("Cords:\n");
+		for (int i = 0; i < 6; i++)
+			printf("%s: (%s)\n", arr[i], map->cords[i]);
+		printf("Map:\n");
+		for (int i = 0; map->map && map->map[i]; i++)
+			printf("%s\n", map->map[i]);
+	}
+	else
+	{
+		printf("Playeable: No");
+			if (map->error)
+				printf(" - %s\n", map->error);
+	}
+}
+void	map_clear(t_map *map)
+{
+	if (map && !map->playable)
+	{
+		map->destroy_cords(map);
+		map->destroy_map(map);
+		map->destroy_file(map);
+	}
 }

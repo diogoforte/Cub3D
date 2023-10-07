@@ -14,6 +14,7 @@ NAME = cub3d
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
 ARGS = maps/test.cub
+ARGS2 = maps/test.cub maps/testcopy.cub
 
 MINILIBX_PATH = minilibx-linux/
 MINILIBX_NAME = libmlx.a
@@ -30,10 +31,11 @@ OBJ_PATH = obj/
 SRC = $(addprefix $(SRC_PATH), \
 		main.c \
 		map/map_create.c \
-		utils/exit.c \
-		utils/struct_calls.c \
-		utils/utils.c \
 		map/map_data.c \
+		map/map_utils.c \
+		utils/exit.c \
+		utils/struct_calls.c utils/utils.c \
+		map/map_destroy.c \
 )
 
 $(OBJ): $(OBJ_PATH)
@@ -83,6 +85,6 @@ v: all
 	@valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) $(ARGS)
 
 v2: all
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(ARGS) maps/test.cub abc
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(ARGS2)
 
 .PHONY: all re clean fclean run

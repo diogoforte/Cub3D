@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 01:33:58 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 05:58:41 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,13 @@ struct s_map
 	int		width;
 	int		height;
 	int		map_number;
+	char	*error;
 
 	void	(*print_variables)();
+	void	(*destroy_file)(t_map *map);
+	void	(*destroy_map)(t_map *map);
+	void	(*destroy_cords)(t_map *map);
+	void	(*destroy_error)(t_map *map);
 	
 	t_map	*next;
 };
@@ -80,7 +85,7 @@ t_cub	*cub(void);
 t_map	*map_new(char *file_path);
 void	map_add_list(char *file_path);
 void	map_extract_file(t_map *map, char *file_path);
-int		err(char *str);
+int		err(char *str, t_map *map);
 void	matrix_add_back(char ***matrix, char *str);
 void	print_matrix(char **matrix);
 void	exit_cub(char *str);
@@ -88,5 +93,16 @@ void	maps_destroy(void);
 void	map_add_back(t_map **map, t_map *new_map);
 void	load_all_maps(char **argv);
 void	map_extract_data(t_map *map);
+void	map_print(t_map *map);
+int		all_filled(t_map *map);
+int		map_extract_map(char **grid, t_map *map);
+t_map	*map_new(char *file_path);
+char	*ft_stradd(char **original, char *add);
+void 	map_destroy_file(t_map *map);
+void 	map_destroy_map(t_map *map);
+void 	map_destroy_error(t_map *map);
+void 	map_destroy_cords(t_map *map);
+void	map_clear(t_map *map);
+
 
 #endif

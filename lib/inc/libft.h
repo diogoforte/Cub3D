@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/06 21:59:49 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/07 00:09:38 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char				*ft_strjoinfree(char *s1, char *s2);
 char				*get_next_line(int fd);
 int					get_next_line2(int fd, char **line);
 off_t				ft_lseek(int fd, off_t offset, int whence);
-int 				ft_matrix_len(char **str);
+int					ft_matrix_len(char **str);
+void				*ft_realloc(void *ptr, size_t nitems, size_t size);
 
 #endif

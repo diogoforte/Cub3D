@@ -24,19 +24,8 @@ LIBFT_NAME = libft.a
 LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
 
 INC = -I ./inc/
-# SRC_PATH = src/
-SRC_PATH = src2/
+SRC_PATH = src/
 OBJ_PATH = obj/
-
-# SRC = $(addprefix $(SRC_PATH), \
-# 		main/engine.c \
-# 		main/exit.c \
-# 		main/main.c \
-# 		map/map_check.c \
-# 		map/map_create.c \
-# 		utils/map_utils.c \
-# 		utils/utils.c	\
-# )
 
 SRC = $(addprefix $(SRC_PATH), \
 		main.c \
@@ -44,6 +33,7 @@ SRC = $(addprefix $(SRC_PATH), \
 		utils/exit.c \
 		utils/struct_calls.c \
 		utils/utils.c \
+		map/map_data.c \
 )
 
 $(OBJ): $(OBJ_PATH)
@@ -55,12 +45,6 @@ all: $(NAME)
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 	@printf "$(EMOJI_HAMMER)	$(BLUE)Compiling $(WHITE)$(NAME)		$(BLUE)%-33s$(WHITE)\r" $(notdir $@)
-
-# $(OBJ_PATH):
-# 	@mkdir -p $(OBJ_PATH)
-# 	@mkdir -p $(OBJ_PATH)/main
-# 	@mkdir -p $(OBJ_PATH)/map
-# 	@mkdir -p $(OBJ_PATH)/utils
 
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)

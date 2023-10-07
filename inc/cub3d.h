@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 17:08:53 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/06 19:47:21 by chaleira         ###   ########.fr       */
+/*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
+/*   Updated: 2023/10/07 01:33:58 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,59 +36,57 @@
 # define F 4
 # define C 5
 
-typedef void					(*t_exe)();
-typedef struct s_map			t_map;
-typedef struct s_engine			t_engine;
+typedef struct s_map 		t_map;
+typedef struct s_cub 		t_cub;
+typedef struct s_window 	t_window;
 
-struct					s_map
+struct s_map
 {
-	bool				playable;
-	int 				map_number;	
-	int					fd;
-	char				*cords[6];
-	char				**grid;
-	char				**map;
-	int					rows;
-	int					cols;
-	int 				(*error)(char *, t_map *);
-	t_exe				add;
-	t_exe				move;
-	t_map				*next;
+	bool	playable;
+	char	**file;
+	char	**map;
+	char 	*cords[6];
+	int		width;
+	int		height;
+	int		map_number;
+
+	void	(*print_variables)();
+	
+	t_map	*next;
 };
 
-struct					s_engine
+struct s_window
 {
-	void				*mlx;
-	void				*win;
-	t_map				**map;
-	t_exe				maps_init;
-	t_exe				free;
-	t_exe				exit;
+	void	*mlx;
+	void	*win;
 };
 
-//	MAP
-// 		MAP_CREATE
-void		maps_loader(char **av);
-// 		MAP_CHECK
-void	map_checker(t_map	*map);
+struct s_cub
+{
+	t_map		*map;
+	t_window	window;
+	int			status;
 
-//	ENGINE
-t_engine	*engine(void);
-void		engine_start(int argc);
-void		engine_free(t_map *map);
+	void		(*map_add_list)(char *file_path);
+	void		(*load_all_maps)(char **av);
+	void		(*exit)(char *str);
+	void		(*maps_destroy)();
+	t_map		*(*map_new)(char *file_path);
+	void		(*map_extract_data)(t_map *map);
+};
 
-//	EXIT
-void		do_exit(char *str);
-int			err(char *str, t_map *map);
 
-//	UITLS
-// 		MAP_UTILS
-int			matrix_biggest_string(char **str);
-int 		ft_matrix_len(void **str);
-char 		***arr_type(t_map	*map);
-int 		all_filled(t_map *map);
-// 		UTILS
-void    	*ft_realloc(void *ptr, size_t nitems, size_t size);
-void		print_vars(t_map *map);
+t_cub	*cub(void);
+t_map	*map_new(char *file_path);
+void	map_add_list(char *file_path);
+void	map_extract_file(t_map *map, char *file_path);
+int		err(char *str);
+void	matrix_add_back(char ***matrix, char *str);
+void	print_matrix(char **matrix);
+void	exit_cub(char *str);
+void	maps_destroy(void);
+void	map_add_back(t_map **map, t_map *new_map);
+void	load_all_maps(char **argv);
+void	map_extract_data(t_map *map);
 
 #endif

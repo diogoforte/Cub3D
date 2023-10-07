@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 06:45:19 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 12:41:28 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/07 16:20:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,39 @@ void	map_check_variables(t_map *map)
 	}
 }
 
+void	map_add_outline(t_map *map)
+{
+	char	**new_map;
+	char	*tmp;
+	int i[5];
+
+	i[4] = ft_matrix_len(map->map);
+	i[3] = matrix_biggest_string(map->map);
+	new_map = ft_calloc(i[4] + 3, sizeof(char *));
+	tmp = ft_calloc(i[3] + 3, sizeof(char));
+	ft_memset(tmp, '/', i[3] + 2);
+	new_map[0] = tmp;
+	new_map[i[4] + 1] = tmp;
+	i[0] = -1;
+	i[2] = 0;
+	while (++i[0] < i[4])
+	{
+		i[2] = ft_strlen(map->map[i[0]]);
+		tmp = ft_calloc(i[3] + 3, sizeof(char));
+		ft_memset(tmp, '/', i[3] + 2);
+		i[1] = -1;
+		while (++i[1] < i[2])
+			if (map->map[i[0]][i[1]] != ' ')
+				tmp[i[1] + 1] = map->map[i[0]][i[1]];
+		new_map[i[0] + 1] = tmp;
+	}
+	ft_freematrix(map->map);
+	map->map = new_map;
+}
+
 void	map_check(t_map *map)
 {
 	map_check_variables(map);
+	map_add_outline(map);
 	// map_check_map(map);
 }

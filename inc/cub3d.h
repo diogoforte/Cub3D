@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 12:42:10 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 13:44:36 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ struct s_map
 	char	**file;
 	char	**map;
 	char 	*cords[6];
-	int		width;
-	int		height;
 	int		map_number;
 	char	*error;
 
@@ -102,6 +100,8 @@ void 	map_destroy_error(t_map *map);
 void 	map_destroy_cords(t_map *map);
 void	map_clear(t_map *map);
 void	map_check(t_map *map);
+
+int	matrix_biggest_string(char **str);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 06:26:51 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 15:30:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ int	map_extract_map(char **grid, t_map *map)
 		grid++;
 	while (grid && *grid && ft_strcmp(*grid, "\n"))
 	{
-		tmp = ft_strtrim(*grid, " \n\t");
+		tmp = ft_strtrim(*grid, "\n");
 		if (tmp && *tmp)
 			ft_matrixadd_back(&map->map, tmp);
-		else
-			free(tmp);
+		free(tmp);
 		grid++;
 	}
 	while (grid && *grid && !ft_strcmp(*grid, "\n"))

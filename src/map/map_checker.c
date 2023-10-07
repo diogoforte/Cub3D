@@ -1,21 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 19:56:04 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 06:49:15 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/07 06:45:19 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/07 06:46:03 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int main (int argc, char **argv)
-{
-	if (argc < 2)
-		exit_cub("Usage: ./cub3D <map.cub> ...");
-	cub()->map_load(argv);
-	cub()->exit(NULL);
-}

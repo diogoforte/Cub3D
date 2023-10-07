@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 05:49:53 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/07 06:26:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	map_extract_map(char **grid, t_map *map)
 	{
 		tmp = ft_strtrim(*grid, " \n\t");
 		if (tmp && *tmp)
-			matrix_add_back(&map->map, tmp);
+			ft_matrixadd_back(&map->map, tmp);
 		else
 			free(tmp);
 		grid++;

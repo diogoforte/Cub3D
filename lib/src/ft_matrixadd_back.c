@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_matrixadd_back.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 19:56:04 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 06:49:15 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/07 06:15:37 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/07 06:16:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+void	ft_matrixadd_back(char ***matrix, char *str)
 {
-	if (argc < 2)
-		exit_cub("Usage: ./cub3D <map.cub> ...");
-	cub()->map_load(argv);
-	cub()->exit(NULL);
+	char	**new_matrix;
+	int		i;
+
+	new_matrix = ft_calloc(sizeof(char *), (ft_matrix_len(*matrix) + 2));
+	i = 0;
+	while (*matrix && (*matrix)[i])
+	{
+		new_matrix[i] = (*matrix)[i];
+		i++;
+	}
+	new_matrix[i] = str;
+	if (*matrix)
+		free(*matrix);
+	*matrix = new_matrix;
 }

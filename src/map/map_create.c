@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 05:59:20 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/07 06:48:23 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_map	*map_new(char *file_path)
 	map->destroy_map = &map_destroy_map;
 	map->destroy_error = &map_destroy_error;
 	map->destroy_cords = &map_destroy_cords;
+	if (map->playable)
+		map_check(map);
 	map_clear(map);
 	map_print(map);
 	return (map);
@@ -55,7 +57,7 @@ void	map_extract_file(t_map *map, char *file_path)
 		{
 			tmp = ft_strtrim(line, " \t");
 			free(line);
-			matrix_add_back(&map->file, tmp);
+			ft_matrixadd_back(&map->file, tmp);
 		}
 		close(fd);
 		if (!map->file)
@@ -63,7 +65,7 @@ void	map_extract_file(t_map *map, char *file_path)
 	}
 }
 
-void	load_all_maps(char **argv)
+void	map_load(char **argv)
 {
 	while (++argv && *argv)
 	{

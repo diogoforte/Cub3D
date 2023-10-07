@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 05:43:19 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/07 06:26:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	err(char *str, t_map *map)
 		if (!map->error)
 			map->error = ft_strdup(str);
 		else
-			ft_stradd(&map->error, str);
+			ft_strjoin_address(&map->error, str);
 		map->playable = false;
 	}
 	while (str && *str)

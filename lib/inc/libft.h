@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 00:09:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 06:22:10 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,7 @@ int					get_next_line2(int fd, char **line);
 off_t				ft_lseek(int fd, off_t offset, int whence);
 int					ft_matrix_len(char **str);
 void				*ft_realloc(void *ptr, size_t nitems, size_t size);
+void				ft_matrixadd_back(char ***matrix, char *str);
+char				*ft_strjoin_address(char **original, char *add);
 
 #endif

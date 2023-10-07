@@ -33,9 +33,11 @@ SRC = $(addprefix $(SRC_PATH), \
 		map/map_create.c \
 		map/map_data.c \
 		map/map_utils.c \
-		utils/exit.c \
-		utils/struct_calls.c utils/utils.c \
 		map/map_destroy.c \
+		map/map_check.c \
+		utils/struct_calls.c \
+		utils/exit.c \
+		utils/utils.c \
 )
 
 $(OBJ): $(OBJ_PATH)

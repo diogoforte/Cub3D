@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 06:22:10 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/07 12:30:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int					ft_matrix_len(char **str);
 void				*ft_realloc(void *ptr, size_t nitems, size_t size);
 void				ft_matrixadd_back(char ***matrix, char *str);
 char				*ft_strjoin_address(char **original, char *add);
+int					ft_charcount(char *str, char c);
 
 #endif

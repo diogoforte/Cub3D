@@ -81,6 +81,7 @@ SRC = $(addprefix $(SRC_PATH), \
 	ft_realloc.c \
 	ft_matrixadd_back.c \
 	ft_strjoin_address.c \
+	ft_charcount.c \
 )
 
 

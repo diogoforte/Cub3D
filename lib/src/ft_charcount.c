@@ -1,14 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker.c                                      :+:      :+:    :+:   */
+/*   ft_charcount.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 06:45:19 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 06:46:03 by dinunes-         ###   ########.fr       */
+/*   Created: 2023/10/07 12:29:15 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/10/07 12:30:23 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
+int	ft_charcount(char *str, char c)
+{
+	int	count;
+
+	count = 0;
+	while (*str)
+		if (*str++ == c)
+			count++;
+	return (count);
+}

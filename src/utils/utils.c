@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 21:02:12 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/08 01:30:30 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 23:51:20 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 void	print_matrix(char **matrix)
 {
-	while (matrix && *matrix)
+	if (!matrix)
 	{
-		printf("%s", *matrix);
+		printf("Can't print matrix\n");
+		return ;	
+	}
+	while (*matrix)
+	{
+		printf("%s\n", *matrix);
 		matrix++;
 	}
 }

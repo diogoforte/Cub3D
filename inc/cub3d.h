@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/08 18:59:29 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:39:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # define HERE write(1, "HERE\n", 6)
 
 # define SPACERS " \t\n\v\f\r"
+# define OUTLINE '_'
+# define EMPTY '0'
+# define WALL '1'
 # define NO 0
 # define SO 1
 # define WE 2
@@ -50,6 +53,8 @@ struct s_map
 	char	*error;
 	int		map_width;
 	int		map_height;
+	int		start_x;
+	int		start_y;
 
 	void	(*print_variables)();
 	void	(*destroy_file)(t_map *map);

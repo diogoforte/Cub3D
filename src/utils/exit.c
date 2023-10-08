@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/08 01:57:31 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 00:40:37 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	err(char *str, t_map *map)
 			ft_strjoin_address(&map->error, str);
 		map->playable = false;
 	}
-	while (str && *str)
-		write(2, str++, 1);
-	write(2, "\n", 1);
+	ft_dprintf(2, "Error: %s\n", str);
 	cub()->status = 1;
 	return (1);
 }

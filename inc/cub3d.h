@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 21:06:04 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 02:02:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
+# define SPACERS " \t\n\v\f\r"
 # define NO 0
 # define SO 1
 # define WE 2
@@ -43,7 +44,6 @@ typedef struct s_window 	t_window;
 struct s_map
 {
 	bool	playable;
-	char	**file;
 	char	**map;
 	char 	*cords[6];
 	int		map_number;
@@ -92,9 +92,8 @@ void	map_load(char **argv);
 void	map_extract_data(t_map *map);
 void	map_print(t_map *map);
 int		all_filled(t_map *map);
-int		map_extract_map(char **grid, t_map *map);
+void	map_extract_map(char **grid, t_map *map);
 t_map	*map_new(char *file_path);
-void 	map_destroy_file(t_map *map);
 void 	map_destroy_map(t_map *map);
 void 	map_destroy_error(t_map *map);
 void 	map_destroy_cords(t_map *map);

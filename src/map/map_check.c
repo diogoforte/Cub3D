@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 23:21:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 02:02:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	map_add_outline(t_map *map)
 	i[3] = matrix_biggest_string(map->map);
 	new_map = ft_calloc(i[4] + 3, sizeof(char *));
 	tmp = ft_calloc(i[3] + 3, sizeof(char));
-	ft_memset(tmp, '/', i[3] + 2);
+	ft_memset(tmp, '_', i[3] + 2);
 	new_map[0] = tmp;
 	new_map[i[4] + 1] = tmp;
 	i[0] = -1;
@@ -55,7 +55,7 @@ void	map_add_outline(t_map *map)
 	{
 		i[2] = ft_strlen(map->map[i[0]]);
 		tmp = ft_calloc(i[3] + 3, sizeof(char));
-		ft_memset(tmp, '/', i[3] + 2);
+		ft_memset(tmp, '_', i[3] + 2);
 		i[1] = -1;
 		while (++i[1] < i[2])
 			if (map->map[i[0]][i[1]] != ' ')

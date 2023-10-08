@@ -75,8 +75,6 @@ SRC = $(addprefix $(SRC_PATH), \
 	ft_toupper.c \
 	ft_triplejoin.c \
 	get_next_line.c \
-	get_next_line2.c \
-	ft_lseek.c \
 	ft_matrixlen.c \
 	ft_realloc.c \
 	ft_matrixadd_back.c \

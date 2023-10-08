@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 22:50:38 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 01:51:46 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ t_map	*map_new(char *file_path)
 	map_extract_file(map, file_path);
 	if (map->playable)
 		map_extract_data(map);
-	map->print_variables = &map_print;
-	map->destroy_file = &map_destroy_file;
-	map->destroy_map = &map_destroy_map;
-	map->destroy_error = &map_destroy_error;
-	map->destroy_cords = &map_destroy_cords;
+	map->print_variables = map_print;
+	map->destroy_map = map_destroy_map;
+	map->destroy_error = map_destroy_error;
+	map->destroy_cords = map_destroy_cords;
 	if (map->playable)
 		map_check(map);
 	map_clear(map);
@@ -51,9 +50,9 @@ void load_files(int fd, t_map *map, int i)
 	if (line)
 		load_files(fd, map, i + 1);
 	else if (i)
-		map->file = ft_calloc(sizeof(char *) , i + 1);
-	if (map->file)
-		map->file[i] = line;
+		map->map = ft_calloc(sizeof(char *) , i + 1);
+	if (map->map)
+		map->map[i] = line;
 }
 
 void	map_extract_file(t_map *map, char *file_path)
@@ -67,7 +66,7 @@ void	map_extract_file(t_map *map, char *file_path)
 	{
 		load_files(fd, map, 0);
 		close(fd);
-		if (!map->file)
+		if (!map->map)
 			err("Empty file", map);
 	}
 }

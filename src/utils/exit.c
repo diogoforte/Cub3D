@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 22:57:21 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 01:57:31 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	maps_destroy(void)
 	while (map)
 	{
 		tmp = map->next;
-		map->destroy_file(map);
-		//map->destroy_map(map);
+		map->destroy_map(map);
 		map->destroy_error(map);
 		map->destroy_cords(map);
 		if (map)

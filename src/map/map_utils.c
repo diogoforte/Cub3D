@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 20:00:30 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/10/07 21:04:31 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 01:30:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,3 +77,21 @@ void	map_clear(t_map *map)
 		map->destroy_file(map);
 	}
 }
+
+void	map_add_back(t_map **map, t_map *new_map)
+{
+	t_map *last;
+
+	if (!map || !new_map)
+		return ;
+	if (!*map)
+	{
+		*map = new_map;
+		return ;
+	}
+	last = *map;
+	while (last->next)
+		last = last->next;
+	last->next = new_map;
+}
+

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/08 02:02:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 18:59:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ struct s_map
 	char 	*cords[6];
 	int		map_number;
 	char	*error;
+	int		map_width;
+	int		map_height;
 
 	void	(*print_variables)();
 	void	(*destroy_file)(t_map *map);

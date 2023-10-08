@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/08 01:51:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 19:00:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_map	*map_new(char *file_path)
 	map_extract_file(map, file_path);
 	if (map->playable)
 		map_extract_data(map);
+	map->map_height = ft_matrix_len(map->map);
+	map->map_width = matrix_biggest_string(map->map);
 	map->print_variables = map_print;
 	map->destroy_map = map_destroy_map;
 	map->destroy_error = map_destroy_error;

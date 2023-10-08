@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/08 02:02:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 19:04:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,21 @@ void	map_add_outline(t_map *map)
 {
 	char	**new_map;
 	char	*tmp;
-	int i[5];
+	int i[3];
 
-	i[4] = ft_matrix_len(map->map);
-	i[3] = matrix_biggest_string(map->map);
-	new_map = ft_calloc(i[4] + 3, sizeof(char *));
-	tmp = ft_calloc(i[3] + 3, sizeof(char));
-	ft_memset(tmp, '_', i[3] + 2);
-	new_map[0] = tmp;
-	new_map[i[4] + 1] = tmp;
+	new_map = ft_calloc(map->map_height + 3, sizeof(char *));
+	tmp = ft_calloc(map->map_width + 3, sizeof(char));
+	ft_memset(tmp, '_', map->map_width + 2);
+	new_map[0] = ft_strdup(tmp);
+	new_map[map->map_height + 1] = ft_strdup(tmp);
+	free(tmp);
 	i[0] = -1;
 	i[2] = 0;
-	while (++i[0] < i[4])
+	while (++i[0] < map->map_height)
 	{
 		i[2] = ft_strlen(map->map[i[0]]);
-		tmp = ft_calloc(i[3] + 3, sizeof(char));
-		ft_memset(tmp, '_', i[3] + 2);
+		tmp = ft_calloc(map->map_width + 3, sizeof(char));
+		ft_memset(tmp, '_', map->map_width + 2);
 		i[1] = -1;
 		while (++i[1] < i[2])
 			if (map->map[i[0]][i[1]] != ' ')

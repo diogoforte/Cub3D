@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 05:15:24 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 21:00:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/08 02:17:54 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ void	ft_freematrix(char **matrix)
 {
 	int	i;
 
-	if (matrix)
+	i = 0;
+	while (matrix[i])
 	{
-		i = 0;
-		while (matrix[i])
-			free(matrix[i++]);
-		free(matrix);
+		free(matrix[i]);
+		matrix[i] = NULL;
+		i++;
 	}
+	free(matrix);
+	matrix = NULL;
 }

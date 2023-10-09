@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/09 00:39:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 06:01:53 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include <stdlib.h>
+// # include <stdlib.h>
 # include <unistd.h>
-# include <stdbool.h>
 
 # define WIDTH 800
 # define HEIGHT 800
@@ -46,17 +45,18 @@ typedef struct s_window 	t_window;
 
 struct s_map
 {
+	int		map_number;
+	char	*map_name;
 	bool	playable;
+	char	*error;
 	char	**map;
 	char 	*cords[6];
-	int		map_number;
-	char	*error;
 	int		map_width;
 	int		map_height;
 	int		start_x;
 	int		start_y;
 
-	void	(*print_variables)();
+	void	(*print)();
 	void	(*destroy_file)(t_map *map);
 	void	(*destroy_map)(t_map *map);
 	void	(*destroy_cords)(t_map *map);

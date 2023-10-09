@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/09 00:41:03 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 06:13:53 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	map_check_variables(t_map *map)
 	char	**tmp;
 	int		i[2];
 
+	if (!map->playable)
+		return ;
 	if (WIDTH <= 0 || HEIGHT <= 0)
 		err("Invalid resolution", map);
 	else
@@ -67,13 +69,12 @@ void	map_add_outline(t_map *map)
 
 void	flood_fill(t_map *map, int x, int y, char **visited)
 {
+	if (!x || !y)
+		err("No starting position.", map);
+	if (visited[y][x] == OUTLINE)
+		err("Map not surrounded by walls.", map);
 	if (visited[y][x] == WALL || !map->playable)
 		return ;
-	if (visited[y][x] == OUTLINE)
-	{
-		err("Map not surrounded by walls.", map);
-		return ;	
-	}
 	visited[y][x] = WALL;
 	flood_fill(map, x + 1, y, visited);
 	flood_fill(map, x - 1, y, visited);
@@ -85,7 +86,7 @@ void	flood_fill(t_map *map, int x, int y, char **visited)
 void	map_check_map(t_map *map)
 {
 	int		i[2];
-	char	**visited = NULL;
+	char	**visited;
 
 	i[0] = -1;
 	visited = ft_calloc(map->map_height + 3, sizeof(char *));
@@ -106,8 +107,6 @@ void	map_check_map(t_map *map)
 			}
 		}
 	}
-	if (!map->start_x || !map->start_y)
-		err("No starting position.", map);
 	flood_fill(map, map->start_x, map->start_y, visited);
 	ft_freematrix(visited);
 }
@@ -115,6 +114,10 @@ void	map_check_map(t_map *map)
 void	map_check(t_map *map)
 {
 	map_check_variables(map);
+	if (!map->playable)
+		return ;
 	map_add_outline(map);
+	if (!map->playable)
+		return ;
 	map_check_map(map);
 }

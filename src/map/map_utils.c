@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 20:00:30 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/10/08 01:30:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 06:14:21 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	matrix_biggest_string(char **str)
 {
-	int i;
-	int j;
-	int biggest;
+	int	i;
+	int	j;
+	int	biggest;
 
 	i = 0;
 	biggest = 0;
@@ -34,7 +34,7 @@ int	matrix_biggest_string(char **str)
 
 int	all_filled(t_map *map)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < 6)
@@ -49,25 +49,30 @@ int	all_filled(t_map *map)
 void	map_print(t_map *map)
 {
 	static char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
+	int			i;
 
 	printf("Map number: %d\n", map->map_number);
+	printf("Map name: %s\n", map->map_name);
 	if (map->playable)
 	{
 		printf("Playeable: Yes\n");
 		printf("Cords:\n");
-		for (int i = 0; i < 6; i++)
+		i = -1;
+		while (++i < 6)
 			printf("%s: (%s)\n", arr[i], map->cords[i]);
+		i = -1;
 		printf("Map:\n");
-		for (int i = 0; map->map && map->map[i]; i++)
+		while (map->map && map->map[++i])
 			printf("%s\n", map->map[i]);
 	}
 	else
 	{
 		printf("Playeable: No");
-			if (map->error)
-				printf(" - %s\n", map->error);
+		if (map->error)
+			printf(" - %s\n", map->error);
 	}
 }
+
 void	map_clear(t_map *map)
 {
 	if (map && !map->playable)
@@ -80,7 +85,7 @@ void	map_clear(t_map *map)
 
 void	map_add_back(t_map **map, t_map *new_map)
 {
-	t_map *last;
+	t_map	*last;
 
 	if (!map || !new_map)
 		return ;
@@ -94,4 +99,3 @@ void	map_add_back(t_map **map, t_map *new_map)
 		last = last->next;
 	last->next = new_map;
 }
-

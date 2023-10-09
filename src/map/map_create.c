@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/09 00:42:06 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 06:15:34 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,44 +27,46 @@ t_map	*map_new(char *file_path)
 	map = ft_calloc(1, sizeof(t_map));
 	map->playable = 1;
 	map->map_number = ++number_of_maps;
+	
 	map_extract_file(map, file_path);
-	if (map->playable)
-		map_extract_data(map);
+	map_extract_data(map);
 	map->map_height = ft_matrix_len(map->map);
-	map->map_width = matrix_biggest_string(map->map);
+	if (map->playable)
+		map->map_width = matrix_biggest_string(map->map);
 	map->start_x = 0;
 	map->start_y = 0;
-	map->print_variables = map_print;
+	map->print = map_print;
 	map->destroy_map = map_destroy_map;
 	map->destroy_error = map_destroy_error;
 	map->destroy_cords = map_destroy_cords;
-	if (map->playable)
-		map_check(map);
+	map_check(map);
 	map_print(map);
 	return (map);
 }
 
-
-void load_files(int fd, t_map *map, int i)
+void	load_files(int fd, t_map *map, int i)
 {
-	char *line;
+	char	*line;
 
 	line = get_next_line(fd);
 	if (line)
 		load_files(fd, map, i + 1);
 	else if (i)
-		map->map = ft_calloc(sizeof(char *) , i + 1);
+		map->map = ft_calloc(sizeof(char *), i + 1);
 	if (map->map)
 		map->map[i] = line;
 }
 
 void	map_extract_file(t_map *map, char *file_path)
 {
-	int		fd;
+	int	fd;
 
+	map->map_name = file_path;
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 		err("File not found", map);
+	else if (ft_strncmp(file_path + ft_strlen(file_path) - 4, ".cub", 4))
+		err("File extension not supported.", map);
 	else
 	{
 		load_files(fd, map, 0);

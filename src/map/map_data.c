@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/08 23:26:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 06:12:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	map_extract_data(t_map *map)
 {
 	static char	*arr[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", 0};
 	int			i[3];
-	char 		*tmp;
+	char		*tmp;
 
+	if (!map->playable)
+		return ;
 	i[0] = 0;
 	i[2] = 0;
 	while (map->map[i[0]] && i[2] < 6)
@@ -54,12 +56,12 @@ void	map_extract_data(t_map *map)
 			while (arr[++i[1]])
 			{
 				if (tmp[0] == arr[i[1]][0] && tmp[1] == arr[i[1]][1]
-				&& (i[0] > 3 || tmp[2] == arr[i[1]][2]))
-				{	
+					&& (i[0] > 3 || tmp[2] == arr[i[1]][2]))
+				{
 					i[2] += (map->cords[i[1]] == NULL);
 					free(map->cords[i[1]]);
 					map->cords[i[1]] = ft_strtrim(tmp + 2, SPACERS);
-				}	
+				}
 			}
 		}
 		free(tmp);

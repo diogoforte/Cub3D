@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/09 06:15:34 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 22:44:38 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_map	*map_new(char *file_path)
 	map = ft_calloc(1, sizeof(t_map));
 	map->playable = 1;
 	map->map_number = ++number_of_maps;
-	
 	map_extract_file(map, file_path);
 	map_extract_data(map);
 	map->map_height = ft_matrix_len(map->map);

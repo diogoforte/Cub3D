@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/09 00:40:37 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/09 22:56:29 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ int	err(char *str, t_map *map)
 {
 	if (map)
 	{
-		if (!map->error)
-			map->error = ft_strdup(str);
-		else
-			ft_strjoin_address(&map->error, str);
+		free(map->error);
+		map->error = ft_strdup(str);
 		map->playable = false;
 	}
-	ft_dprintf(2, "Error: %s\n", str);
 	cub()->status = 1;
 	return (1);
 }

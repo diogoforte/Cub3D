@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   window_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 19:56:04 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/10 00:13:20 by plopes-c         ###   ########.fr       */
+/*   Created: 2023/10/10 00:09:49 by plopes-c          #+#    #+#             */
+/*   Updated: 2023/10/10 00:12:29 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int main (int argc, char **argv)
+void   window_create(t_cub *cub)
 {
-	if (argc < 2)
-		exit_cub("Usage: ./cub3D <map.cub> ...");
-	cub()->map_load(argv);
-	window_create(cub());
-	cub()->exit(NULL);
+	cub->window.mlx = mlx_init();
+	cub->window.win = mlx_new_window(cub->window.mlx, WIDTH, HEIGHT, "Cub3D");
+	mlx_loop(cub->window.mlx);
 }

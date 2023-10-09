@@ -38,6 +38,7 @@ SRC = $(addprefix $(SRC_PATH), \
 		utils/struct_calls.c \
 		utils/exit.c \
 		utils/utils.c \
+		window/window_create.c \
 )
 
 $(OBJ): $(OBJ_PATH)

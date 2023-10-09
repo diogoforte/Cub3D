@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/09 06:01:53 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/10 00:12:40 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@
 # define HERE write(1, "HERE\n", 6)
 
 # define SPACERS " \t\n\v\f\r"
-# define OUTLINE '_'
+# define OUTLINE -1
+# define PLAYER_START "NSEW"
+# define VALID_CHARS "01NSEW_ "
 # define EMPTY '0'
 # define WALL '1'
 # define NO 0
@@ -106,8 +108,10 @@ void 	map_destroy_error(t_map *map);
 void 	map_destroy_cords(t_map *map);
 void	map_clear(t_map *map);
 void	map_check(t_map *map);
-
+int		map_invalid_char(t_map *map);
 int	matrix_biggest_string(char **str);
+
+void   window_create(t_cub *cub);
 
 
 #endif

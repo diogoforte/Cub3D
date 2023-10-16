@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/09 22:51:52 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:50:02 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	map_check(t_map *map)
 	if (map_check_variables(map) || map_invalid_char(map))
 		return ;
 	map_add_outline(map, OUTLINE);
-	check_open_rooms(map, 0, 0, -2, "Map not closed.");
+	check_open_rooms(map, 0, 0, -2, "Map not closed");
 	check_all_rooms(map);
 	matrix_char_to_char(map->map, -2, ' ');
 }
@@ -97,15 +97,18 @@ int	map_invalid_char(t_map *map)
 		while (map->map && map->map[i][++j])
 		{
 			if (!ft_strchr(VALID_CHARS, map->map[i][j]))
-					return (err("Invalid map character.", map));
+					return (err("Invalid map character", map));
 			if (ft_strchr(PLAYER_START, map->map[i][j]))
-					k++;
-			if (k == 2)
-				return (err("Multiple starting positions.", map));
+			{
+				if (++k == 2)
+					return (err("Multiple starting positions", map));
+				map->start_x = j;
+				map->start_y = i;
+			}
 		}
 	}
 	if (k == 0)
-		return (err("No starting position.", map));
+		return (err("No starting position", map));
 	return (0);
 }
 
@@ -141,7 +144,7 @@ int check_all_rooms(t_map *map)
 		while (map->map[i][j])
 		{
 			if (map->map[i][j] == ' ')
-				check_open_rooms(map, j, i, -2, "Empty space in map.");
+				check_open_rooms(map, j, i, -2, "Empty space in map");
 			j++;
 		}
 		i++;

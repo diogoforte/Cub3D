@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/09 17:37:38 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:50:15 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	map_extract_map(char **grid, t_map *map)
 	while (grid && *grid && !ft_strcmp(*grid, "\n"))
 		grid++;
 	if (grid && *grid)
-		err("Empty line in map.", map);
+		err("Empty line in map", map);
 	map_destroy_map(map);
 	if (tmp_map)
 		map->map = tmp_map;
@@ -45,11 +45,11 @@ void	map_extract_data(t_map *map)
 
 	if (!map->playable)
 		return ;
-	i[0] = 0;
+	i[0] = -1;
 	i[2] = 0;
-	while (map->map[i[0]] && i[2] < 6)
+	while (map->map[++i[0]] && i[2] < 6)
 	{
-		tmp = ft_strtrim(map->map[i[0]++], SPACERS);
+		tmp = ft_strtrim(map->map[i[0]], SPACERS);
 		if (tmp && *tmp)
 		{
 			i[1] = -1;
@@ -66,6 +66,6 @@ void	map_extract_data(t_map *map)
 		}
 		free(tmp);
 	}
-	if (all_filled(map) || err("Missing texture.", map))
+	if (all_filled(map) || err("Missing texture", map))
 		map_extract_map(&map->map[i[0]], map);
 }

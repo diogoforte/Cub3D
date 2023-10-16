@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/07 21:08:16 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:46:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_cub	*cub(void)
 {
 	static t_cub cub = {
 		NULL,
+		NULL,
 		0,
 		map_add_list,
 		map_load,
@@ -23,7 +24,8 @@ t_cub	*cub(void)
 		maps_destroy,
 		map_new,
 		NULL,
-		{}
+		{},
+		{},
 	};
 
 	return (&cub);

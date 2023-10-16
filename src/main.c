@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:04 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/10 00:13:20 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:28:21 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ int main (int argc, char **argv)
 	if (argc < 2)
 		exit_cub("Usage: ./cub3D <map.cub> ...");
 	cub()->map_load(argv);
-	window_create(cub());
+	window_create();
 	cub()->exit(NULL);
 }

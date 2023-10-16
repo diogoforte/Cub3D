@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/09 22:44:38 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/16 14:50:08 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	map_add_list(char *file_path)
 {
-	map_add_back(&cub()->map, map_new(file_path));
+	map_add_back(&cub()->maps, map_new(file_path));
 }
 
 t_map	*map_new(char *file_path)
@@ -65,7 +65,7 @@ void	map_extract_file(t_map *map, char *file_path)
 	if (fd < 0)
 		err("File not found", map);
 	else if (ft_strncmp(file_path + ft_strlen(file_path) - 4, ".cub", 4))
-		err("File extension not supported.", map);
+		err("File extension not supported", map);
 	else
 	{
 		load_files(fd, map, 0);

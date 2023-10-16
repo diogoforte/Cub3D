@@ -39,6 +39,9 @@ SRC = $(addprefix $(SRC_PATH), \
 		utils/exit.c \
 		utils/utils.c \
 		window/window_create.c \
+		window/key_hook.c \
+		window/window_draw.c \
+		window/window_menu.c \
 )
 
 $(OBJ): $(OBJ_PATH)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/10 00:12:40 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:07:09 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
-// # include <stdlib.h>
 # include <unistd.h>
 
 # define WIDTH 800
@@ -28,22 +27,33 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
+# define MOUSE_LEFT 1
+# define MOUSE_RIGHT 2
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_F1 65470
+# define EVENT_CLOSE_BTN 17
+
 # define SPACERS " \t\n\v\f\r"
 # define OUTLINE -1
 # define PLAYER_START "NSEW"
 # define VALID_CHARS "01NSEW_ "
 # define EMPTY '0'
 # define WALL '1'
-# define NO 0
-# define SO 1
-# define WE 2
-# define EA 3
-# define F 4
-# define C 5
+// # define NO 0
+// # define SO 1
+// # define WE 2
+// # define EA 3
+// # define F 4
+// # define C 5
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
 typedef struct s_window 	t_window;
+typedef struct s_player 	t_player;
 
 struct s_map
 {
@@ -71,22 +81,31 @@ struct s_window
 {
 	void	*mlx;
 	void	*win;
+	int		tile_size;
+};
+
+struct s_player
+{
+	int		x;
+	int		y;
+	int		dir;
 };
 
 struct s_cub
 {
-	t_map		*map;
+	t_map 		*map;
+	t_map		*maps;
 	int			status;
 	void		(*map_add_list)(char *file_path);
 	void		(*map_load)(char **av);
-	void		(*exit)(char *str);
+	int		(*exit)(char *str);
 	void		(*maps_destroy)();
 	t_map		*(*map_new)(char *file_path);
 	void		(*map_extract_data)(t_map *map);
 	t_window	window;
+	t_player	player;
 
 };
-
 
 t_cub	*cub(void);
 t_map	*map_new(char *file_path);
@@ -94,7 +113,7 @@ void	map_add_list(char *file_path);
 void	map_extract_file(t_map *map, char *file_path);
 int		err(char *str, t_map *map);
 void	print_matrix(char **matrix);
-void	exit_cub(char *str);
+int		exit_cub(char *str);
 void	maps_destroy(void);
 void	map_add_back(t_map **map, t_map *new_map);
 void	map_load(char **argv);
@@ -109,9 +128,12 @@ void 	map_destroy_cords(t_map *map);
 void	map_clear(t_map *map);
 void	map_check(t_map *map);
 int		map_invalid_char(t_map *map);
-int	matrix_biggest_string(char **str);
+int		matrix_biggest_string(char **str);
 
-void   window_create(t_cub *cub);
-
+void	window_create(void);
+void	draw_menu(void);
+int		key_hook(int keycode);
+void	draw_map(void);
+void	draw_menu(void);
 
 #endif

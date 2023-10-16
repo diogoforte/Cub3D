@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/16 21:49:19 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 00:36:10 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define WIDTH 800
-# define HEIGHT 800
+# define WIDTH 1920
+# define HEIGHT 1080
 
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
@@ -85,15 +85,16 @@ struct s_window
 {
 	void	*mlx;
 	void	*win;
-	int		tile_size;
+	float	tile_size;
 	t_image	img;
 };
 
 struct s_player
 {
-	int		x;
-	int		y;
-	int		dir;
+	float		x;
+	float		y;
+	float		dir_x;
+	float		dir_y;
 	bool	w;
 	bool	a;
 	bool	s;

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:24:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/16 15:40:17 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/16 20:48:49 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	tile_size(void)
 	cub()->player.y += cub()->window.tile_size;
 }
 
-static int	mouse_press(int button, int x, int y)
+int	mouse_press(int button, int x, int y)
 {
 	t_map	*maps;
 	int		menu_y;
@@ -42,7 +42,7 @@ static int	mouse_press(int button, int x, int y)
 				cub()->player.x = cub()->map->start_x;
 				cub()->player.y = cub()->map->start_y;
 				tile_size();
-				draw_map();
+				cub()->draw = draw_map;
 				return (0);
 			}
 			else if (y >= menu_y && y < menu_y + 20 && !maps->playable)
@@ -63,7 +63,7 @@ void	draw_menu(void)
 	{
 		cub()->map = cub()->maps;
 		tile_size();
-		draw_map();
+		cub()->draw = draw_map;
 		return ;
 	}
 	maps = cub()->maps;
@@ -87,5 +87,4 @@ void	draw_menu(void)
 		}
 		maps = maps->next;
 	}
-	mlx_mouse_hook(cub()->window.win, mouse_press, NULL);
 }

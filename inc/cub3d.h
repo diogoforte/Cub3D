@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/16 15:07:09 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/16 21:49:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,12 @@
 # define VALID_CHARS "01NSEW_ "
 # define EMPTY '0'
 # define WALL '1'
-// # define NO 0
-// # define SO 1
-// # define WE 2
-// # define EA 3
-// # define F 4
-// # define C 5
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
 typedef struct s_window 	t_window;
 typedef struct s_player 	t_player;
+typedef struct s_image 		t_image;
 
 struct s_map
 {
@@ -77,11 +72,21 @@ struct s_map
 	t_map	*next;
 };
 
+struct	s_image
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+};
+
 struct s_window
 {
 	void	*mlx;
 	void	*win;
 	int		tile_size;
+	t_image	img;
 };
 
 struct s_player
@@ -89,6 +94,10 @@ struct s_player
 	int		x;
 	int		y;
 	int		dir;
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
 };
 
 struct s_cub
@@ -102,6 +111,8 @@ struct s_cub
 	void		(*maps_destroy)();
 	t_map		*(*map_new)(char *file_path);
 	void		(*map_extract_data)(t_map *map);
+	void		(*draw)();
+	void		(*move)();	
 	t_window	window;
 	t_player	player;
 
@@ -132,8 +143,11 @@ int		matrix_biggest_string(char **str);
 
 void	window_create(void);
 void	draw_menu(void);
-int		key_hook(int keycode);
+int		key_press(int keycode);
+int		key_release(int keycode);
 void	draw_map(void);
 void	draw_menu(void);
+int 	draw_game(void);
+void	movement(void);
 
 #endif

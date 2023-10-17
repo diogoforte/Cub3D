@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:25:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/17 00:36:54 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:13:55 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	draw_player(void)
 	int	center_x;
 	int	center_y;
 
-	radius = cub()->window.tile_size / 10;
-	printf("x: %d, y: %d\n", center_x, center_y);
+	radius = cub()->window.tile_size / 3;
+	center_x = cub()->player.x + cub()->window.tile_size / 100;
+	center_y = cub()->player.y + cub()->window.tile_size / 100;
 	i = -radius;
 	while (++i < radius)
 	{
@@ -52,11 +53,11 @@ void	draw_map(void)
 	int	j;
 	int	i;
 
-	y = -1;
-	while (++y < cub()->map->map_height)
+	y = 0;
+	while (++y < cub()->map->map_height - 1)
 	{
-		x = -1;
-		while (++x < cub()->map->map_width)
+		x = 0;
+		while (++x < cub()->map->map_width - 1)
 		{
 			if (cub()->map->map[y][x] == '1')
 			{
@@ -65,7 +66,7 @@ void	draw_map(void)
 				{
 					j = -1;
 					while (++j < cub()->window.tile_size)
-						buffer_mlx_pixel_put(x * cub()->window.tile_size + i, y
+						buffer_mlx_pixel_put((x - 1) * cub()->window.tile_size + i, (y - 1)
 							* cub()->window.tile_size + j, 0xFFFFFF);
 				}
 			}
@@ -76,7 +77,7 @@ void	draw_map(void)
 				{
 					j = -1;
 					while (++j < cub()->window.tile_size)
-						buffer_mlx_pixel_put(x * cub()->window.tile_size + i, y
+						buffer_mlx_pixel_put((x - 1) * cub()->window.tile_size + i, (y - 1)
 							* cub()->window.tile_size + j, 0x0);
 				}
 			}
@@ -84,15 +85,15 @@ void	draw_map(void)
 			{
 				i = -1;
 				while (++i < cub()->window.tile_size)
-					buffer_mlx_pixel_put((x + 1) * cub()->window.tile_size - 1,
-						y * cub()->window.tile_size + i, 0x808080);
+					buffer_mlx_pixel_put((x) * cub()->window.tile_size - 1,
+						(y - 1) * cub()->window.tile_size + i, 0x808080);
 			}
 			if (y < cub()->map->map_height - 1)
 			{
 				i = -1;
 				while (++i < cub()->window.tile_size)
-					buffer_mlx_pixel_put(x * cub()->window.tile_size + i, (y
-							+ 1) * cub()->window.tile_size - 1, 0x808080);
+					buffer_mlx_pixel_put((x - 1) * cub()->window.tile_size + i, y
+							 * cub()->window.tile_size - 1, 0x808080);
 			}
 		}
 	}

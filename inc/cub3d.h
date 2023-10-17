@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 00:36:10 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:13:36 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
+# define MINIMAP_WIDTH 500
+# define MINIMAP_HEIGHT 500
 
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)

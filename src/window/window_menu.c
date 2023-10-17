@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:24:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/16 20:48:49 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:40:54 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	tile_size(void)
 {
-	if (WIDTH / cub()->map->map_width < HEIGHT / cub()->map->map_height)
-		cub()->window.tile_size = WIDTH / cub()->map->map_width;
+	if (MINIMAP_WIDTH / cub()->map->map_width < MINIMAP_HEIGHT / cub()->map->map_height)
+		cub()->window.tile_size = MINIMAP_WIDTH / cub()->map->map_width;
 	else
-		cub()->window.tile_size = HEIGHT / cub()->map->map_height;
+		cub()->window.tile_size = MINIMAP_HEIGHT / cub()->map->map_height;
 	cub()->player.x *= cub()->window.tile_size;
 	cub()->player.y *= cub()->window.tile_size;
 	cub()->player.x += cub()->window.tile_size;

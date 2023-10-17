@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/16 22:30:13 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:09:20 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 bool	colision(int x, int y)
 {
-	// printf("%i, %i\n",x, y);
-	if (x >= WIDTH || y >= HEIGHT || x < 1 || y < 1)
-		return false;
-	return (cub()->map->map[y][x] == '1');
+	printf("x: %d, y: %d\n", x, y);
+	printf("map: %c\n", cub()->map->map[y + 1][x + 1]);
+	return (cub()->map->map[y + 1][x + 1] == '1');
 }
 
 void	movement(void)

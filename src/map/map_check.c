@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/16 14:50:02 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:12:04 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	map_invalid_char(t_map *map)
 			{
 				if (++k == 2)
 					return (err("Multiple starting positions", map));
-				map->start_x = j;
-				map->start_y = i;
+				map->start_x = j - 1;
+				map->start_y = i - 1;
 			}
 		}
 	}

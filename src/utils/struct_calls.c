@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 11:20:08 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:23:22 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	collision(int x, int y)
 
 void	movement(void)
 {
-	if (cub()->player.w && !colision(((int)cub()->player.x
+	if (cub()->player.w && !collision(((int)cub()->player.x
 				+ cub()->player.delta_x) / cub()->window.tile_size,
 			(int)(cub()->player.y + cub()->player.delta_y)
 			/ cub()->window.tile_size))
@@ -29,11 +29,11 @@ void	movement(void)
 		cub()->player.x += cub()->player.delta_x;
 		cub()->player.y += cub()->player.delta_y;
 	}
-	if (cub()->player.a && !colision((int)(cub()->player.x - 5)
+	if (cub()->player.a && !collision((int)(cub()->player.x - 5)
 			/ cub()->window.tile_size, (int)cub()->player.y
 			/ cub()->window.tile_size))
 		cub()->player.x -= 5;
-	if (cub()->player.s && !colision(((int)cub()->player.x
+	if (cub()->player.s && !collision(((int)cub()->player.x
 				- cub()->player.delta_x) / cub()->window.tile_size,
 			(int)(cub()->player.y - cub()->player.delta_y)
 			/ cub()->window.tile_size))
@@ -41,7 +41,7 @@ void	movement(void)
 		cub()->player.x -= cub()->player.delta_x;
 		cub()->player.y -= cub()->player.delta_y;
 	}
-	if (cub()->player.d && !colision((int)(cub()->player.x + 5)
+	if (cub()->player.d && !collision((int)(cub()->player.x + 5)
 			/ cub()->window.tile_size, (int)cub()->player.y
 			/ cub()->window.tile_size))
 		cub()->player.x += 5;

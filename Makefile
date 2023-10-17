@@ -68,7 +68,7 @@ $(MINILIBX):
 	@make -sC $(MINILIBX_PATH)
 
 $(NAME): $(MINILIBX) $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -L$(MINILIBX_PATH) -lmlx -L/usr/X11/lib -lX11 -lXext
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -L$(MINILIBX_PATH) -lmlx -L/usr/X11/lib -lX11 -lXext -lm
 	@printf  "\n$(EMOJI_PACKAGE)	$(WHITE)$(NAME)			$(YELLOW)compiled$(WHITE)\n"
 
 clean:

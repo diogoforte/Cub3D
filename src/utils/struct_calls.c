@@ -6,13 +6,13 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 10:09:20 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:20:08 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	colision(int x, int y)
+bool	collision(int x, int y)
 {
 	printf("x: %d, y: %d\n", x, y);
 	printf("map: %c\n", cub()->map->map[y + 1][x + 1]);
@@ -21,22 +21,52 @@ bool	colision(int x, int y)
 
 void	movement(void)
 {
-	if (cub()->player.w && !colision((int)cub()->player.x / cub()->window.tile_size , (int)(cub()->player.y - 5) / cub()->window.tile_size))
-		cub()->player.y -= 5;
-	if (cub()->player.a && !colision((int)(cub()->player.x - 5) / cub()->window.tile_size, (int)cub()->player.y / cub()->window.tile_size))
+	if (cub()->player.w && !colision(((int)cub()->player.x
+				+ cub()->player.delta_x) / cub()->window.tile_size,
+			(int)(cub()->player.y + cub()->player.delta_y)
+			/ cub()->window.tile_size))
+	{
+		cub()->player.x += cub()->player.delta_x;
+		cub()->player.y += cub()->player.delta_y;
+	}
+	if (cub()->player.a && !colision((int)(cub()->player.x - 5)
+			/ cub()->window.tile_size, (int)cub()->player.y
+			/ cub()->window.tile_size))
 		cub()->player.x -= 5;
-	if (cub()->player.s && !colision((int)cub()->player.x / cub()->window.tile_size, (int)(cub()->player.y + 5) / cub()->window.tile_size))
-		cub()->player.y += 5;
-	if (cub()->player.d && !colision((int)(cub()->player.x + 5) / cub()->window.tile_size, (int)cub()->player.y / cub()->window.tile_size))
+	if (cub()->player.s && !colision(((int)cub()->player.x
+				- cub()->player.delta_x) / cub()->window.tile_size,
+			(int)(cub()->player.y - cub()->player.delta_y)
+			/ cub()->window.tile_size))
+	{
+		cub()->player.x -= cub()->player.delta_x;
+		cub()->player.y -= cub()->player.delta_y;
+	}
+	if (cub()->player.d && !colision((int)(cub()->player.x + 5)
+			/ cub()->window.tile_size, (int)cub()->player.y
+			/ cub()->window.tile_size))
 		cub()->player.x += 5;
+	if (cub()->player.q)
+	{
+		cub()->player.angle -= 0.1;
+		if (cub()->player.angle < 0)
+			cub()->player.angle += 2 * PI;
+		cub()->player.delta_x = cos(cub()->player.angle) * 5;
+		cub()->player.delta_y = sin(cub()->player.angle) * 5;
+	}
+	if (cub()->player.e)
+	{
+		cub()->player.angle += 0.1;
+		if (cub()->player.angle > 2 * PI)
+			cub()->player.angle -= 2 * PI;
+		cub()->player.delta_x = cos(cub()->player.angle) * 5;
+		cub()->player.delta_y = sin(cub()->player.angle) * 5;
+	}
 }
 
-int draw_game(void)
+int	draw_game(void)
 {
 	cub()->move();
 	cub()->draw();
-	
-	
 	return (0);
 }
 

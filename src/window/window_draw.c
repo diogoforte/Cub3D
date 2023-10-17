@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:25:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/17 10:13:55 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:16:14 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,65 @@ void	buffer_mlx_pixel_put(int x, int y, int color)
 {
 	char	*dst;
 
-	if (x >= WIDTH || y >= HEIGHT)
+	if (x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
 		return ;
 	dst = cub()->window.img.addr + (y * cub()->window.img.line_length + x
 		* (cub()->window.img.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
+void	draw_line(int x0, int y0, int x1, int y1, int color)
+{
+    float	dx;
+    float	dy;
+    float	steps;
+    float	x;
+    float	y;
+    int		i;
+
+    dx = x1 - x0;
+    dy = y1 - y0;
+    steps = fmaxf(fabsf(dx), fabsf(dy));
+    dx /= steps;
+    dy /= steps;
+    x = x0;
+    y = y0;
+    i = 0;
+    while (i++ < steps)
+    {
+        buffer_mlx_pixel_put((int)x, (int)y, color);
+        x += dx;
+        y += dy;
+    }
+    buffer_mlx_pixel_put(x1, y1, color);
+}
+
 void	draw_player(void)
 {
-	int	i;
-	int	j;
-	int	radius;
-	int	center_x;
-	int	center_y;
+    int	i;
+    int	j;
+    int	radius;
+    int	center_x;
+    int	center_y;
+    int	dir_x;
+    int	dir_y;
 
-	radius = cub()->window.tile_size / 3;
-	center_x = cub()->player.x + cub()->window.tile_size / 100;
-	center_y = cub()->player.y + cub()->window.tile_size / 100;
-	i = -radius;
-	while (++i < radius)
-	{
-		j = -radius;
-		while (++j < radius)
-		{
-			if (i * i + j * j <= radius * radius)
-				buffer_mlx_pixel_put(center_x + i, center_y + j, 0xFF0000);
-		}
-	}
+    radius = cub()->window.tile_size / 3;
+    center_x = cub()->player.x + cub()->window.tile_size / 100;
+    center_y = cub()->player.y + cub()->window.tile_size / 100;
+    dir_x = center_x + cub()->player.delta_x * radius;
+    dir_y = center_y + cub()->player.delta_y * radius;
+    i = -radius;
+    while (++i < radius)
+    {
+        j = -radius;
+        while (++j < radius)
+        {
+            if (i * i + j * j <= radius * radius)
+                buffer_mlx_pixel_put(center_x + i, center_y + j, 0xFF0000);
+        }
+    }
+    draw_line(center_x, center_y, dir_x, dir_y, 0xFF0000);
 }
 
 void	draw_map(void)

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 10:13:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:47:18 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,20 @@
 # include <stdio.h>
 # include <unistd.h>
 
+# define THERE write(1, "THERE\n", 6)
+# define HERE write(1, "HERE\n", 6)
+
 # define WIDTH 1920
 # define HEIGHT 1080
 # define MINIMAP_WIDTH 500
 # define MINIMAP_HEIGHT 500
 
-# define THERE write(1, "THERE\n", 6)
-# define HERE write(1, "HERE\n", 6)
+# define SPACERS " \t\n\v\f\r"
+# define OUTLINE -1
+# define PLAYER_START "NSEW"
+# define VALID_CHARS "01NSEW_ "
+# define EMPTY '0'
+# define WALL '1'
 
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2
@@ -36,15 +43,12 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define KEY_Q 113
+# define KEY_E 101
 # define KEY_F1 65470
 # define EVENT_CLOSE_BTN 17
 
-# define SPACERS " \t\n\v\f\r"
-# define OUTLINE -1
-# define PLAYER_START "NSEW"
-# define VALID_CHARS "01NSEW_ "
-# define EMPTY '0'
-# define WALL '1'
+# define PI 3.14159265359
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
@@ -95,12 +99,15 @@ struct s_player
 {
 	float		x;
 	float		y;
-	float		dir_x;
-	float		dir_y;
+	float		delta_x;
+	float		delta_y;
+	float		angle;
 	bool	w;
 	bool	a;
 	bool	s;
 	bool	d;
+	bool	q;
+	bool	e;
 };
 
 struct s_cub

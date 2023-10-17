@@ -42,6 +42,7 @@ SRC = $(addprefix $(SRC_PATH), \
 		window/key_hook.c \
 		window/window_draw.c \
 		window/window_menu.c \
+		movement/movement.c \
 )
 
 $(OBJ): $(OBJ_PATH)
@@ -60,6 +61,7 @@ $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)/map
 	@mkdir -p $(OBJ_PATH)/utils
 	@mkdir -p $(OBJ_PATH)/window
+	@mkdir -p $(OBJ_PATH)/movement
 
 $(LIBFT):
 	@make -sC $(LIBFT_PATH)

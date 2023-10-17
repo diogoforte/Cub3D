@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:24:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/17 09:40:54 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:10:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ static void	tile_size(void)
 	cub()->player.y *= cub()->window.tile_size;
 	cub()->player.x += cub()->window.tile_size;
 	cub()->player.y += cub()->window.tile_size;
+}
+
+void start_angle(void)
+{
+	if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'N')
+		cub()->player.angle = 3 * PI / 2;
+	else if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'S')
+		cub()->player.angle = PI / 2;
+	else if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'W')
+		cub()->player.angle = PI;
+	else if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'E')
+		cub()->player.angle = 0;
+	cub()->player.delta_x = cos(cub()->player.angle) * 5;
+	cub()->player.delta_y = sin(cub()->player.angle) * 5;
 }
 
 int	mouse_press(int button, int x, int y)
@@ -42,6 +56,7 @@ int	mouse_press(int button, int x, int y)
 				cub()->player.x = cub()->map->start_x;
 				cub()->player.y = cub()->map->start_y;
 				tile_size();
+				start_angle();
 				cub()->draw = draw_map;
 				return (0);
 			}
@@ -63,6 +78,7 @@ void	draw_menu(void)
 	{
 		cub()->map = cub()->maps;
 		tile_size();
+		start_angle();
 		cub()->draw = draw_map;
 		return ;
 	}

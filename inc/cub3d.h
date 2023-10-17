@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 10:47:18 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:43:08 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 # define VALID_CHARS "01NSEW_ "
 # define EMPTY '0'
 # define WALL '1'
+# define W 1
+# define S -1
+# define A 1
+# define D -1
+# define E 1
+# define Q -1
 
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2

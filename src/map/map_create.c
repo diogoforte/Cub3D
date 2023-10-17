@@ -6,16 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 11:48:43 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:26:33 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	map_add_list(char *file_path)
-{
-	map_add_back(&cub()->maps, map_new(file_path));
-}
 
 t_map	*map_new(char *file_path)
 {
@@ -39,7 +34,7 @@ t_map	*map_new(char *file_path)
 	map->destroy_error = map_destroy_error;
 	map->destroy_cords = map_destroy_cords;
 	map_check(map);
-	map_print(map);
+	// map_print(map);
 	return (map);
 }
 
@@ -78,8 +73,5 @@ void	map_extract_file(t_map *map, char *file_path)
 void	map_load(char **argv)
 {
 	while (++argv && *argv)
-	{
-		printf("\nLoading map: %s\n", *argv);
-		map_add_list(*argv);
-	}
+		map_add_back(&cub()->maps, map_new(*argv));
 }

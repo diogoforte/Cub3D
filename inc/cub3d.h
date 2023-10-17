@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 14:30:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:27:07 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ struct s_window
 	void	*win;
 	float	tile_size;
 	t_image	img;
+	double	fps;
 };
 
 struct s_player
@@ -121,7 +122,6 @@ struct s_cub
 	t_map 		*map;
 	t_map		*maps;
 	int			status;
-	void		(*map_add_list)(char *file_path);
 	void		(*map_load)(char **av);
 	int		(*exit)(char *str);
 	void		(*maps_destroy)();
@@ -136,7 +136,6 @@ struct s_cub
 
 t_cub	*cub(void);
 t_map	*map_new(char *file_path);
-void	map_add_list(char *file_path);
 void	map_extract_file(t_map *map, char *file_path);
 int		err(char *str, t_map *map);
 void	print_matrix(char **matrix);

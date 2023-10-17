@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 12:43:08 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:30:46 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,5 +165,6 @@ void	draw_map(void);
 void	draw_menu(void);
 int 	draw_game(void);
 void	movement(void);
+int		mouse_press(int button, int x, int y);
 
 #endif

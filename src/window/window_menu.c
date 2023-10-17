@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:24:00 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/17 12:10:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:29:10 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	tile_size(void)
 void start_angle(void)
 {
 	if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'N')
-		cub()->player.angle = 3 * PI / 2;
+		cub()->player.angle = 1.5 * PI;
 	else if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'S')
-		cub()->player.angle = PI / 2;
+		cub()->player.angle = 0.5 * PI;
 	else if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'W')
 		cub()->player.angle = PI;
 	else if (cub()->map->map[cub()->map->start_y + 2][cub()->map->start_x + 2] == 'E')

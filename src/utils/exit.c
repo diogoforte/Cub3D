@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/16 12:13:15 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 14:43:37 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ int	err(char *str, t_map *map)
 int	exit_cub(char *str)
 {
 	cub()->maps_destroy();
+	if (cub()->window.win)
+		mlx_destroy_window(cub()->window.mlx, cub()->window.win);
+	if (cub()->window.img.img)
+		mlx_destroy_image(cub()->window.mlx, cub()->window.img.img);
+	if (cub()->window.mlx)
+	{
+		mlx_destroy_display(cub()->window.mlx);
+		free(cub()->window.mlx);
+	}
 	if (str)
 		exit(err(str, NULL));
 	else
@@ -38,7 +47,7 @@ void	maps_destroy(void)
 {
 	t_map	*tmp;
 	t_map	*map;
-	
+
 	map = cub()->maps;
 	while (map)
 	{

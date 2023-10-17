@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/17 12:44:54 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:44:51 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static void	move(int key)
 
 	x = cub()->player.x + key * cub()->player.delta_x;
 	y = cub()->player.y + key * cub()->player.delta_y;
-	if (!collision((int)x / cub()->window.tile_size, (int)y
+	if (!collision((int)x / cub()->window.tile_size, (int)cub()->player.y
 			/ cub()->window.tile_size))
-	{
 		cub()->player.x = x;
+	if (!collision((int)cub()->player.x / cub()->window.tile_size, (int)y
+			/ cub()->window.tile_size))
 		cub()->player.y = y;
-	}
 }
 
 static void	strafe(int key)
@@ -39,12 +39,10 @@ static void	strafe(int key)
 
 	x = (cub()->player.x + key * cos(cub()->player.angle - (PI / 2)) * 5);
 	y = (cub()->player.y + key * sin(cub()->player.angle - (PI / 2)) * 5);
-	if (!collision((int)x / cub()->window.tile_size, (int)y
-			/ cub()->window.tile_size))
-	{
+	if (!collision((x / cub()->window.tile_size), cub()->player.y / cub()->window.tile_size))
 		cub()->player.x = x;
+	if (!collision((cub()->player.x / cub()->window.tile_size), y / cub()->window.tile_size))
 		cub()->player.y = y;
-	}
 }
 
 static void	rotate(int key)

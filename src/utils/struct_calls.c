@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 15:27:10 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:44:00 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	fps(void)
 	static clock_t	prev_time;
 	clock_t			curr_time;
 	double			frame_time;
+	char			tmp[12];
 
 	curr_time = clock();
 	frame_time = (double)(curr_time - prev_time) / CLOCKS_PER_SEC;
@@ -26,7 +27,7 @@ void	fps(void)
 	mlx_string_put(cub()->window.mlx, cub()->window.win, 1860, 10, 0xFFFFFF,
 		"fps");
 	mlx_string_put(cub()->window.mlx, cub()->window.win, 1880, 10, 0xFFFFFF,
-		ft_itoa((int)cub()->window.fps));
+		ft_itoa_address(tmp, (int)cub()->window.fps));
 	mlx_string_put(cub()->window.mlx, cub()->window.win, 10, 1070, 0xFFFFFF,
 		"@diogoforte & @chaleira");
 }

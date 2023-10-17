@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 23:37:36 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/08 01:25:12 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:34:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ void				ft_matrixadd_back(char ***matrix, char *str);
 char				*ft_strjoin_address(char **original, char *add);
 int					ft_charcount(char *str, char c);
 void				ft_matrixadd_front(char ***matrix, char *str);
+char				*ft_itoa_address(char  *str, int n);
 
 #endif

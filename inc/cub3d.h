@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 19:45:18 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/18 23:54:20 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,14 @@ struct s_player
 	float		delta_x;
 	float		delta_y;
 	float		angle;
-	bool	w;
-	bool	a;
-	bool	s;
-	bool	d;
-	bool	q;
-	bool	e;
+	int			mouse_x;
+	int	 		mouse_y;
+	bool		w;
+	bool		a;
+	bool		s;
+	bool		d;
+	bool		q;
+	bool		e;
 };
 
 struct s_cub
@@ -165,5 +167,9 @@ void	draw_menu(void);
 int 	draw_game(void);
 void	movement(void);
 int		mouse_press(int button, int x, int y);
+
+void raycast(void);
+void pressed(int keycode);
+void released(int keycode);
 
 #endif

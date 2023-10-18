@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_calls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/17 17:44:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/10/18 23:51:37 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	fps(void)
 	frame_time = (double)(curr_time - prev_time) / CLOCKS_PER_SEC;
 	prev_time = curr_time;
 	cub()->window.fps = 1.0 / frame_time;
-	mlx_string_put(cub()->window.mlx, cub()->window.win, 1860, 10, 0xFFFFFF,
-		"fps");
-	mlx_string_put(cub()->window.mlx, cub()->window.win, 1880, 10, 0xFFFFFF,
+	// mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - (WIDTH / cub()->window.tile_size) - 10, 10, 0xFFFFFF,
+	// 	"fps");
+	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - (WIDTH / cub()->window.tile_size), 10, 0xFFFFFF,
 		ft_itoa_address(tmp, (int)cub()->window.fps));
 	mlx_string_put(cub()->window.mlx, cub()->window.win, 10, 1070, 0xFFFFFF,
 		"@diogoforte & @chaleira");
@@ -34,8 +34,8 @@ void	fps(void)
 
 int	draw_game(void)
 {
-	cub()->move();
 	cub()->draw();
+	// raycast();
 	fps();
 	return (0);
 }

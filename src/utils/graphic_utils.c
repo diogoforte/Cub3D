@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:30:42 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/21 10:31:01 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/21 22:24:35 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	buffer_mlx_pixel_put(int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line(float x0, float y0, float angle, int lenght, int color)
+void	draw_line(double x0, double y0, double angle, int lenght, int color)
 {
-	float	angle_x;
-	float	angle_y;
+	double	angle_x;
+	double	angle_y;
 	int		i;
 
-	angle_x = cos(angle);
-	angle_y = sin(angle);
+	angle_x = (double)cos(angle);
+	angle_y = (double)sin(angle);
 	i = 0;
     while (i <= lenght)
     {

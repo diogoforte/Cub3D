@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/21 11:15:32 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/21 22:24:56 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ struct s_window
 
 struct s_player
 {
-	float		x;
-	float		y;
-	float		delta_x;
-	float		delta_y;
-	float		angle;
+	double		x;
+	double		y;
+	double		delta_x;
+	double		delta_y;
+	double		angle;
 	int			mouse_x;
 	int	 		mouse_y;
 	bool		w;
@@ -176,6 +176,6 @@ void released(int keycode);
 
 
 void	buffer_mlx_pixel_put(int x, int y, int color);
-void	draw_line(float x0, float y0, float angle, int lenght, int color);
+void	draw_line(double x0, double y0, double angle, int lenght, int color);
 
 #endif

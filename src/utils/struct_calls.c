@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_calls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/18 23:51:37 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/21 11:10:19 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	fps(void)
 int	draw_game(void)
 {
 	cub()->draw();
-	// raycast();
 	fps();
 	return (0);
 }

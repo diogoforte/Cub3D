@@ -43,6 +43,7 @@ SRC = $(addprefix $(SRC_PATH), \
 		window/window_draw.c \
 		window/window_menu.c \
 		movement/movement.c \
+		utils/graphic_utils.c \
 )
 
 $(OBJ): $(OBJ_PATH)
@@ -86,13 +87,17 @@ fclean: clean
 
 re: fclean all
 
-run: all
-	@./$(NAME)
+run: clean_exe all
+	@./$(NAME) maps/*
 
 v: all
 	@valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) $(ARGS)
 
 v2: all
 	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(ARGS2)
+
+clean_exe:
+	@rm -rf $(OBJ_PATH)
+	@rm -fr $(NAME)
 
 .PHONY: all re clean fclean run

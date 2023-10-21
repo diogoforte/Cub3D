@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/18 23:54:20 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/21 11:15:32 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1080
+# define HEIGHT 720
 # define MINIMAP_WIDTH 500
 # define MINIMAP_HEIGHT 500
+# define FOV (PI / 3)
 
 # define SPACERS " \t\n\v\f\r"
 # define OUTLINE -1
@@ -61,6 +62,7 @@ typedef struct s_cub 		t_cub;
 typedef struct s_window 	t_window;
 typedef struct s_player 	t_player;
 typedef struct s_image 		t_image;
+typedef void 				(*array_func)();
 
 struct s_map
 {
@@ -130,7 +132,7 @@ struct s_cub
 	t_map		*(*map_new)(char *file_path);
 	void		(*map_extract_data)(t_map *map);
 	void		(*draw)();
-	void		(*move)();	
+	void		(*move)();
 	t_window	window;
 	t_player	player;
 
@@ -171,5 +173,9 @@ int		mouse_press(int button, int x, int y);
 void raycast(void);
 void pressed(int keycode);
 void released(int keycode);
+
+
+void	buffer_mlx_pixel_put(int x, int y, int color);
+void	draw_line(float x0, float y0, float angle, int lenght, int color);
 
 #endif

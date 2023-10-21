@@ -6,7 +6,7 @@
 /*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/21 11:18:50 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/10/21 22:14:18 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	move(int key)
 	float	x;
 	float	y;
 
-	x = cub()->player.x + key * cub()->player.delta_x * 0.8;
-	y = cub()->player.y + key * cub()->player.delta_y * 0.8;
+	x = cub()->player.x + key * cub()->player.delta_x;
+	y = cub()->player.y + key * cub()->player.delta_y;
 	if (!collision((int)x / cub()->window.tile_size, (int)cub()->player.y
 			/ cub()->window.tile_size))
 		cub()->player.x = x;
@@ -47,7 +47,7 @@ static void	strafe(int key)
 
 static void	rotate(int key)
 {
-	cub()->player.angle += key * 0.05;
+	cub()->player.angle += key * 0.1;
 	if (cub()->player.angle < 0)
 		cub()->player.angle += 2 * PI;
 	if (cub()->player.angle > 2 * PI)

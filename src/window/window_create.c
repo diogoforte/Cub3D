@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 00:09:49 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/10/18 23:28:09 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/10/21 11:10:40 by chaleira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ void	window_create(void)
 		&(cub()->window.img.endian));
 	mlx_hook(cub()->window.win, EVENT_CLOSE_BTN, 0, cub()->exit, NULL);
 	mlx_mouse_hook(cub()->window.win, mouse_press, NULL);
-	mlx_hook(cub()->window.win, 2, 1L << 0, key_press, NULL);
-	mlx_hook(cub()->window.win, 3, 1L << 1, key_release, NULL);
-	// mlx_mouse_move(cub()->window.mlx, cub()->window.win, WIDTH / 2, HEIGHT / 2);
 	mlx_loop_hook(cub()->window.mlx, draw_game, NULL);
+	mlx_hook(cub()->window.win, 2, 1L << 0, (void *)key_press, NULL);
+	mlx_hook(cub()->window.win, 3, 1L << 1, (void *)key_release, NULL);
 	mlx_loop(cub()->window.mlx);
 }

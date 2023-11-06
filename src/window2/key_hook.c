@@ -5,19 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 13:58:16 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/11/02 13:58:36 by plopes-c         ###   ########.fr       */
+/*   Created: 2023/10/16 14:25:58 by dinunes-          #+#    #+#             */
+/*   Updated: 2023/11/02 13:51:12 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "cub3d.h"
 
 int	key_press(int keycode)
 {
-	if (!cub()->map)
-		return (0);
 	if (keycode == KEY_ESC)
 		cub()->exit(NULL);
+	// if (keycode == KEY_F1)
+	// {
+	// 	cub()->map = NULL;
+	// 	cub()->draw = draw_menu;
+	// }
+	if (!cub()->map)
+		return (0);
 	if (keycode == KEY_W)
 		cub()->player.w = true;
 	else if (keycode == KEY_A)

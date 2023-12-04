@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 14:14:20 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/11/02 21:40:56 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:04:54 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 int draw_collum(double lenght, int color)
 {
 	static int j;
-	// double lineH;
 
-	int lineH = (double)(HEIGHT / lenght);
+	double lineH = (double)(HEIGHT / lenght);
 	if (lineH > HEIGHT)
 		lineH = HEIGHT;
 	draw_line(j, 0, (PI / 2), (HEIGHT / 2 - lineH / 2), 0x001489);
@@ -30,66 +29,38 @@ int draw_collum(double lenght, int color)
 	return (0);
 }
 
-// double raycast(double pos[2], double vector[2])
-// {
-// 	int hit = 0;
-// 	double increment[2];
-// 	double	dist;
-	
-// 	dist = (((vector[X] > 0) * SCALE) + pos[X]) - pos[X];
-// 	pos[X] += dist - ((vector[X] > 0) * 0.0000001);
-// 	pos[Y] += vector[Y] / vector[X] * dist;
-// 	increment[X] = SCALE;
-// 	increment[Y] = vector[Y] / vector[X] * increment[X];
-// 	printf("pos[X]: %f\n", pos[X]);
-// 	printf("pos[Y]: %f\n", pos[Y]);
-// 	while (!hit)
-// 	{
-// 		// printf("vector[X]: %f\n", vector[X]);
-// 		// printf("vector[Y]: %f\n", vector[Y]);
-// 		// printf("increment[X]: %f\n", increment[X]);
-// 		// printf("increment[Y]: %f\n", increment[Y]);
-// 		// printf("real pos[X]: %f\n", pos[X] / SCALE);
-// 		// printf("real pos[Y]: %f\n", pos[Y] / SCALE);
-// 		pos[X] += increment[X];
-// 		if (cub()->map->map[(int)(pos[Y] / SCALE)][(int)(pos[X] / SCALE)] == '1')
-// 		{
-// 			hit = 1;
-// 			break;
-// 		}
-// 		pos[Y] += increment[Y];
-// 		if (cub()->map->map[(int)(pos[Y] / SCALE)][(int)(pos[X] / SCALE)] == '1')
-// 			hit = 1;
-// 	}
-// 	return ((pos[X] - cub()->player.pos[X]));
-// }
-
 void set_dist_to_side(double vector[2])
 {
 	if (vector[X] < 0)
 	{
 		ray()->step[X] = -1;
+		ray()->prep_hit_dist[X] = cub()->player.pos[X] - (int)(cub()->player.map_pos[X] * SCALE);
 		ray()->first_hit[X] = -(cub()->player.pos[X] - (int)cub()->player.pos[X]);
 		ray()->dist_to_side[X] = ((cub()->player.map_pos[X]) - ray()->map_pos[X]) * ray()->dist_between[X];
 	}
 	else
 	{
 		ray()->step[X] = 1;
+		ray()->prep_hit_dist[X] = (int)((cub()->player.map_pos[X] + 1) * SCALE) + cub()->player.pos[X];
 		ray()->first_hit[X] = (cub()->player.pos[X] - (int)cub()->player.pos[X]);
 		ray()->dist_to_side[X] = (ray()->map_pos[X] + 1.0 - (cub()->player.map_pos[X])) * ray()->dist_between[X];
 	}
 	if (vector[Y] < 0)
 	{
 		ray()->step[Y] = -1;
+		ray()->prep_hit_dist[Y] = cub()->player.pos[Y] - (int)(cub()->player.map_pos[Y] * SCALE);
 		ray()->first_hit[Y] = -(cub()->player.pos[Y] - (int)cub()->player.pos[Y]);
 		ray()->dist_to_side[Y] = ((cub()->player.map_pos[Y]) - ray()->map_pos[Y]) * ray()->dist_between[Y];
 	}
 	else
 	{
 		ray()->step[Y] = 1;
+		ray()->prep_hit_dist[Y] = (int)((cub()->player.map_pos[Y] + 1) * SCALE) - cub()->player.pos[Y];
 		ray()->first_hit[Y] = (cub()->player.pos[Y] - (int)cub()->player.pos[Y]);
 		ray()->dist_to_side[Y] = (ray()->map_pos[Y] + 1.0 - (cub()->player.map_pos[Y])) * ray()->dist_between[Y];
 	}
+	printf("ray()->prep_hit_dist[X]: %f\n", ray()->prep_hit_dist[X]);
+	printf("ray()->prep_hit_dist[Y]: %f\n", ray()->prep_hit_dist[Y]);
 }
 
 void set_dist_between(double vector[2])
@@ -128,8 +99,8 @@ double	raycast(double vector[2])
 		ray()->wall_hit = (cub()->map->map[ray()->map_pos[Y] + 1][ray()->map_pos[X] + 1] == '1');
 	}
 	if (ray()->side == 0x00d4ff)
-		ray()->distance = (ray()->dist_to_side[X] - ray()->dist_between[X]);
+		ray()->distance = (ray()->dist_to_side[X] - ray()->dist_between[X]) + ray()->prep_hit_dist[X];
 	else
-		ray()->distance = (ray()->dist_to_side[Y] - ray()->dist_between[Y]);
+		ray()->distance = (ray()->dist_to_side[Y] - ray()->dist_between[Y]) + ray()->prep_hit_dist[Y];
 	return (ray()->distance);
 }

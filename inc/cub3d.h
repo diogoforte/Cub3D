@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/11/02 21:42:00 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:47:35 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 
 # define PI 3.14159265359
 
-# define SCALE 100
+# define SCALE 50
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
@@ -119,6 +119,7 @@ struct s_ray
 	double		distance;
 	int			color;
 	double		first_hit[2];
+	double		prep_hit_dist[2];
 	double 		dist_to_side[2];
 	double		dist_between[2];
 	int 		map_pos[2];

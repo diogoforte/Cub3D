@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:04 by chaleira          #+#    #+#             */
-/*   Updated: 2023/11/02 11:53:44 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:26:29 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void print_maps(void)
 		printf("map_height: %d\n", tmp_map->map_height);
 		printf("start_x: %d\n", tmp_map->start_x);
 		printf("start_y: %d\n", tmp_map->start_y);
+		printf("start_dir: %c\n", tmp_map->start_dir);
 		printf("\n");
 		tmp_map = tmp_map->next;
 	}

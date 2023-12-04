@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/11/02 14:57:19 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:29:05 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	move(int key)
 	float	x;
 	float	y;
 
-	x = cub()->player.pos[X] + key * (cub()->player.vector[X]);
-	y = cub()->player.pos[Y] + key * (cub()->player.vector[Y]);
+	x = cub()->player.pos[X] + key * (cub()->player.vector[X]) * 2;
+	y = cub()->player.pos[Y] + key * (cub()->player.vector[Y]) * 2;
 	if (!collision((int)x / SCALE, (int)cub()->player.pos[Y]
 			/ SCALE))
 		cub()->player.pos[X] = x;
@@ -39,8 +39,8 @@ static void	strafe(int key)
 	float	x;
 	float	y;
 
-	x = cub()->player.pos[X] + key * (cos(cub()->player.angle - (PI / 2)));
-	y = cub()->player.pos[Y] + key * (sin(cub()->player.angle - (PI / 2)));
+	x = cub()->player.pos[X] + key * (cos(cub()->player.angle - (PI / 2))) * 2;
+	y = cub()->player.pos[Y] + key * (sin(cub()->player.angle - (PI / 2))) * 2;
 	if (!collision((x / SCALE), cub()->player.pos[Y] / SCALE))
 		cub()->player.pos[X] = x;
 	if (!collision((cub()->player.pos[X] / SCALE), y / SCALE))

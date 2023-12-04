@@ -38,12 +38,13 @@ SRC = $(addprefix $(SRC_PATH), \
 		utils/struct_calls.c \
 		utils/exit.c \
 		utils/utils.c \
-		window/key_hook.c \
-		window/window_prepare.c \
-		window/window.c \
 		movement/movement.c \
 		utils/graphic_utils.c \
-		window/raycast.c \
+		window/window.c \
+		window/render.c \
+		window/draw.c \
+		movement/key_hook.c \
+		raycast/raycast.c \
 )
 
 $(OBJ): $(OBJ_PATH)
@@ -63,6 +64,7 @@ $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)/utils
 	@mkdir -p $(OBJ_PATH)/window
 	@mkdir -p $(OBJ_PATH)/movement
+	@mkdir -p $(OBJ_PATH)/raycast
 
 $(LIBFT):
 	@make -sC $(LIBFT_PATH)
@@ -88,7 +90,7 @@ fclean: clean
 re: fclean all
 
 run: clean_exe all
-	@./$(NAME) maps/*
+	@./$(NAME) maps/test1.cub
 
 v: all
 	@valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) $(ARGS)

@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/11/02 11:14:36 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:36:18 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	map_invalid_char(t_map *map)
 			{
 				if (++k == 2)
 					return (err("Multiple starting positions", map));
+				map->start_dir = map->map[i][j];
 				map->start_x = j - 1;
 				map->start_y = i - 1;
 			}

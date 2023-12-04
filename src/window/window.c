@@ -5,71 +5,72 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 13:56:09 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/11/02 21:39:19 by plopes-c         ###   ########.fr       */
+/*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
+/*   Updated: 2023/12/04 15:22:05 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "cub3d.h"
 
-void get_vector(double angle)
+static void	tile_size(void)
 {
-	cub()->player.ray.vector[X] = cos(cub()->player.angle + angle);
-	cub()->player.ray.vector[Y] = sin(cub()->player.angle + angle);
-}
-
-void draw_fov(void)
-{
-	draw_line((stoi(cub()->player.pos[X]) + 1) * cub()->window.minimap_scale + 1, (stoi(cub()->player.pos[Y]) + 1) * cub()->window.minimap_scale + 1, cub()->player.angle - (FOV / 2), 100, 0xFF0000);
-	draw_line((stoi(cub()->player.pos[X]) + 1) * cub()->window.minimap_scale + 1, (stoi(cub()->player.pos[Y]) + 1) * cub()->window.minimap_scale + 1, cub()->player.angle + (FOV / 2), 100, 0xFF0000);
-}
-
-void draw_screen(void)
-{
-	double pov = -(FOV / 2);
-	double increment = FOV / WIDTH;
-	double dist;
-
-	while (pov <= FOV / 2)
+	if (cub()->map->map_width < cub()->map->map_height)
 	{
-		get_vector(pov);
-		dist = raycast((double[]){cub()->player.ray.vector[X], cub()->player.ray.vector[Y]});
-		draw_collum(dist * cos(pov), ray()->side);
-		pov += increment;
+		window()->tile_size = MINIMAP_WIDTH / cub()->map->map_width;
+		window()->tile_size = WIDTH / window()->tile_size;
 	}
-	// (void)dist;
-}
-
-void draw_minimap(void)
-{
-	int i;
-	int j;
-	int scale;
-
-	if (HEIGHT > WIDTH)
-		scale = WIDTH / 50;
 	else
-		scale = HEIGHT / 50;
-	cub()->window.minimap_scale = scale;
-	i = 0;
-	while (i < cub()->map->map_height)
 	{
-		j = 0;
-		while (j < cub()->map->map_width)
-		{
-			if (cub()->map->map[i][j] == '1')
-				draw_square(j * scale - 1, i * scale - 1, scale, scale, 0xFFFFFF);
-			else
-				draw_square(j * scale - 1, i * scale - 1, scale, scale, 0x000000);
-			draw_line(j * scale, i * scale, 0, scale, 0x555555);
-			j++;
-		}
-		draw_line(j * scale, i * scale, (PI / 2), scale, 0x555555);
-		i++;
+		window()->tile_size = MINIMAP_HEIGHT / cub()->map->map_height;
+		window()->tile_size = HEIGHT / window()->tile_size;
 	}
-	draw_point(((cub()->player.pos[X] / SCALE) + 1) * scale, ((cub()->player.pos[Y] / SCALE) + 1) * scale, 2, 0xFF0000);
-	// draw_fov();
-	double dist = raycast((double[]){cub()->player.vector[X], cub()->player.vector[Y]});
-	draw_line(((cub()->player.pos[X] / SCALE) + 1) * scale, ((cub()->player.pos[Y] / SCALE) + 1) * scale, cub()->player.angle, dist * scale, 0xFF0000);
+	window()->tile_size = 50;
+}
+
+void player_dir(void)
+{
+	if (cub()->map->start_dir == 'N')
+		player()->angle = 3 * PI / 2;
+	else if (cub()->map->start_dir == 'S')
+		player()->angle = PI / 2;
+	else if (cub()->map->start_dir == 'E')
+		player()->angle = 0;
+	else if (cub()->map->start_dir == 'W')
+		player()->angle = PI;
+}
+
+void player_prepare(void)
+{
+	player()->map_pos[X] = cub()->map->start_x;
+	player()->map_pos[Y] = cub()->map->start_y;
+	player()->pos[X] = itos(player()->map_pos[X]);
+	player()->pos[Y] = itos(player()->map_pos[Y]);
+	player_dir();
+	player()->vector[X] = cos(player()->angle);
+	player()->vector[Y] = sin(player()->angle);
 	
+}
+
+void window_prepare(void)
+{
+	window()->mlx = mlx_init();
+	window()->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
+	window()->img.img = mlx_new_image(window()->mlx, WIDTH, HEIGHT);
+	window()->img.addr = mlx_get_data_addr(window()->img.img,
+		&window()->img.bits_per_pixel, &window()->img.line_length,
+		&window()->img.endian);
+	cub()->map = cub()->maps;
+
+}
+
+void window_create(void)
+{
+	window_prepare();
+	tile_size();
+	player_prepare();
+	mlx_hook(window()->win, EVENT_CLOSE_BTN, 0, cub()->exit, NULL);
+	mlx_loop_hook(window()->mlx, render, NULL);
+	mlx_hook(window()->win, 2, 1L << 0, (void *)key_press, NULL);
+	mlx_hook(window()->win, 3, 1L << 1, (void *)key_release, NULL);
+	mlx_loop(window()->mlx);
 }

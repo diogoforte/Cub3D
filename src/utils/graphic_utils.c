@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:30:42 by chaleira          #+#    #+#             */
-/*   Updated: 2023/11/02 18:45:55 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:47:19 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	buffer_mlx_pixel_put(int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line(double x0, double y0, double angle, int lenght, int color)
+void	draw_line(double x0, double y0, double angle, double lenght, int color)
 {
 	double	angle_x;
 	double	angle_y;

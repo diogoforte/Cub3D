@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2023/11/02 21:03:53 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:27:43 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,25 @@ void	fps(void)
 		"@diogoforte & @chaleira");
 }
 
-int	render(void)
+// int	render(void)
+// {
+// 	cub()->draw_screen();
+// 	cub()->draw_minimap();
+// 	cub()->move();
+// 	mlx_put_image_to_window(cub()->window.mlx, cub()->window.win,
+// 		cub()->window.img.img, 0, 0);
+// 	fps();
+// 	return (0);
+// }
+
+t_player	*player(void)
 {
-	cub()->draw_screen();
-	cub()->draw_minimap();
-	cub()->move();
-	mlx_put_image_to_window(cub()->window.mlx, cub()->window.win,
-		cub()->window.img.img, 0, 0);
-	fps();
-	return (0);
+	return (&cub()->player);
+}
+
+t_window	*window(void)
+{
+	return (&cub()->window);
 }
 
 t_ray	*ray(void)
@@ -59,7 +69,7 @@ t_cub	*cub(void)
 		maps_destroy,
 		map_new,
 		NULL,
-		draw_screen,
+		NULL,
 		draw_minimap,
 		movement,
 		{},

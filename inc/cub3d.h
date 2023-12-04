@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/11/06 17:47:35 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:55:30 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
-# define WIDTH 1400
+# define WIDTH 1000
 # define HEIGHT 1000
 # define MINIMAP_WIDTH 500
 # define MINIMAP_HEIGHT 500
@@ -63,6 +63,7 @@
 # define PI 3.14159265359
 
 # define SCALE 50
+# define MINIMAP_SCALE 50
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
@@ -84,6 +85,7 @@ struct s_map
 	int		map_height;
 	int		start_x;
 	int		start_y;
+	char	start_dir;
 
 	void	(*print)();
 	void	(*destroy_file)(t_map *map);
@@ -105,27 +107,26 @@ struct	s_image
 
 struct s_window
 {
-	void	*mlx;
-	void	*win;
-	int		minimap_scale;
-	t_image	img;
-	double	fps;
+	void		*mlx;
+	void		*win;
+	int			minimap_scale;
+	t_image		img;
+	double		tile_size;
+	double		fps;
 };
 
 struct s_ray
 {
 	double 		vector[2];
+	double		dir[2];
+	double		side_dist[2];
+	double		delta_dist[2];
+	double		step[2];
 	double		angle;
-	double		distance;
+	double		prep_distance;
 	int			color;
-	double		first_hit[2];
-	double		prep_hit_dist[2];
-	double 		dist_to_side[2];
-	double		dist_between[2];
-	int 		map_pos[2];
-	int			step[2];
 	int 		side;
-	int			wall_hit;
+	int 		map_pos[2];
 };
 
 struct s_player
@@ -163,52 +164,52 @@ struct s_cub
 
 };
 
-t_cub	*cub(void);
-t_ray	*ray(void);
-t_map	*map_new(char *file_path);
-void	map_extract_file(t_map *map, char *file_path);
-int		err(char *str, t_map *map);
-void	print_matrix(char **matrix);
-int		exit_cub(char *str);
-void	maps_destroy(void);
-void	map_add_back(t_map **map, t_map *new_map);
-void	map_load(char **argv);
-void	map_extract_data(t_map *map);
-void	map_print(t_map *map);
-int		all_filled(t_map *map);
-void	map_extract_map(char **grid, t_map *map);
-t_map	*map_new(char *file_path);
-void 	map_destroy_map(t_map *map);
-void 	map_destroy_error(t_map *map);
-void 	map_destroy_cords(t_map *map);
-void	map_clear(t_map *map);
-void	map_check(t_map *map);
-int		map_invalid_char(t_map *map);
-int		matrix_biggest_string(char **str);
+t_cub		*cub(void);
+t_ray		*ray(void);
+t_window	*window(void);
+t_player	*player(void);
+t_map		*map_new(char *file_path);
+void		map_extract_file(t_map *map, char *file_path);
+int			err(char *str, t_map *map);
+void		print_matrix(char **matrix);
+int			exit_cub(char *str);
+void		maps_destroy(void);
+void		map_add_back(t_map **map, t_map *new_map);
+void		map_load(char **argv);
+void		map_extract_data(t_map *map);
+void		map_print(t_map *map);
+int			all_filled(t_map *map);
+void		map_extract_map(char **grid, t_map *map);
+t_map		*map_new(char *file_path);
+void 		map_destroy_map(t_map *map);
+void 		map_destroy_error(t_map *map);
+void 		map_destroy_cords(t_map *map);
+void		map_clear(t_map *map);
+void		map_check(t_map *map);
+int			map_invalid_char(t_map *map);
+int			matrix_biggest_string(char **str);
 
 void	window_create(void);
-void	draw_menu(void);
 int		key_press(int keycode);
 int		key_release(int keycode);
 void	draw_map(void);
-void	draw_menu(void);
 int 	render(void);
 void	movement(void);
-int		mouse_press(int button, int x, int y);
-
 
 void	buffer_mlx_pixel_put(int x, int y, int color);
-void	draw_line(double x0, double y0, double angle, int lenght, int color);
+void	draw_line(double x0, double y0, double angle, double lenght, int color);
 void	draw_point(int x, int y, int size, int color);
 
 void 	draw_square(int x, int y, int width, int height, int color);
 void 	draw_screen(void);
 void	fps(void);
-void 	draw_minimap(void);
-double 	raycast(double vector[2]);
 int 	draw_collum(double lenght, int color);
 void 	clear_screen(void);
 int 	stoi(double nb);
-
+double 	itos(int nb);
+void	draw_minimap(void);
+double		raycast(double angle);
+void	draw_fov(void);
+void draw_screen(void);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/17 11:49:24 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/12/04 14:36:18 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ void	map_check(t_map *map)
 	if (map_check_variables(map) || map_invalid_char(map))
 		return ;
 	map_add_outline(map, OUTLINE);
-	check_open_rooms(map, 0, 0, -2, "Map not closed");
+	check_open_rooms(map, 0, 0, FILLER, "Map not closed");
 	check_all_rooms(map);
-	matrix_char_to_char(map->map, -2, ' ');
+	matrix_char_to_char(map->map, FILLER, ' ');
 }
 
 int	map_invalid_char(t_map *map)
@@ -102,6 +102,7 @@ int	map_invalid_char(t_map *map)
 			{
 				if (++k == 2)
 					return (err("Multiple starting positions", map));
+				map->start_dir = map->map[i][j];
 				map->start_x = j - 1;
 				map->start_y = i - 1;
 			}
@@ -144,7 +145,7 @@ int check_all_rooms(t_map *map)
 		while (map->map[i][j])
 		{
 			if (map->map[i][j] == ' ')
-				check_open_rooms(map, j, i, -2, "Empty space in map");
+				check_open_rooms(map, j, i, FILLER, "Empty space in map");
 			j++;
 		}
 		i++;

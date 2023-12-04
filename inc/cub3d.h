@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/21 22:24:56 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:47:35 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,18 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
-# define WIDTH 1080
-# define HEIGHT 720
+# define WIDTH 1400
+# define HEIGHT 1000
 # define MINIMAP_WIDTH 500
 # define MINIMAP_HEIGHT 500
 # define FOV (PI / 3)
 
+# define X 0
+# define Y 1
+
 # define SPACERS " \t\n\v\f\r"
-# define OUTLINE -1
+# define OUTLINE 'a'
+# define FILLER 'b'
 # define PLAYER_START "NSEW"
 # define VALID_CHARS "01NSEW_ "
 # define EMPTY '0'
@@ -53,15 +57,19 @@
 # define KEY_Q 113
 # define KEY_E 101
 # define KEY_F1 65470
+# define KEY_SPACE 32
 # define EVENT_CLOSE_BTN 17
 
 # define PI 3.14159265359
+
+# define SCALE 50
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
 typedef struct s_window 	t_window;
 typedef struct s_player 	t_player;
 typedef struct s_image 		t_image;
+typedef struct s_ray 		t_ray;
 typedef void 				(*array_func)();
 
 struct s_map
@@ -99,20 +107,36 @@ struct s_window
 {
 	void	*mlx;
 	void	*win;
-	float	tile_size;
+	int		minimap_scale;
 	t_image	img;
 	double	fps;
 };
 
+struct s_ray
+{
+	double 		vector[2];
+	double		angle;
+	double		distance;
+	int			color;
+	double		first_hit[2];
+	double		prep_hit_dist[2];
+	double 		dist_to_side[2];
+	double		dist_between[2];
+	int 		map_pos[2];
+	int			step[2];
+	int 		side;
+	int			wall_hit;
+};
+
 struct s_player
 {
-	double		x;
-	double		y;
-	double		delta_x;
-	double		delta_y;
+	double		pos[2];
 	double		angle;
 	int			mouse_x;
 	int	 		mouse_y;
+	double		vector[2];
+	int			map_pos[2];
+	t_ray		ray;
 	bool		w;
 	bool		a;
 	bool		s;
@@ -123,15 +147,16 @@ struct s_player
 
 struct s_cub
 {
-	t_map 		*map;
+	t_map		*map;
 	t_map		*maps;
 	int			status;
 	void		(*map_load)(char **av);
-	int		(*exit)(char *str);
+	int			(*exit)(char *str);
 	void		(*maps_destroy)();
 	t_map		*(*map_new)(char *file_path);
 	void		(*map_extract_data)(t_map *map);
-	void		(*draw)();
+	void		(*draw_screen)();
+	void		(*draw_minimap)();
 	void		(*move)();
 	t_window	window;
 	t_player	player;
@@ -139,6 +164,7 @@ struct s_cub
 };
 
 t_cub	*cub(void);
+t_ray	*ray(void);
 t_map	*map_new(char *file_path);
 void	map_extract_file(t_map *map, char *file_path);
 int		err(char *str, t_map *map);
@@ -166,16 +192,23 @@ int		key_press(int keycode);
 int		key_release(int keycode);
 void	draw_map(void);
 void	draw_menu(void);
-int 	draw_game(void);
+int 	render(void);
 void	movement(void);
 int		mouse_press(int button, int x, int y);
-
-void raycast(void);
-void pressed(int keycode);
-void released(int keycode);
 
 
 void	buffer_mlx_pixel_put(int x, int y, int color);
 void	draw_line(double x0, double y0, double angle, int lenght, int color);
+void	draw_point(int x, int y, int size, int color);
+
+void 	draw_square(int x, int y, int width, int height, int color);
+void 	draw_screen(void);
+void	fps(void);
+void 	draw_minimap(void);
+double 	raycast(double vector[2]);
+int 	draw_collum(double lenght, int color);
+void 	clear_screen(void);
+int 	stoi(double nb);
+
 
 #endif

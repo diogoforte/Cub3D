@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chaleira <chaleira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/21 22:14:18 by chaleira         ###   ########.fr       */
+/*   Updated: 2023/11/02 14:57:19 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@ static void	move(int key)
 	float	x;
 	float	y;
 
-	x = cub()->player.x + key * cub()->player.delta_x;
-	y = cub()->player.y + key * cub()->player.delta_y;
-	if (!collision((int)x / cub()->window.tile_size, (int)cub()->player.y
-			/ cub()->window.tile_size))
-		cub()->player.x = x;
-	if (!collision((int)cub()->player.x / cub()->window.tile_size, (int)y
-			/ cub()->window.tile_size))
-		cub()->player.y = y;
+	x = cub()->player.pos[X] + key * (cub()->player.vector[X]);
+	y = cub()->player.pos[Y] + key * (cub()->player.vector[Y]);
+	if (!collision((int)x / SCALE, (int)cub()->player.pos[Y]
+			/ SCALE))
+		cub()->player.pos[X] = x;
+	if (!collision((int)cub()->player.pos[X] / SCALE, (int)y
+			/ SCALE))
+		cub()->player.pos[Y] = y;
+	cub()->player.map_pos[X] = cub()->player.pos[X] / SCALE;
+	cub()->player.map_pos[Y] = cub()->player.pos[Y] / SCALE;
 }
 
 static void	strafe(int key)
@@ -37,25 +39,34 @@ static void	strafe(int key)
 	float	x;
 	float	y;
 
-	x = (cub()->player.x + key * cos(cub()->player.angle - (PI / 2)));
-	y = (cub()->player.y + key * sin(cub()->player.angle - (PI / 2)));
-	if (!collision((x / cub()->window.tile_size), cub()->player.y / cub()->window.tile_size))
-		cub()->player.x = x;
-	if (!collision((cub()->player.x / cub()->window.tile_size), y / cub()->window.tile_size))
-		cub()->player.y = y;
+	x = cub()->player.pos[X] + key * (cos(cub()->player.angle - (PI / 2)));
+	y = cub()->player.pos[Y] + key * (sin(cub()->player.angle - (PI / 2)));
+	if (!collision((x / SCALE), cub()->player.pos[Y] / SCALE))
+		cub()->player.pos[X] = x;
+	if (!collision((cub()->player.pos[X] / SCALE), y / SCALE))
+		cub()->player.pos[Y] = y;
+	cub()->player.map_pos[X] = cub()->player.pos[X] / SCALE;
+	cub()->player.map_pos[Y] = cub()->player.pos[Y] / SCALE;
 }
 
-static void	rotate(int key)
+static void	rotateX(int key)
 {
-	cub()->player.angle += key * 0.1;
+	cub()->player.angle += key * 0.001;
 	if (cub()->player.angle < 0)
 		cub()->player.angle += 2 * PI;
 	if (cub()->player.angle > 2 * PI)
 		cub()->player.angle -= 2 * PI;
-	cub()->player.delta_x = cos(cub()->player.angle);
-	cub()->player.delta_y = sin(cub()->player.angle);
+	cub()->player.vector[X] = cos(cub()->player.angle);
+	cub()->player.vector[Y] = sin(cub()->player.angle);
 }
 
+// static void rotateY(int key)
+// {
+// 	cub()->window.mid -= key;
+// 	if (cub()->window.mid <= -(HEIGHT) || cub()->window.mid >= HEIGHT)
+// 		cub()->window.mid += key;
+	
+// }
 
 void	movement(void)
 {
@@ -67,12 +78,8 @@ void	movement(void)
 		strafe(A);
 	if (cub()->player.d)
 		strafe(D);
-	if (cub()->player.q)
-		rotate(Q);
-	if (cub()->player.e)
-		rotate(E);
-	// mlx_mouse_get_pos(cub()->window.mlx, cub()->window.win, &cub()->player.mouse_x, &cub()->player.mouse_y);
-	// cub()->player.mouse_x -= (WIDTH / 2);
-	// rotate(cub()->player.mouse_x);
-	// mlx_mouse_move(cub()->window.mlx, cub()->window.win, WIDTH / 2, HEIGHT / 2);
+	mlx_mouse_get_pos(cub()->window.mlx, cub()->window.win, &cub()->player.mouse_x, &cub()->player.mouse_y);
+	cub()->player.mouse_x -= (WIDTH / 2);
+	rotateX(cub()->player.mouse_x);
+	mlx_mouse_move(cub()->window.mlx, cub()->window.win, WIDTH / 2, HEIGHT / 2);
 }

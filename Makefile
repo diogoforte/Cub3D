@@ -12,7 +12,7 @@ EMOJI_TRASH = \360\237\227\221\357\270\217
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
 ARGS = maps/test.cub
 ARGS2 = maps/test.cub maps/testcopy.cub
 
@@ -38,12 +38,12 @@ SRC = $(addprefix $(SRC_PATH), \
 		utils/struct_calls.c \
 		utils/exit.c \
 		utils/utils.c \
-		window/window_create.c \
 		window/key_hook.c \
-		window/window_draw.c \
-		window/window_menu.c \
+		window/window_prepare.c \
+		window/window.c \
 		movement/movement.c \
 		utils/graphic_utils.c \
+		window/raycast.c \
 )
 
 $(OBJ): $(OBJ_PATH)

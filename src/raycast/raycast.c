@@ -6,18 +6,17 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/12/04 15:59:36 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:05:53 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// double delta_dist(double ray_dir[2])
-// {
-// 	ray()->delta_dist[X] = fabs(1 / ray_dir[X]);
-// 	delta_dist[Y] = fabs(1 / ray_dir[Y]);
-// 	return (delta_dist[X]);
-// }
+void delta_dist(double ray_dir[2])
+{
+	ray()->delta_dist[X] = fabs(1 / ray_dir[X]);
+	ray()->delta_dist[Y] = fabs(1 / ray_dir[Y]);
+}
 
 void draw_fov(void)
 {

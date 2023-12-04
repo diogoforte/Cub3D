@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/12/04 15:53:36 by plopes-c         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:55:30 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,14 @@ struct s_window
 struct s_ray
 {
 	double 		vector[2];
+	double		dir[2];
+	double		side_dist[2];
 	double		delta_dist[2];
+	double		step[2];
 	double		angle;
-	double		distance;
+	double		prep_distance;
 	int			color;
+	int 		side;
 	int 		map_pos[2];
 };
 
@@ -193,7 +197,7 @@ int 	render(void);
 void	movement(void);
 
 void	buffer_mlx_pixel_put(int x, int y, int color);
-void	draw_line(double x0, double y0, double angle, int lenght, int color);
+void	draw_line(double x0, double y0, double angle, double lenght, int color);
 void	draw_point(int x, int y, int size, int color);
 
 void 	draw_square(int x, int y, int width, int height, int color);
@@ -204,7 +208,8 @@ void 	clear_screen(void);
 int 	stoi(double nb);
 double 	itos(int nb);
 void	draw_minimap(void);
-int		raycast(double angle);
+double		raycast(double angle);
 void	draw_fov(void);
+void draw_screen(void);
 
 #endif

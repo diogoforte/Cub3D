@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:30:42 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/05 11:11:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/05 18:06:53 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,23 @@ void draw_point(int x, int y, int size, int color)
 		}
 	}
 }
-void clear_screen(void)
+void	draw_circle(int x_center, int y_center, int radius, int color)
 {
-	int j = 0;
-	while (j < WIDTH)
+	int	dx;
+	int	dy;
+
+	int x, y;
+	for (y = y_center - radius; y <= y_center + radius; y++)
 	{
-		draw_line(j, 0, (PI / 2), HEIGHT, 0x000000);
-		j++;
+		for (x = x_center - radius; x <= x_center + radius; x++)
+		{
+			dx = x_center - x;
+			dy = y_center - y;
+			if (dx * dx + dy * dy <= radius * radius)
+			{
+				buffer_mlx_pixel_put(x, y, color);
+			}
+		}
 	}
 }
 

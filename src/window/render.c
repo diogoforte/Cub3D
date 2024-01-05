@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:57:22 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/05 13:59:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/05 16:30:04 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int render(void)
 {
 	draw_fov();
 	cub()->draw_minimap();
-	draw_fov_minimap();
+	// draw_fov_minimap();
 	cub()->move();
 	mlx_put_image_to_window(cub()->window.mlx, cub()->window.win,
 		cub()->window.img.img, 0, 0);

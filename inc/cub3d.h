@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/05 13:46:05 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/05 18:07:08 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@
 
 # define WIDTH 1000
 # define HEIGHT 1000
-# define MINIMAP_WIDTH 100
-# define MINIMAP_HEIGHT 100
+# define SCALE 50
+# define MM_SCALE (WIDTH / 20)
+# define MM_WIDTH (WIDTH / 7)
+# define MM_HEIGHT (HEIGHT * 0.80)
 
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)
@@ -64,7 +66,6 @@
 
 # define PI 3.14159265359
 
-# define SCALE 50
 // # define MINIMAP_SCALE 1
 
 typedef struct s_map 		t_map;
@@ -202,6 +203,7 @@ void	draw_point(int x, int y, int size, int color);
 
 void 	draw_square(int x, int y, int width, int height, int color);
 void 	draw_screen(void);
+void	draw_circle(int x_center, int y_center, int radius, int color);
 void	fps(void);
 int 	draw_collum(double lenght, int color);
 void 	clear_screen(void);

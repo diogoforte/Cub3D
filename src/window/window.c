@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/12/04 15:22:05 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/05 15:36:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void	tile_size(void)
-{
-	if (cub()->map->map_width < cub()->map->map_height)
-	{
-		window()->tile_size = MINIMAP_WIDTH / cub()->map->map_width;
-		window()->tile_size = WIDTH / window()->tile_size;
-	}
-	else
-	{
-		window()->tile_size = MINIMAP_HEIGHT / cub()->map->map_height;
-		window()->tile_size = HEIGHT / window()->tile_size;
-	}
-	window()->tile_size = 50;
-}
 
 void player_dir(void)
 {
@@ -66,7 +51,6 @@ void window_prepare(void)
 void window_create(void)
 {
 	window_prepare();
-	tile_size();
 	player_prepare();
 	mlx_hook(window()->win, EVENT_CLOSE_BTN, 0, cub()->exit, NULL);
 	mlx_loop_hook(window()->mlx, render, NULL);

@@ -6,91 +6,145 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/05 09:18:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/05 19:04:27 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void draw_minimap(void)
-// {
-// 	int i;
-// 	int j;
-// 	int scale;
+void	draw_minimap_tile(int dx, int dy, int radius)
+{
+	int	pixel_dx;
+	int	pixel_dy;
+	int	pixel_distance;
+	int	i;
+	int	j;
 
-// 	if (HEIGHT > WIDTH)
-// 		scale = WIDTH / 50;
-// 	else
-// 		scale = HEIGHT / 50;
-// 	cub()->window.minimap_scale = scale;
-// 	i = 0;
-// 	while (i < cub()->map->map_height)
-// 	{
-// 		j = 0;
-// 		while (j < cub()->map->map_width)
-// 		{
-// 			if (cub()->map->map[i][j] == '1')
-// 				draw_square(j * scale - 1, i * scale - 1, scale, scale, 0xFFFFFF);
-// 			else
-// 				draw_square(j * scale - 1, i * scale - 1, scale, scale, 0x000000);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	draw_point(((cub()->player.pos[X] / SCALE) + 1) * scale, ((cub()->player.pos[Y] / SCALE) + 1) * scale, 2, 0xFF0000);
-// }
+	i = 0;
+	while (i < MM_SCALE)
+	{
+		j = 0;
+		while (j < MM_SCALE)
+		{
+			pixel_dx = dx + i - MM_SCALE / 2;
+			pixel_dy = dy + j - MM_SCALE / 2;
+			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
+			if (pixel_distance <= radius * MM_SCALE)
+				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
+					0x3386FF);
+			++j;
+		}
+		++i;
+	}
+}
+
+void	draw_empty_tile(int dx, int dy, int radius)
+{
+	int	pixel_dx;
+	int	pixel_dy;
+	int	pixel_distance;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < MM_SCALE)
+	{
+		j = 0;
+		while (j < MM_SCALE)
+		{
+			pixel_dx = dx + i - MM_SCALE / 2;
+			pixel_dy = dy + j - MM_SCALE / 2;
+			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
+			if (pixel_distance <= radius * MM_SCALE)
+				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
+					0x0);
+			++j;
+		}
+		++i;
+	}
+}
+
+void	draw_outside_map(int dx, int dy, int radius)
+{
+	int	pixel_dx;
+	int	pixel_dy;
+	int	pixel_distance;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < MM_SCALE)
+	{
+		j = 0;
+		while (j < MM_SCALE)
+		{
+			pixel_dx = dx + i - MM_SCALE / 2;
+			pixel_dy = dy + j - MM_SCALE / 2;
+			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
+			if (pixel_distance <= radius * MM_SCALE)
+			{
+				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
+					0x0);
+			}
+			++j;
+		}
+		++i;
+	}
+}
+
+void	draw_minimap_tiles(int player_x, int player_y, int radius)
+{
+	int	distance[2];
+	int	coord[2];
+
+	coord[Y] = player_y / MM_SCALE - radius;
+	while (coord[Y] <= player_y / MM_SCALE + radius)
+	{
+		coord[X] = player_x / MM_SCALE - radius;
+		while (coord[X] <= player_x / MM_SCALE + radius)
+		{
+			distance[X] = coord[X] * MM_SCALE - player_x;
+			distance[Y] = coord[Y] * MM_SCALE - player_y;
+			if (coord[Y] >= 0 && coord[Y] < cub()->map->map_height
+				&& coord[X] >= 0 && coord[X] < cub()->map->map_width)
+			{
+				if (cub()->map->map[coord[Y]][coord[X]] == '1')
+					draw_minimap_tile(distance[X], distance[Y], radius);
+				else
+					draw_empty_tile(distance[X], distance[Y], radius);
+			}
+			else
+				draw_outside_map(distance[X], distance[Y], radius);
+			++coord[X];
+		}
+		++coord[Y];
+	}
+}
+
+void	draw_circle_border(int x, int y, int radius, int color)
+{
+	int	angle;
+	int	dx;
+	int	dy;
+
+	for (angle = 0; angle < 360; angle++)
+	{
+		dx = radius * cos(angle * PI / 180);
+		dy = radius * sin(angle * PI / 180);
+		buffer_mlx_pixel_put(x + dx, y + dy, color);
+	}
+}
 
 void	draw_minimap(void)
 {
-	int	x;
-	int	y;
-	int	j;
-	int	i;
+	int	player_x;
+	int	player_y;
+	int	radius;
 
-	y = 0;
-	while (++y < cub()->map->map_height - 1)
-	{
-		x = 0;
-		while (++x < cub()->map->map_width - 1)
-		{
-			if (cub()->map->map[y][x] == '1')
-			{
-				i = -1;
-				while (++i < cub()->window.tile_size)
-				{
-					j = -1;
-					while (++j < cub()->window.tile_size)
-						buffer_mlx_pixel_put((x - 1) * cub()->window.tile_size
-							+ i, (y - 1) * cub()->window.tile_size + j,
-							0xFFFFFF);
-				}
-			}
-			else
-			{
-				i = -1;
-				while (++i < cub()->window.tile_size)
-				{
-					j = -1;
-					while (++j < cub()->window.tile_size)
-						buffer_mlx_pixel_put((x - 1) * cub()->window.tile_size
-							+ i, (y - 1) * cub()->window.tile_size + j, 0x0);
-				}
-			}
-			if (x < cub()->map->map_width - 1)
-			{
-				i = -1;
-				while (++i < cub()->window.tile_size)
-					buffer_mlx_pixel_put((x)*cub()->window.tile_size - 1, (y
-							- 1) * cub()->window.tile_size + i, 0x808080);
-			}
-			if (y < cub()->map->map_height - 1)
-			{
-				i = -1;
-				while (++i < cub()->window.tile_size)
-					buffer_mlx_pixel_put((x - 1) * cub()->window.tile_size + i,
-						y * cub()->window.tile_size - 1, 0x808080);
-			}
-		}
-	}
-	draw_point(player()->pos[X] - 5, player()->pos[Y] - 5, 5, 0xFF0000);
+	player_x = (player()->pos[X] / SCALE) * MM_SCALE + MM_SCALE;
+	player_y = (player()->pos[Y] / SCALE) * MM_SCALE + MM_SCALE;
+	radius = MM_SCALE / 15;
+	draw_minimap_tiles(player_x, player_y, radius);
+	draw_circle(MM_WIDTH, MM_HEIGHT, MM_SCALE / 10, 0xFFFFFF);
+	draw_line(MM_WIDTH, MM_HEIGHT, player()->angle, MM_SCALE / 4, 0xFFFFFF);
 }

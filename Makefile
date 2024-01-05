@@ -12,7 +12,7 @@ EMOJI_TRASH = \360\237\227\221\357\270\217
 NAME = cub3d
 
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
+CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
 ARGS = maps/test.cub
 ARGS2 = maps/test.cub maps/testcopy.cub
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2023/12/04 17:55:30 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/05 13:46:05 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@
 
 # define WIDTH 1000
 # define HEIGHT 1000
-# define MINIMAP_WIDTH 500
-# define MINIMAP_HEIGHT 500
+# define MINIMAP_WIDTH 100
+# define MINIMAP_HEIGHT 100
+
 # define FOV (PI / 3)
+# define ANGLE (FOV / WIDTH)
 
 # define X 0
 # define Y 1
@@ -63,7 +65,7 @@
 # define PI 3.14159265359
 
 # define SCALE 50
-# define MINIMAP_SCALE 50
+// # define MINIMAP_SCALE 1
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
@@ -81,6 +83,7 @@ struct s_map
 	char	*error;
 	char	**map;
 	char 	*cords[6];
+	int		FC[2];
 	int		map_width;
 	int		map_height;
 	int		start_x;
@@ -117,16 +120,13 @@ struct s_window
 
 struct s_ray
 {
-	double 		vector[2];
 	double		dir[2];
 	double		side_dist[2];
 	double		delta_dist[2];
 	double		step[2];
 	double		angle;
-	double		prep_distance;
-	int			color;
-	int 		side;
 	int 		map_pos[2];
+	int			side;
 };
 
 struct s_player
@@ -208,7 +208,7 @@ void 	clear_screen(void);
 int 	stoi(double nb);
 double 	itos(int nb);
 void	draw_minimap(void);
-double		raycast(double angle);
+double		raycast(void);
 void	draw_fov(void);
 void draw_screen(void);
 

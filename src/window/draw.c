@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/12/04 15:56:43 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/05 09:18:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	draw_minimap(void)
 	int	i;
 
 	y = 0;
-	// cub()->move();
 	while (++y < cub()->map->map_height - 1)
 	{
 		x = 0;
@@ -94,5 +93,4 @@ void	draw_minimap(void)
 		}
 	}
 	draw_point(player()->pos[X] - 5, player()->pos[Y] - 5, 5, 0xFF0000);
-	draw_fov();
 }

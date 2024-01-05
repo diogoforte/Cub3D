@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/16 14:50:15 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:06:29 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,26 @@ void	map_extract_map(char **grid, t_map *map)
 	map_destroy_map(map);
 	if (tmp_map)
 		map->map = tmp_map;
+}
+
+void	rgb_to_hex(t_map *map)
+{
+	int		r;
+	int		g;
+	int		b;
+	int		i;
+	char	**colors;
+
+	i = -1;
+	while (++i < 2)
+	{
+		colors = ft_split(map->cords[i + 4], ',');
+		r = ft_atoi(colors[0]);
+		g = ft_atoi(colors[1]);
+		b = ft_atoi(colors[2]);
+		ft_freematrix(colors);
+		map->FC[i] = (r << 16) | (g << 8) | b;
+	}
 }
 
 void	map_extract_data(t_map *map)
@@ -66,6 +86,7 @@ void	map_extract_data(t_map *map)
 		}
 		free(tmp);
 	}
+	rgb_to_hex(map);
 	if (all_filled(map) || err("Missing texture", map))
 		map_extract_map(&map->map[i[0]], map);
 }

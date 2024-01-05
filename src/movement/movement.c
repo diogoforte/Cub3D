@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/12/04 15:29:05 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:26:01 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	strafe(int key)
 	cub()->player.map_pos[Y] = cub()->player.pos[Y] / SCALE;
 }
 
-static void	rotateX(int key)
+static void	rotate(int key)
 {
 	cub()->player.angle += key * 0.001;
 	if (cub()->player.angle < 0)
@@ -59,14 +59,6 @@ static void	rotateX(int key)
 	cub()->player.vector[X] = cos(cub()->player.angle);
 	cub()->player.vector[Y] = sin(cub()->player.angle);
 }
-
-// static void rotateY(int key)
-// {
-// 	cub()->window.mid -= key;
-// 	if (cub()->window.mid <= -(HEIGHT) || cub()->window.mid >= HEIGHT)
-// 		cub()->window.mid += key;
-	
-// }
 
 void	movement(void)
 {
@@ -78,8 +70,12 @@ void	movement(void)
 		strafe(A);
 	if (cub()->player.d)
 		strafe(D);
+	if (cub()->player.q)
+		rotate(Q - 50);
+	if (cub()->player.e)
+		rotate(E + 50);
 	mlx_mouse_get_pos(cub()->window.mlx, cub()->window.win, &cub()->player.mouse_x, &cub()->player.mouse_y);
 	cub()->player.mouse_x -= (WIDTH / 2);
-	rotateX(cub()->player.mouse_x);
+	rotate(cub()->player.mouse_x);
 	mlx_mouse_move(cub()->window.mlx, cub()->window.win, WIDTH / 2, HEIGHT / 2);
 }

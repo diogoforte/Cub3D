@@ -3,19 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:57:22 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/12/04 18:17:51 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/05 13:59:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	draw_fov_minimap(void)
+{
+	ray()->angle = -(FOV / 2) + player()->angle;
+	while (ray()->angle < (FOV / 2) + player()->angle)
+	{
+		draw_line(player()->pos[X], player()->pos[Y], ray()->angle, raycast(),
+			0xFFF100);
+		ray()->angle += ANGLE;
+	}
+}
+
 int render(void)
 {
-	// draw_screen();
+	draw_fov();
 	cub()->draw_minimap();
+	draw_fov_minimap();
 	cub()->move();
 	mlx_put_image_to_window(cub()->window.mlx, cub()->window.win,
 		cub()->window.img.img, 0, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/12/04 14:36:18 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:58:46 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,6 @@ int	check_open_rooms(t_map	*map, int x, int y, char c, char *str);
 void matrix_char_to_char(char **matrix, char old, char new);
 int check_all_rooms(t_map *map);
 
-int	map_check_variables(t_map *map)
-{
-	char	**tmp;
-	int		i[2];
-
-	if (!map->playable)
-		return (1);
-	if (WIDTH <= 0 || HEIGHT <= 0)
-		return (err("Invalid resolution", map));
-	else
-	{
-		i[0] = 3;
-		while (++i[0] < 6 && map->playable)
-		{
-			if (ft_charcount(map->cords[i[0]], ',') != 2)
-				return (err("Invalid color", map));
-			tmp = ft_split(map->cords[i[0]], ',');
-			i[1] = -1;
-			while (tmp[++i[1]])
-				if (ft_atoi(tmp[i[1]]) < 0 || ft_atoi(tmp[i[1]]) > 255)
-					err("Invalid color", map);
-			ft_freematrix(tmp);
-		}
-	}
-	return (0);
-}
 
 void	map_add_outline(t_map *map, char c)
 {
@@ -75,7 +49,7 @@ void	map_add_outline(t_map *map, char c)
 
 void	map_check(t_map *map)
 {
-	if (map_check_variables(map) || map_invalid_char(map))
+	if (map_invalid_char(map))
 		return ;
 	map_add_outline(map, OUTLINE);
 	check_open_rooms(map, 0, 0, FILLER, "Map not closed");

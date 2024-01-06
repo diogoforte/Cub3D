@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/05 12:46:05 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:50:28 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@ void	ray_side(void)
 	{
 		ray()->step[X] = -1;
 		ray()->side_dist[X] = (player()->pos[X] - ray()->map_pos[X])
-		* ray()->delta_dist[X];
+			* ray()->delta_dist[X];
 	}
 	else
 	{
 		ray()->step[X] = 1;
 		ray()->side_dist[X] = (ray()->map_pos[X] + 1.0 - player()->pos[X])
-		* ray()->delta_dist[X];
+			* ray()->delta_dist[X];
 	}
 	if (ray()->dir[Y] < 0)
 	{
 		ray()->step[Y] = -1;
 		ray()->side_dist[Y] = (player()->pos[Y] - ray()->map_pos[Y])
-		* ray()->delta_dist[Y];
+			* ray()->delta_dist[Y];
 	}
 	else
 	{
 		ray()->step[Y] = 1;
 		ray()->side_dist[Y] = (ray()->map_pos[Y] + 1.0 - player()->pos[Y])
-		* ray()->delta_dist[Y];
+			* ray()->delta_dist[Y];
 	}
 }
 
@@ -79,21 +79,11 @@ double	raycast(void)
 	}
 	return (ray_distance());
 }
-// void	draw_fov(void)
-// {
-// 	ray()->angle = -(FOV / 2) + player()->angle;
-// 	while (ray()->angle < (FOV / 2) + player()->angle)
-// 	{
-// 		draw_line(player()->pos[X], player()->pos[Y], ray()->angle, raycast(),
-// 			0xFFF100);
-// 		ray()->angle += ANGLE;
-// 	}
-// }
 
 void	ceiling_floor(void)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	x = 0;
@@ -107,39 +97,64 @@ void	ceiling_floor(void)
 	{
 		x = 0;
 		while (x < WIDTH)
-			buffer_mlx_pixel_put(x++, y, cub()->map->FC[0]);	
+			buffer_mlx_pixel_put(x++, y, cub()->map->FC[0]);
+	}
+}
+
+void	calculate_distance(void)
+{
+	raycast();
+	if (!ray()->side)
+		ray()->distance = (ray()->side_dist[X] - ray()->delta_dist[X]);
+	else
+		ray()->distance = (ray()->side_dist[Y] - ray()->delta_dist[Y]);
+	ray()->distance /= SCALE;
+	ray()->correctdistance = ray()->distance * cos(ray()->angle
+			- player()->angle);
+	if (ray()->correctdistance < 0.0001)
+		ray()->correctdistance = 0.1;
+}
+
+void	calculate_wall_height_and_draw_limits(void)
+{
+	ray()->wallheight = (int)(HEIGHT / ray()->correctdistance);
+	ray()->drawstart = -(ray()->wallheight) / 2 + HEIGHT / 2;
+	if (ray()->drawstart < 0)
+		ray()->drawstart = 0;
+	ray()->drawend = ray()->wallheight / 2 + HEIGHT / 2;
+	if (ray()->drawend >= HEIGHT)
+		ray()->drawend = HEIGHT - 1;
+}
+
+void	draw_wall(int x)
+{
+	int	y;
+
+	y = ray()->drawstart;
+	while (y < ray()->drawend)
+	{
+		if (ray()->side)
+			buffer_mlx_pixel_put(x, y, 0xFF0000);
+		else
+			buffer_mlx_pixel_put(x, y, 0xFF9633);
+		y++;
 	}
 }
 
 void	draw_fov(void)
 {
-	double distance;
-	
-    ray()->angle = -(FOV / 2) + player()->angle;
-	ceiling_floor();
-    for (int x = 0; x < WIDTH; x++)
-    {
-		raycast();
-		if (!ray()->side)
-			distance = (ray()->side_dist[X] - ray()->delta_dist[X]);
-		else
-			distance = (ray()->side_dist[Y] - ray()->delta_dist[Y]);
-		distance /= SCALE;
-		if (distance < 0.0001)
-			distance = 0.1;
-        int wallheight = (int)(HEIGHT / distance);
-		int drawStart = -wallheight / 2 + HEIGHT / 2;
-	    if(drawStart < 0) drawStart = 0;
-	    int drawEnd = wallheight / 2 + HEIGHT / 2;
-	    if(drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
-        for (int y = drawStart; y < drawEnd; y++)
-		{
-			if(ray()->side)
-            	buffer_mlx_pixel_put(x, y, 0xFF0000);
-			else
-				buffer_mlx_pixel_put(x, y, 0xFF9633);
-		}
-        ray()->angle += ANGLE;
-    }
-}
+	int	x;
 
+	x = -1;
+	if (!cub()->map->playable)
+		return ;
+	ray()->angle = -(FOV / 2) + player()->angle;
+	ceiling_floor();
+	while (++x < WIDTH)
+	{
+		calculate_distance();
+		calculate_wall_height_and_draw_limits();
+		draw_wall(x);
+		ray()->angle += ANGLE;
+	}
+}

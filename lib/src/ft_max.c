@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_charcount.c                                     :+:      :+:    :+:   */
+/*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 12:29:15 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/06 03:59:49 by dinunes-         ###   ########.fr       */
+/*   Created: 2024/01/06 03:26:06 by dinunes-          #+#    #+#             */
+/*   Updated: 2024/01/06 03:26:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_charcount(char *str, char c)
+int	ft_max(int a, int b)
 {
-	int	count;
-
-	if (!str)
-		return (0);
-	count = 0;
-	while (*str)
-		if (*str++ == c)
-			count++;
-	return (count);
+	if (a > b)
+		return (a);
+	return (b);
 }

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/05 18:07:08 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:39:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
-# define WIDTH 1000
+# define WIDTH 1900
 # define HEIGHT 1000
 # define SCALE 50
-# define MM_SCALE (WIDTH / 20)
+# define MM_SCALE (ft_min(HEIGHT, WIDTH) / 20)
 # define MM_WIDTH (WIDTH / 7)
 # define MM_HEIGHT (HEIGHT * 0.80)
 
@@ -37,6 +37,7 @@
 # define X 0
 # define Y 1
 
+# define PI 3.14159265359
 # define SPACERS " \t\n\v\f\r"
 # define OUTLINE 'a'
 # define FILLER 'b'
@@ -64,9 +65,6 @@
 # define KEY_SPACE 32
 # define EVENT_CLOSE_BTN 17
 
-# define PI 3.14159265359
-
-// # define MINIMAP_SCALE 1
 
 typedef struct s_map 		t_map;
 typedef struct s_cub 		t_cub;
@@ -128,6 +126,11 @@ struct s_ray
 	double		angle;
 	int 		map_pos[2];
 	int			side;
+	double	distance;
+	int		wallheight;
+	int		drawstart;
+	int		drawend;
+	double	correctdistance;
 };
 
 struct s_player

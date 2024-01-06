@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 14:59:25 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/08/16 23:57:35 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:56:23 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	wdc(char const *s, char c)
 {
 	int	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (*s)
 	{

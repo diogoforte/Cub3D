@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/05 12:06:29 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:58:28 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,28 @@ void	map_extract_map(char **grid, t_map *map)
 		map->map = tmp_map;
 }
 
+int	map_check_colors(t_map *map)
+{
+	char	**tmp;
+	int		i[2];
+
+	if (!map->playable)
+		return (1);
+	i[0] = 3;
+	while (++i[0] < 6 && map->playable)
+	{
+		if (ft_charcount(map->cords[i[0]], ',') != 2)
+			return (err("Invalid color", map));
+		tmp = ft_split(map->cords[i[0]], ',');
+		i[1] = -1;
+		while (tmp[++i[1]])
+			if (ft_atoi(tmp[i[1]]) < 0 || ft_atoi(tmp[i[1]]) > 255)
+				err("Invalid color", map);
+		ft_freematrix(tmp);
+	}
+	return (0);
+}
+
 void	rgb_to_hex(t_map *map)
 {
 	int		r;
@@ -45,6 +67,8 @@ void	rgb_to_hex(t_map *map)
 	int		i;
 	char	**colors;
 
+	if (map_check_colors(map))
+		return ;
 	i = -1;
 	while (++i < 2)
 	{

@@ -42,7 +42,8 @@ SRC = $(addprefix $(SRC_PATH), \
 		utils/graphic_utils.c \
 		window/window.c \
 		window/render.c \
-		window/draw.c \
+		window/minimap.c \
+		window/wall.c \
 		movement/key_hook.c \
 		raycast/raycast.c \
 )

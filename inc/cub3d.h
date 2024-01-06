@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/06 03:39:30 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 04:43:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
-# define WIDTH 1900
+# define WIDTH 1000
 # define HEIGHT 1000
 # define SCALE 50
 # define MM_SCALE (ft_min(HEIGHT, WIDTH) / 20)
-# define MM_WIDTH (WIDTH / 7)
-# define MM_HEIGHT (HEIGHT * 0.80)
+# define MM_WIDTH (WIDTH / 6)
+# define MM_HEIGHT (HEIGHT * 0.83)
 
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/05 19:04:27 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 04:54:53 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	draw_minimap_tile(int dx, int dy, int radius)
 		j = 0;
 		while (j < MM_SCALE)
 		{
-			pixel_dx = dx + i - MM_SCALE / 2;
-			pixel_dy = dy + j - MM_SCALE / 2;
+			pixel_dx = dx + i - MM_SCALE / 30;
+			pixel_dy = dy + j - MM_SCALE / 30;
 			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
 			if (pixel_distance <= radius * MM_SCALE)
 				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
@@ -52,8 +52,8 @@ void	draw_empty_tile(int dx, int dy, int radius)
 		j = 0;
 		while (j < MM_SCALE)
 		{
-			pixel_dx = dx + i - MM_SCALE / 2;
-			pixel_dy = dy + j - MM_SCALE / 2;
+			pixel_dx = dx + i - MM_SCALE / 30;
+			pixel_dy = dy + j - MM_SCALE / 30;
 			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
 			if (pixel_distance <= radius * MM_SCALE)
 				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
@@ -78,8 +78,8 @@ void	draw_outside_map(int dx, int dy, int radius)
 		j = 0;
 		while (j < MM_SCALE)
 		{
-			pixel_dx = dx + i - MM_SCALE / 2;
-			pixel_dy = dy + j - MM_SCALE / 2;
+			pixel_dx = dx + i - MM_SCALE / 30;
+			pixel_dy = dy + j - MM_SCALE / 30;
 			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
 			if (pixel_distance <= radius * MM_SCALE)
 			{
@@ -118,20 +118,6 @@ void	draw_minimap_tiles(int player_x, int player_y, int radius)
 			++coord[X];
 		}
 		++coord[Y];
-	}
-}
-
-void	draw_circle_border(int x, int y, int radius, int color)
-{
-	int	angle;
-	int	dx;
-	int	dy;
-
-	for (angle = 0; angle < 360; angle++)
-	{
-		dx = radius * cos(angle * PI / 180);
-		dy = radius * sin(angle * PI / 180);
-		buffer_mlx_pixel_put(x + dx, y + dy, color);
 	}
 }
 

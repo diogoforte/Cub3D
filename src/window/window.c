@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/06 06:42:36 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 12:59:27 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,25 @@ void	player_prepare(void)
 	player()->vector[Y] = sin(player()->angle);
 }
 
-void	load_textures(void)
+void	load_texturess(void)
 {
 	int	i;
 
 	i = -1;
 	while (++i < 4)
 	{
-		cub()->map->texture[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
-				cub()->map->cords[i], &cub()->map->texture[i].width,
-				&cub()->map->texture[i].height);
-		if (!cub()->map->texture[i].img)
+		cub()->map->textures[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
+			cub()->map->cords[i], &cub()->map->textures[i].width,
+		&cub()->map->textures[i].height);
+		if (!cub()->map->textures[i].img)
 		{
-			err("Failed to load textures\n", cub()->map);
+			err("Failed to load texturess\n", cub()->map);
 			return ;
 		}
-		cub()->map->texture[i].addr = mlx_get_data_addr(cub()->map->texture[i].img,
-				&cub()->map->texture[i].bits_per_pixel,
-				&cub()->map->texture[i].line_length,
-				&cub()->map->texture[i].endian);
+		cub()->map->textures[i].addr = mlx_get_data_addr(cub()->map->textures[i].img,
+			&cub()->map->textures[i].bits_per_pixel,
+		&cub()->map->textures[i].line_length,
+		&cub()->map->textures[i].endian);
 	}
 }
 
@@ -63,10 +63,10 @@ void	window_prepare(void)
 	window()->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
 	window()->img.img = mlx_new_image(window()->mlx, WIDTH, HEIGHT);
 	window()->img.addr = mlx_get_data_addr(window()->img.img,
-			&window()->img.bits_per_pixel, &window()->img.line_length,
-			&window()->img.endian);
-	cub()->map = cub()->maps; // add fucntion to select map
-	load_textures();
+		&window()->img.bits_per_pixel, &window()->img.line_length,
+	&window()->img.endian);
+	cub()->map = cub()->maps;
+	load_texturess();
 }
 
 void	window_create(void)

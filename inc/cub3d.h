@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/06 06:51:27 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 12:41:12 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@
 # define MM_SCALE (ft_min(HEIGHT, WIDTH) / 20)
 # define MM_WIDTH (WIDTH / 6)
 # define MM_HEIGHT (HEIGHT * 0.83)
-#define TEXWIDTH 64
-
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)
+# define TEX_WIDTH 64
 
 # define X 0
 # define Y 1
-
 # define PI 3.14159265359
 # define SPACERS " \t\n\v\f\r"
 # define OUTLINE 'a'
@@ -70,174 +68,179 @@
 # define KEY_SPACE 32
 # define EVENT_CLOSE_BTN 17
 
-typedef struct s_map	t_map;
+typedef struct s_map		t_map;
 typedef struct s_texture	t_texture;
-typedef struct s_cub	t_cub;
-typedef struct s_window	t_window;
-typedef struct s_player	t_player;
-typedef struct s_image	t_image;
-typedef struct s_ray	t_ray;
-typedef void			(*array_func)();
+typedef struct s_cub		t_cub;
+typedef struct s_window		t_window;
+typedef struct s_player		t_player;
+typedef struct s_image		t_image;
+typedef struct s_ray		t_ray;
+typedef void				(*array_func)();
 
-struct					s_texture
+struct						s_texture
 {
-	void				*img;
-	char				*addr;
-	int					bits_per_pixel;
-	int					line_length;
-	int					endian;
-	int					width;
-	int					height;
+	void					*img;
+	char					*addr;
+	int						bits_per_pixel;
+	int						line_length;
+	int						endian;
+	int						width;
+	int						height;
 };
 
-struct					s_map
+struct						s_map
 {
-	int					map_number;
-	char				*map_name;
-	bool				playable;
-	char				*error;
-	char				**map;
-	char				*cords[6];
-	int					FC[2];
-	int					map_width;
-	int					map_height;
-	int					start_x;
-	int					start_y;
-	char				start_dir;
-	t_texture			texture[5];
+	int						map_number;
+	char					*map_name;
+	bool					playable;
+	char					*error;
+	char					**map;
+	char					*cords[6];
+	int						FC[2];
+	int						map_width;
+	int						map_height;
+	int						start_x;
+	int						start_y;
+	char					start_dir;
+	t_texture				textures[5];
 
-	void				(*print)();
-	void				(*destroy_file)(t_map *map);
-	void				(*destroy_map)(t_map *map);
-	void				(*destroy_cords)(t_map *map);
-	void				(*destroy_error)(t_map *map);
+	void					(*print)();
+	void					(*destroy_file)(t_map *map);
+	void					(*destroy_map)(t_map *map);
+	void					(*destroy_cords)(t_map *map);
+	void					(*destroy_error)(t_map *map);
 
-	t_map				*next;
+	t_map					*next;
 };
 
-struct					s_image
+struct						s_image
 {
-	void				*img;
-	char				*addr;
-	int					bits_per_pixel;
-	int					line_length;
-	int					endian;
+	void					*img;
+	char					*addr;
+	int						bits_per_pixel;
+	int						line_length;
+	int						endian;
 };
 
-struct					s_window
+struct						s_window
 {
-	void				*mlx;
-	void				*win;
-	int					minimap_scale;
-	t_image				img;
-	double				tile_size;
-	double				fps;
+	void					*mlx;
+	void					*win;
+	int						minimap_scale;
+	t_image					img;
+	double					tile_size;
+	double					fps;
 };
 
-struct					s_ray
+struct						s_ray
 {
-	double				dir[2];
-	double				side_dist[2];
-	double				delta_dist[2];
-	double				step[2];
-	double				angle;
-	int					map_pos[2];
-	int					side;
-	double				distance;
-	int					wallheight;
-	int					drawstart;
-	int					drawend;
-	double				correctdistance;
-	double				wallx;
-	int					texx;
+	double					dir[2];
+	double					side_dist[2];
+	double					delta_dist[2];
+	double					step[2];
+	double					angle;
+	int						map_pos[2];
+	int						side;
+	double					distance;
+	int						wallheight;
+	int						drawstart;
+	int						drawend;
+	double					correctdistance;
+	double					wallx;
+	int						tex[2];
+	int						texnum;
+	int						texheight;
+	double					texpos;
+	double					texstep;
+	int						color;
 };
 
-struct					s_player
+struct						s_player
 {
-	double				pos[2];
-	double				angle;
-	int					mouse_x;
-	int					mouse_y;
-	double				vector[2];
-	int					map_pos[2];
-	t_ray				ray;
-	bool				w;
-	bool				a;
-	bool				s;
-	bool				d;
-	bool				q;
-	bool				e;
+	double					pos[2];
+	double					angle;
+	int						mouse_x;
+	int						mouse_y;
+	double					vector[2];
+	int						map_pos[2];
+	t_ray					ray;
+	bool					w;
+	bool					a;
+	bool					s;
+	bool					d;
+	bool					q;
+	bool					e;
 };
 
-struct					s_cub
+struct						s_cub
 {
-	t_map				*map;
-	t_map				*maps;
-	int					status;
-	void				(*map_load)(char **av);
-	int					(*exit)(char *str);
-	void				(*maps_destroy)();
-	t_map				*(*map_new)(char *file_path);
-	void				(*map_extract_data)(t_map *map);
-	void				(*draw_screen)();
-	void				(*draw_minimap)();
-	void				(*move)();
-	t_window			window;
-	t_player			player;
+	t_map					*map;
+	t_map					*maps;
+	int						status;
+	void					(*map_load)(char **av);
+	int						(*exit)(char *str);
+	void					(*maps_destroy)();
+	t_map					*(*map_new)(char *file_path);
+	void					(*map_extract_data)(t_map *map);
+	void					(*draw_screen)();
+	void					(*draw_minimap)();
+	void					(*move)();
+	t_window				window;
+	t_player				player;
 };
 
-t_cub					*cub(void);
-t_ray					*ray(void);
-t_window				*window(void);
-t_player				*player(void);
-t_map					*map_new(char *file_path);
-void					map_extract_file(t_map *map, char *file_path);
-int						err(char *str, t_map *map);
-void					print_matrix(char **matrix);
-int						exit_cub(char *str);
-void					maps_destroy(void);
-void					map_add_back(t_map **map, t_map *new_map);
-void					map_load(char **argv);
-void					map_extract_data(t_map *map);
-void					map_print(t_map *map);
-int						all_filled(t_map *map);
-void					map_extract_map(char **grid, t_map *map);
-t_map					*map_new(char *file_path);
-void					map_destroy_map(t_map *map);
-void					map_destroy_error(t_map *map);
-void					map_destroy_cords(t_map *map);
-void					map_clear(t_map *map);
-void					map_check(t_map *map);
-int						map_invalid_char(t_map *map);
-int						matrix_biggest_string(char **str);
+t_cub						*cub(void);
+t_ray						*ray(void);
+t_window					*window(void);
+t_player					*player(void);
+t_map						*map_new(char *file_path);
+void						map_extract_file(t_map *map, char *file_path);
+int							err(char *str, t_map *map);
+void						print_matrix(char **matrix);
+int							exit_cub(char *str);
+void						maps_destroy(void);
+void						map_add_back(t_map **map, t_map *new_map);
+void						map_load(char **argv);
+void						map_extract_data(t_map *map);
+void						map_print(t_map *map);
+int							all_filled(t_map *map);
+void						map_extract_map(char **grid, t_map *map);
+t_map						*map_new(char *file_path);
+void						map_destroy_map(t_map *map);
+void						map_destroy_error(t_map *map);
+void						map_destroy_cords(t_map *map);
+void						map_clear(t_map *map);
+void						map_check(t_map *map);
+int							map_invalid_char(t_map *map);
+int							matrix_biggest_string(char **str);
 
-void					window_create(void);
-int						key_press(int keycode);
-int						key_release(int keycode);
-void					draw_map(void);
-int						render(void);
-void					movement(void);
+void						window_create(void);
+int							key_press(int keycode);
+int							key_release(int keycode);
+void						draw_map(void);
+int							render(void);
+void						movement(void);
 
-void					buffer_mlx_pixel_put(int x, int y, int color);
-void					draw_line(double x0, double y0, double angle,
-							double lenght, int color);
-void					draw_point(int x, int y, int size, int color);
+void						buffer_mlx_pixel_put(int x, int y, int color);
+void						draw_line(double x0, double y0, double angle,
+								double lenght, int color);
+void						draw_point(int x, int y, int size, int color);
 
-void					draw_square(int x, int y, int width, int height,
-							int color);
-void					draw_screen(void);
-void					draw_circle(int x_center, int y_center, int radius,
-							int color);
-void					fps(void);
-int						draw_collum(double lenght, int color);
-void					clear_screen(void);
-int						stoi(double nb);
-double					itos(int nb);
-void					draw_minimap(void);
-double					raycast(void);
-void					draw_fov(void);
-void					draw_screen(void);
-void					calculate_wall_height_and_draw_limits(void);
-void					draw_wall(int x);
+void						draw_square(int x, int y, int width, int height,
+								int color);
+void						draw_screen(void);
+void						draw_circle(int x_center, int y_center, int radius,
+								int color);
+void						fps(void);
+int							draw_collum(double lenght, int color);
+void						clear_screen(void);
+int							stoi(double nb);
+double						itos(int nb);
+void						draw_minimap(void);
+double						raycast(void);
+void						draw_fov(void);
+void						draw_screen(void);
+void						calculate_wall_height_and_draw_limits(void);
+void						draw_wall(int x);
 
 #endif

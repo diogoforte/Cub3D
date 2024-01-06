@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/06 06:56:42 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 09:59:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ void	calculate_distance(void)
 	ray()->distance /= SCALE;
 	ray()->correctdistance = ray()->distance * cos(ray()->angle
 		- player()->angle);
-	if (ray()->correctdistance < 0.0001)
-		ray()->correctdistance = 0.1;
 }
 
 void	draw_fov(void)

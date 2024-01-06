@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 06:18:27 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/10/07 06:25:15 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/06 05:01:44 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin_address(char **original, char *add)
 	if (!original || !(*original) || !add)
 		return (NULL);
 	joined = ft_calloc(sizeof(char), (ft_strlen((*original)) + ft_strlen(add)
-			+ 1));
+				+ 1));
 	if (!joined)
 		return (NULL);
 	i = -1;

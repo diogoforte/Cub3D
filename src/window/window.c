@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/06 12:59:27 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/07 09:50:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	player_dir(void)
 
 void	player_prepare(void)
 {
-	player()->map_pos[X] = cub()->map->start_x;
-	player()->map_pos[Y] = cub()->map->start_y;
+	player()->map_pos[X] = cub()->map->start_x + 1;
+	player()->map_pos[Y] = cub()->map->start_y + 1;
 	player()->pos[X] = itos(player()->map_pos[X]);
 	player()->pos[Y] = itos(player()->map_pos[Y]);
 	player_dir();

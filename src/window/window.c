@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/07 09:50:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/07 10:15:52 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	player_prepare(void)
 {
 	player()->map_pos[X] = cub()->map->start_x + 1;
 	player()->map_pos[Y] = cub()->map->start_y + 1;
-	player()->pos[X] = itos(player()->map_pos[X]);
-	player()->pos[Y] = itos(player()->map_pos[Y]);
+	player()->pos[X] = itos(player()->map_pos[X]) + 0.5 * SCALE;
+	player()->pos[Y] = itos(player()->map_pos[Y]) + 0.5 * SCALE;
 	player_dir();
 	player()->vector[X] = cos(player()->angle);
 	player()->vector[Y] = sin(player()->angle);
 }
 
-void	load_texturess(void)
+void	load_textures(void)
 {
 	int	i;
 
@@ -66,7 +66,7 @@ void	window_prepare(void)
 		&window()->img.bits_per_pixel, &window()->img.line_length,
 	&window()->img.endian);
 	cub()->map = cub()->maps;
-	load_texturess();
+	load_textures();
 }
 
 void	window_create(void)

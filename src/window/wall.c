@@ -6,94 +6,72 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/06 12:55:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:17:06 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	calculate_wall_height_and_draw_limits(void)
+void	calculate_wall_height_and_draw_limits(t_tdata *data)
 {
-	ray()->wallheight = (int)(HEIGHT / ray()->correctdistance);
-	ray()->drawstart = -(ray()->wallheight) / 2 + HEIGHT / 2;
-	if (ray()->drawstart < 0)
-		ray()->drawstart = 0;
-	ray()->drawend = ray()->wallheight / 2 + HEIGHT / 2;
-	if (ray()->drawend >= HEIGHT)
-		ray()->drawend = HEIGHT - 1;
-	if (ray()->side == 0)
-		ray()->wallx = (cub()->player.pos[Y] / SCALE) + ray()->correctdistance
-		* ray()->dir[Y];
+	data->ray.wallheight = (int)(HEIGHT / data->ray.correctdistance);
+	data->ray.drawstart = -(data->ray.wallheight) / 2 + HEIGHT / 2;
+	if (data->ray.drawstart < 0)
+		data->ray.drawstart = 0;
+	data->ray.drawend = data->ray.wallheight / 2 + HEIGHT / 2;
+	if (data->ray.drawend >= HEIGHT)
+		data->ray.drawend = HEIGHT - 1;
+	if (data->ray.side == 0)
+		data->ray.wallx = (cub()->player.pos[Y] / SCALE) + data->ray.correctdistance
+		* data->ray.dir[Y];
 	else
-		ray()->wallx = (cub()->player.pos[X] / SCALE) + ray()->correctdistance
-		* ray()->dir[X];
-	ray()->wallx -= floor(ray()->wallx);
-	ray()->tex[X] = (int)(ray()->wallx * (double)TEX_WIDTH);
-	if (ray()->side == 0 && ray()->dir[X] > 0)
-		ray()->tex[X] = TEX_WIDTH - ray()->tex[X] - 1;
-	if (ray()->side == 1 && ray()->dir[Y] < 0)
-		ray()->tex[X] = TEX_WIDTH - ray()->tex[X] - 1;
+		data->ray.wallx = (cub()->player.pos[X] / SCALE) + data->ray.correctdistance
+		* data->ray.dir[X];
+	data->ray.wallx -= floor(data->ray.wallx);
+	data->ray.tex[X] = (int)(data->ray.wallx * (double)TEX_WIDTH);
+	if (data->ray.side == 0 && data->ray.dir[X] > 0)
+		data->ray.tex[X] = TEX_WIDTH - data->ray.tex[X] - 1;
+	if (data->ray.side == 1 && data->ray.dir[Y] < 0)
+		data->ray.tex[X] = TEX_WIDTH - data->ray.tex[X] - 1;
 }
 
-int	get_texture_number(void)
+int	get_texture_number(t_tdata *data)
 {
-	if (ray()->side == 0)
+	if (data->ray.side == 0)
 	{
-		if (ray()->dir[0] > 0)
+		if (data->ray.dir[0] > 0)
 			return (EA);
 		else
 			return (WE);
 	}
-	if (ray()->dir[1] > 0)
+	if (data->ray.dir[1] > 0)
 		return (SO);
 	else
 		return (NO);
 }
 
-void	draw_wall(int x)
+void	draw_wall(int x, t_tdata *data)
 {
-	int	y;
+	int y;
+	int texnum;
+	int color;
+	int texheight;
+	double step;
+	double texpos;
 
-	ray()->texnum = get_texture_number();
-	ray()->texheight = cub()->map->textures[ray()->texnum].height;
-	ray()->texstep = 1.0 * ray()->texheight / ray()->wallheight;
-	ray()->texpos = (ray()->drawstart - HEIGHT / 2 + ray()->wallheight / 2)
-	* ray()->texstep;
-	y = ray()->drawstart - 1;
-	while (++y < ray()->drawend)
+	texnum = get_texture_number(data);
+	texheight = cub()->map->textures[texnum].height;
+	step = 1.0 * texheight / data->ray.wallheight;
+	texpos = (data->ray.drawstart - HEIGHT / 2 + data->ray.wallheight / 2) * step;
+	y = data->ray.drawstart - 1;
+	while (++y < data->ray.drawend)
 	{
-		ray()->tex[Y] = (int)ray()->texpos & (ray()->texheight - 1);
-		ray()->texpos += ray()->texstep;
-		ray()->color = ((int *)cub()->map->textures[ray()->texnum].addr)
-	[ray()->texheight * ray()->tex[Y] + ray()->tex[X]];
-		if (ray()->side == 1)
-			ray()->color = (ray()->color >> 1) & 8355711;
-		buffer_mlx_pixel_put(x, y, ray()->color);
+		data->ray.tex[Y] = (int)texpos & (texheight - 1);
+		texpos += step;
+		color = ((int *)cub()->map->textures[texnum].addr)[texheight
+		* data->ray.tex[Y] + data->ray.tex[X]];
+		if (data->ray.side == 1)
+			color = (color >> 1) & 8355711;
+		buffer_mlx_pixel_put(x, y, color);
 	}
 }
-
-// void	draw_wall(int x)
-// {
-// 	int y;
-// 	int texNum;
-// 	int color;
-// 	int texHeight;
-// 	double step;
-// 	double texPos;
-
-// 	texNum = get_texture_number();
-// 	texHeight = cub()->map->textures[texNum].height;
-// 	step = 1.0 * texHeight / ray()->wallheight;
-// 	texPos = (ray()->drawstart - HEIGHT / 2 + ray()->wallheight / 2) * step;
-// 	y = ray()->drawstart - 1;
-// 	while (++y < ray()->drawend)
-// 	{
-// 		ray()->tex[Y] = (int)texPos & (texHeight - 1);
-// 		texPos += step;
-// 		color = ((int *)cub()->map->textures[texNum].addr)[texHeight
-// 		* ray()->tex[Y] + ray()->tex[X]];
-// 		if (ray()->side == 1)
-// 			color = (color >> 1) & 8355711;
-// 		buffer_mlx_pixel_put(x, y, color);
-// 	}
-// }

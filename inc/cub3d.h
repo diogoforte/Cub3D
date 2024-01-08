@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/07 09:40:48 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:40:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@
 # include "../minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <math.h>
+# include <pthread.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <time.h>
 # include <unistd.h>
 
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH 1080
+# define HEIGHT 1080
 # define SCALE 50
 # define MM_SCALE (ft_min(HEIGHT, WIDTH) / 20)
 # define MM_WIDTH (WIDTH / 6)
@@ -33,6 +35,14 @@
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)
 # define TEX_WIDTH 64
+# define MOVE_SPEED 500
+# define ROT_SPEED 5
+# define FPS 1000
+# define FRAME_TIME_NS (1000000000L / FPS)
+
+# define THREADS 8
+# define THREAD_WIDTH (WIDTH / THREADS)
+# define THREAD_HEIGHT (HEIGHT / THREADS)
 
 # define X 0
 # define Y 1
@@ -75,6 +85,7 @@ typedef struct s_window		t_window;
 typedef struct s_player		t_player;
 typedef struct s_image		t_image;
 typedef struct s_ray		t_ray;
+typedef struct s_tdata		t_tdata;
 typedef void				(*array_func)();
 
 struct						s_texture
@@ -130,6 +141,7 @@ struct						s_window
 	t_image					img;
 	double					tile_size;
 	double					fps;
+	double					frame_time;
 };
 
 struct						s_ray
@@ -189,6 +201,16 @@ struct						s_cub
 	t_player				player;
 };
 
+typedef struct s_tdata
+{
+	int						id;
+	int						raycast_start;
+	int						raycast_end;
+	int						fc_start;
+	int						fc_end;
+	t_ray					ray;
+}							t_tdata;
+
 t_cub						*cub(void);
 t_ray						*ray(void);
 t_window					*window(void);
@@ -237,10 +259,11 @@ void						clear_screen(void);
 int							stoi(double nb);
 double						itos(int nb);
 void						draw_minimap(void);
-double						raycast(void);
-void						draw_fov(void);
-void						draw_screen(void);
-void						calculate_wall_height_and_draw_limits(void);
-void						draw_wall(int x);
+double						raycast(t_tdata *data);
+t_tdata						*tdata(int threadid);
 
+void						*draw_fov(void *arg);
+void						draw_fov_threads(void);
+void						calculate_wall_height_and_draw_limits(t_tdata *data);
+void						draw_wall(int x, t_tdata *data);
 #endif

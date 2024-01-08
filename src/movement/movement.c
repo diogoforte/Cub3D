@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/05 12:26:01 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:42:59 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ static void	move(int key)
 {
 	float	x;
 	float	y;
+	float	norm;
 
-	x = cub()->player.pos[X] + key * (cub()->player.vector[X]) * 2;
-	y = cub()->player.pos[Y] + key * (cub()->player.vector[Y]) * 2;
-	if (!collision((int)x / SCALE, (int)cub()->player.pos[Y]
-			/ SCALE))
+	norm = sqrt(pow(cub()->player.vector[X], 2) + pow(cub()->player.vector[Y], 2));
+	x = cub()->player.pos[X] + key * (cub()->player.vector[X]) * MOVE_SPEED
+		* cub()->window.frame_time;
+	y = cub()->player.pos[Y] + key * (cub()->player.vector[Y]) * MOVE_SPEED
+		* cub()->window.frame_time;
+	if (!collision((int)x / SCALE, (int)cub()->player.pos[Y] / SCALE))
 		cub()->player.pos[X] = x;
-	if (!collision((int)cub()->player.pos[X] / SCALE, (int)y
-			/ SCALE))
+	if (!collision((int)cub()->player.pos[X] / SCALE, (int)y / SCALE))
 		cub()->player.pos[Y] = y;
 	cub()->player.map_pos[X] = cub()->player.pos[X] / SCALE;
 	cub()->player.map_pos[Y] = cub()->player.pos[Y] / SCALE;
@@ -38,9 +40,11 @@ static void	strafe(int key)
 {
 	float	x;
 	float	y;
-
-	x = cub()->player.pos[X] + key * (cos(cub()->player.angle - (PI / 2))) * 2;
-	y = cub()->player.pos[Y] + key * (sin(cub()->player.angle - (PI / 2))) * 2;
+	
+	x = cub()->player.pos[X] + key * (cos(cub()->player.angle - (PI / 2)))
+		* MOVE_SPEED * cub()->window.frame_time;
+	y = cub()->player.pos[Y] + key * (sin(cub()->player.angle - (PI / 2)))
+		* MOVE_SPEED * cub()->window.frame_time;
 	if (!collision((x / SCALE), cub()->player.pos[Y] / SCALE))
 		cub()->player.pos[X] = x;
 	if (!collision((cub()->player.pos[X] / SCALE), y / SCALE))
@@ -51,7 +55,7 @@ static void	strafe(int key)
 
 static void	rotate(int key)
 {
-	cub()->player.angle += key * 0.001;
+	cub()->player.angle += key * ROT_SPEED * cub()->window.frame_time;
 	if (cub()->player.angle < 0)
 		cub()->player.angle += 2 * PI;
 	if (cub()->player.angle > 2 * PI)
@@ -71,10 +75,11 @@ void	movement(void)
 	if (cub()->player.d)
 		strafe(D);
 	if (cub()->player.q)
-		rotate(Q - 50);
+		rotate(Q);
 	if (cub()->player.e)
-		rotate(E + 50);
-	mlx_mouse_get_pos(cub()->window.mlx, cub()->window.win, &cub()->player.mouse_x, &cub()->player.mouse_y);
+		rotate(E);
+	mlx_mouse_get_pos(cub()->window.mlx, cub()->window.win,
+		&cub()->player.mouse_x, &cub()->player.mouse_y);
 	cub()->player.mouse_x -= (WIDTH / 2);
 	rotate(cub()->player.mouse_x);
 	mlx_mouse_move(cub()->window.mlx, cub()->window.win, WIDTH / 2, HEIGHT / 2);

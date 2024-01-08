@@ -6,121 +6,152 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/06 09:59:32 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:38:04 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ray_side(void)
+void	*ceiling_floor(void *arg)
 {
-	if (ray()->dir[X] < 0)
+	int		x;
+	int		y;
+	t_tdata	*data;
+
+	data = (t_tdata *)arg;
+	x = data->fc_start - 1;
+	while (++x < data->fc_end)
 	{
-		ray()->step[X] = -1;
-		ray()->side_dist[X] = (player()->pos[X] - ray()->map_pos[X])
-		* ray()->delta_dist[X];
+		y = -1;
+		while (++y < HEIGHT / 2)
+			buffer_mlx_pixel_put(x, y, cub()->map->FC[1]);
+		while (++y < HEIGHT)
+			buffer_mlx_pixel_put(x, y, cub()->map->FC[0]);
+	}
+	return (NULL);
+}
+
+void	ray_side(t_tdata *data)
+{
+	if (data->ray.dir[X] < 0)
+	{
+		data->ray.step[X] = -1;
+		data->ray.side_dist[X] = (player()->pos[X] - data->ray.map_pos[X])
+			* data->ray.delta_dist[X];
 	}
 	else
 	{
-		ray()->step[X] = 1;
-		ray()->side_dist[X] = (ray()->map_pos[X] + 1.0 - player()->pos[X])
-		* ray()->delta_dist[X];
+		data->ray.step[X] = 1;
+		data->ray.side_dist[X] = (data->ray.map_pos[X] + 1.0 - player()->pos[X])
+			* data->ray.delta_dist[X];
 	}
-	if (ray()->dir[Y] < 0)
+	if (data->ray.dir[Y] < 0)
 	{
-		ray()->step[Y] = -1;
-		ray()->side_dist[Y] = (player()->pos[Y] - ray()->map_pos[Y])
-		* ray()->delta_dist[Y];
+		data->ray.step[Y] = -1;
+		data->ray.side_dist[Y] = (player()->pos[Y] - data->ray.map_pos[Y])
+			* data->ray.delta_dist[Y];
 	}
 	else
 	{
-		ray()->step[Y] = 1;
-		ray()->side_dist[Y] = (ray()->map_pos[Y] + 1.0 - player()->pos[Y])
-		* ray()->delta_dist[Y];
+		data->ray.step[Y] = 1;
+		data->ray.side_dist[Y] = (data->ray.map_pos[Y] + 1.0 - player()->pos[Y])
+			* data->ray.delta_dist[Y];
 	}
 }
 
-double	raycast(void)
+double	raycast(t_tdata *data)
 {
-	ray_side();
+	ray_side(data);
 	while (1)
 	{
-		if (ray()->side_dist[X] < ray()->side_dist[Y])
+		if (data->ray.side_dist[X] < data->ray.side_dist[Y])
 		{
-			ray()->side_dist[X] += ray()->delta_dist[X];
-			ray()->map_pos[X] += ray()->step[X];
-			ray()->side = 0;
+			data->ray.side_dist[X] += data->ray.delta_dist[X];
+			data->ray.map_pos[X] += data->ray.step[X];
+			data->ray.side = 0;
 		}
 		else
 		{
-			ray()->side_dist[Y] += ray()->delta_dist[Y];
-			ray()->map_pos[Y] += ray()->step[Y];
-			ray()->side = 1;
+			data->ray.side_dist[Y] += data->ray.delta_dist[Y];
+			data->ray.map_pos[Y] += data->ray.step[Y];
+			data->ray.side = 1;
 		}
-		if (cub()->map->map[stoi(ray()->map_pos[Y]) + 1][stoi(ray()->map_pos[X])
-			+ 1] == '1')
+		if (cub()->map->map[stoi(data->ray.map_pos[Y])
+			+ 1][stoi(data->ray.map_pos[X]) + 1] == '1')
 			break ;
 	}
-	if (ray()->side_dist[X] < ray()->side_dist[Y])
-		return ((ray()->map_pos[X] - player()->pos[X] + (1 - ray()->step[X])
-				/ 2) / ray()->dir[X]);
-	return ((ray()->map_pos[Y] - player()->pos[Y] + (1 - ray()->step[Y]) / 2)
-		/ ray()->dir[Y]);
+	if (data->ray.side_dist[X] < data->ray.side_dist[Y])
+		return ((data->ray.map_pos[X] - player()->pos[X] + (1
+					- data->ray.step[X]) / 2) / data->ray.dir[X]);
+	return ((data->ray.map_pos[Y] - player()->pos[Y] + (1 - data->ray.step[Y])
+			/ 2) / data->ray.dir[Y]);
 }
 
-void	ceiling_floor(void)
+void	calculate_distance(t_tdata *data)
 {
-	int	x;
-	int	y;
-
-	y = 0;
-	x = 0;
-	while (y++ < HEIGHT / 2)
-	{
-		x = 0;
-		while (x < WIDTH)
-			buffer_mlx_pixel_put(x++, y, cub()->map->FC[1]);
-	}
-	while (y++ < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-			buffer_mlx_pixel_put(x++, y, cub()->map->FC[0]);
-	}
-}
-
-void	calculate_distance(void)
-{
-	raycast();
-	if (!ray()->side)
-		ray()->distance = (ray()->side_dist[X] - ray()->delta_dist[X]);
+	data->ray.dir[X] = cos(data->ray.angle);
+	data->ray.dir[Y] = sin(data->ray.angle);
+	data->ray.map_pos[X] = (int)player()->pos[X];
+	data->ray.map_pos[Y] = (int)player()->pos[Y];
+	data->ray.delta_dist[X] = fabs(1 / data->ray.dir[X]);
+	data->ray.delta_dist[Y] = fabs(1 / data->ray.dir[Y]);
+	raycast(data);
+	if (!data->ray.side)
+		data->ray.distance = (data->ray.side_dist[X] - data->ray.delta_dist[X]);
 	else
-		ray()->distance = (ray()->side_dist[Y] - ray()->delta_dist[Y]);
-	ray()->distance /= SCALE;
-	ray()->correctdistance = ray()->distance * cos(ray()->angle
-		- player()->angle);
+		data->ray.distance = (data->ray.side_dist[Y] - data->ray.delta_dist[Y]);
+	data->ray.distance /= SCALE;
+	data->ray.correctdistance = data->ray.distance * cos(data->ray.angle
+			- player()->angle);
 }
 
-void	draw_fov(void)
+void	*draw_fov(void *arg)
 {
-	int	x;
+	t_tdata	*data;
+	int		x;
 
-	x = -1;
+	data = (t_tdata *)arg;
+	x = data->raycast_start - 1;
 	if (!cub()->map->playable)
-		return ;
-	ray()->angle = -(FOV / 2) + player()->angle;
-	ceiling_floor();
-	while (++x < WIDTH)
+		return (NULL);
+	data->ray.angle = -(FOV / 2) + player()->angle + data->raycast_start
+		* ANGLE;
+	while (++x < data->raycast_end)
 	{
-		ray()->dir[X] = cos(ray()->angle);
-		ray()->dir[Y] = sin(ray()->angle);
-		ray()->map_pos[X] = (int)player()->pos[X];
-		ray()->map_pos[Y] = (int)player()->pos[Y];
-		ray()->delta_dist[X] = fabs(1 / ray()->dir[X]);
-		ray()->delta_dist[Y] = fabs(1 / ray()->dir[Y]);
-		calculate_distance();
-		calculate_wall_height_and_draw_limits();
-		draw_wall(x);
-		ray()->angle += ANGLE;
+		calculate_distance(data);
+		calculate_wall_height_and_draw_limits(data);
+		draw_wall(x, data);
+		data->ray.angle += ANGLE;
 	}
+	return (NULL);
+}
+
+void	draw_fov_threads(void)
+{
+	int			i;
+	pthread_t	threads[THREADS];
+	t_tdata		*data[THREADS];
+
+	i = -1;
+	while (++i < THREADS)
+	{
+		data[i] = tdata(i);
+		data[i]->raycast_start = i * THREAD_WIDTH;
+		data[i]->raycast_end = (i + 1) * THREAD_WIDTH;
+		pthread_create(&threads[i], NULL, ceiling_floor, data[i]);
+	}
+	i = -1;
+	while (++i < THREADS)
+		pthread_join(threads[i], NULL);
+	i = -1;
+	while (++i < THREADS)
+	{
+		data[i] = tdata(i);
+		data[i]->fc_start = i * THREAD_WIDTH;
+		data[i]->fc_end = (i + 1) * THREAD_WIDTH;
+		pthread_create(&threads[i], NULL, draw_fov, data[i]);
+	}
+	i = -1;
+	while (++i < THREADS)
+		pthread_join(threads[i], NULL);
 }

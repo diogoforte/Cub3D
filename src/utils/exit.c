@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/06 06:37:53 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:34:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ int	err(char *str, t_map *map)
 
 int	exit_cub(char *str)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+		mlx_destroy_image(cub()->window.mlx, cub()->map->textures[i].img);
 	cub()->maps_destroy();
 	if (cub()->window.win)
 		mlx_destroy_window(cub()->window.mlx, cub()->window.win);

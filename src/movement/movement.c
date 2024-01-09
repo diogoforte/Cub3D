@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/09 10:47:49 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:22:30 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void	movement(void)
 	move_direction = 0;
 	strafe_direction = 0;
 	if (cub()->player.w)
-		move_direction = W;
-	else if (cub()->player.s)
-		move_direction = S;
+		move_direction += W;
+	if (cub()->player.s)
+		move_direction += S;
 	if (cub()->player.a)
-		strafe_direction = A;
-	else if (cub()->player.d)
-		strafe_direction = D;
+		strafe_direction += A;
+	if (cub()->player.d)
+		strafe_direction += D;
 	move_and_strafe(move_direction, strafe_direction);
 	if (cub()->player.q)
 		rotate(Q);

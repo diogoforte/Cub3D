@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/06 04:54:53 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:40:18 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,6 @@ void	draw_minimap(void)
 	player_y = (player()->pos[Y] / SCALE) * MM_SCALE + MM_SCALE;
 	radius = MM_SCALE / 15;
 	draw_minimap_tiles(player_x, player_y, radius);
-	draw_circle(MM_WIDTH, MM_HEIGHT, MM_SCALE / 10, 0xFFFFFF);
-	draw_line(MM_WIDTH, MM_HEIGHT, player()->angle, MM_SCALE / 4, 0xFFFFFF);
+	minimap_player(0xFFFFFF);
+	minimap_player_angle(0xFFFFFF);
 }

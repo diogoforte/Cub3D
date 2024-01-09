@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/08 17:40:26 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:55:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,6 @@ struct						s_ray
 	double					correctdistance;
 	double					wallx;
 	int						tex[2];
-	int						texnum;
-	int						texheight;
-	double					texpos;
-	double					texstep;
-	int						color;
 };
 
 struct						s_player
@@ -212,13 +207,11 @@ typedef struct s_tdata
 }							t_tdata;
 
 t_cub						*cub(void);
-t_ray						*ray(void);
 t_window					*window(void);
 t_player					*player(void);
 t_map						*map_new(char *file_path);
 void						map_extract_file(t_map *map, char *file_path);
 int							err(char *str, t_map *map);
-void						print_matrix(char **matrix);
 int							exit_cub(char *str);
 void						maps_destroy(void);
 void						map_add_back(t_map **map, t_map *new_map);
@@ -239,25 +232,11 @@ int							matrix_biggest_string(char **str);
 void						window_create(void);
 int							key_press(int keycode);
 int							key_release(int keycode);
-void						draw_map(void);
 int							render(void);
 void						movement(void);
 
 void						buffer_mlx_pixel_put(int x, int y, int color);
-void						draw_line(double x0, double y0, double angle,
-								double lenght, int color);
-void						draw_point(int x, int y, int size, int color);
-
-void						draw_square(int x, int y, int width, int height,
-								int color);
-void						draw_screen(void);
-void						draw_circle(int x_center, int y_center, int radius,
-								int color);
 void						fps(void);
-int							draw_collum(double lenght, int color);
-void						clear_screen(void);
-int							stoi(double nb);
-double						itos(int nb);
 void						draw_minimap(void);
 double						raycast(t_tdata *data);
 t_tdata						*tdata(int threadid);
@@ -265,5 +244,11 @@ t_tdata						*tdata(int threadid);
 void						*draw_fov(void *arg);
 void						draw_fov_threads(void);
 void						calculate_wall_height_and_draw_limits(t_tdata *data);
-void						draw_wall(int x, t_tdata *data);
+void						draw_wall(int x, int y, t_tdata *data);
+void						minimap_player_angle(int color);
+void						minimap_player(int color);
+void						*ceiling_floor(void *arg);
+void						create_and_join_threads(pthread_t *threads,
+								t_tdata **data, void *(*func)(void *));
+void						draw_fov_threads(void);
 #endif

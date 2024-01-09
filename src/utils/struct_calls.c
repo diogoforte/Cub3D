@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:04:19 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/08 17:20:17 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:55:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_window	*window(void)
 
 t_cub	*cub(void)
 {
-	static t_cub cub = {
+	static t_cub	cub = {
 		NULL,
 		NULL,
 		0,
@@ -36,8 +36,8 @@ t_cub	*cub(void)
 		NULL,
 		draw_minimap,
 		movement,
-		{},
-		{}
+	{},
+	{}
 	};
 
 	return (&cub);
@@ -46,8 +46,9 @@ t_cub	*cub(void)
 t_tdata	*tdata(int threadid)
 {
 	static t_tdata	data[THREADS];
-	t_ray ray = {};
+	t_ray			ray;
 
+	ft_bzero(&ray, sizeof(t_ray));
 	data[threadid].id = threadid;
 	data[threadid].ray = ray;
 	return (&data[threadid]);

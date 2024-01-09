@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:57:22 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/08 17:31:24 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:59:28 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void	fps(void)
 void	speed(void)
 {
 	char			tmp[12];
-	double			curr_pos[2] = {player()->pos[X], player()->pos[Y]};
+	double			curr_pos[2];
 	static double	prev_pos[2] = {0, 0};
 	double			distance;
 	double			speed;
 
+	curr_pos[X] = player()->pos[X];
+	curr_pos[Y] = player()->pos[Y];
 	distance = sqrt(pow(curr_pos[X] - prev_pos[X], 2) + pow(curr_pos[Y]
 				- prev_pos[Y], 2));
 	speed = distance / cub()->window.frame_time;

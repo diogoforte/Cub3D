@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:30:42 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/05 18:06:53 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:43:41 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,77 +19,52 @@ void	buffer_mlx_pixel_put(int x, int y, int color)
 	if (x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
 		return ;
 	dst = cub()->window.img.addr + (y * cub()->window.img.line_length + x
-		* (cub()->window.img.bits_per_pixel / 8));
+			* (cub()->window.img.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line(double x0, double y0, double angle, double lenght, int color)
+void	minimap_player_angle(int color)
 {
+	double	x;
+	double	y;
 	double	angle_x;
 	double	angle_y;
 	int		i;
 
-	angle_x = (double)cos(angle);
-	angle_y = (double)sin(angle);
-	i = 0;
-    while (i <= lenght)
-    {
-        buffer_mlx_pixel_put((int)x0, (int)y0, color);
-        x0 += angle_x;
-        y0 += angle_y;
-		i++;
-    }
-}
-
-void draw_point(int x, int y, int size, int color)
-{
-	int i;
-	int j;
-	int center[2];
-
-	i = -size;
-	center[X] = x + size;
-	center[Y] = y + size;
-	while (++i < size)
+	x = MM_WIDTH;
+	y = MM_HEIGHT;
+	angle_x = (double)cos(cub()->player.angle);
+	angle_y = (double)sin(cub()->player.angle);
+	i = -1;
+	while (++i <= MM_SCALE / 4)
 	{
-		j = -size;
-		while (++j < size)
-		{
-			if (i * i + j * j <= size * size)
-				buffer_mlx_pixel_put(center[X] + i, center[Y] + j, color);
-		}
+		buffer_mlx_pixel_put((int)x, (int)y, color);
+		x += angle_x;
+		y += angle_y;
 	}
 }
-void	draw_circle(int x_center, int y_center, int radius, int color)
+
+void	minimap_player(int color)
 {
 	int	dx;
 	int	dy;
+	int	x;
+	int	y;
 
-	int x, y;
-	for (y = y_center - radius; y <= y_center + radius; y++)
+	y = MM_HEIGHT - MM_SCALE / 10;
+	while (y <= MM_HEIGHT + MM_SCALE / 10)
 	{
-		for (x = x_center - radius; x <= x_center + radius; x++)
+		x = MM_WIDTH - MM_SCALE / 10;
+		while (x <= MM_WIDTH + MM_SCALE / 10)
 		{
-			dx = x_center - x;
-			dy = y_center - y;
-			if (dx * dx + dy * dy <= radius * radius)
+			dx = MM_WIDTH - x;
+			dy = MM_HEIGHT - y;
+			if (dx * dx + dy * dy <= MM_SCALE / 10 * MM_SCALE / 10)
 			{
 				buffer_mlx_pixel_put(x, y, color);
 			}
+			x++;
 		}
-	}
-}
-
-void draw_square(int x, int y, int width, int height, int color)
-{
-	int i;
-	int j;
-
-	i = -1;
-	while (++i < height)
-	{
-		j = -1;
-		while (++j < width)
-			buffer_mlx_pixel_put(x + i, y + j, color);
+		y++;
 	}
 }

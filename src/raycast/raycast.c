@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/08 16:38:04 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:55:03 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ double	raycast(t_tdata *data)
 			data->ray.map_pos[Y] += data->ray.step[Y];
 			data->ray.side = 1;
 		}
-		if (cub()->map->map[stoi(data->ray.map_pos[Y])
-			+ 1][stoi(data->ray.map_pos[X]) + 1] == '1')
+		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1')
 			break ;
 	}
 	if (data->ray.side_dist[X] < data->ray.side_dist[Y])
@@ -120,38 +120,8 @@ void	*draw_fov(void *arg)
 	{
 		calculate_distance(data);
 		calculate_wall_height_and_draw_limits(data);
-		draw_wall(x, data);
+		draw_wall(x, 0, data);
 		data->ray.angle += ANGLE;
 	}
 	return (NULL);
-}
-
-void	draw_fov_threads(void)
-{
-	int			i;
-	pthread_t	threads[THREADS];
-	t_tdata		*data[THREADS];
-
-	i = -1;
-	while (++i < THREADS)
-	{
-		data[i] = tdata(i);
-		data[i]->raycast_start = i * THREAD_WIDTH;
-		data[i]->raycast_end = (i + 1) * THREAD_WIDTH;
-		pthread_create(&threads[i], NULL, ceiling_floor, data[i]);
-	}
-	i = -1;
-	while (++i < THREADS)
-		pthread_join(threads[i], NULL);
-	i = -1;
-	while (++i < THREADS)
-	{
-		data[i] = tdata(i);
-		data[i]->fc_start = i * THREAD_WIDTH;
-		data[i]->fc_end = (i + 1) * THREAD_WIDTH;
-		pthread_create(&threads[i], NULL, draw_fov, data[i]);
-	}
-	i = -1;
-	while (++i < THREADS)
-		pthread_join(threads[i], NULL);
 }

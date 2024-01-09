@@ -37,15 +37,15 @@ SRC = $(addprefix $(SRC_PATH), \
 		map/map_check.c \
 		utils/struct_calls.c \
 		utils/exit.c \
-		utils/utils.c \
 		movement/movement.c \
 		utils/graphic_utils.c \
 		window/window.c \
 		window/render.c \
 		window/minimap.c \
-		window/wall.c \
 		movement/key_hook.c \
 		raycast/raycast.c \
+		raycast/threads.c \
+		raycast/wall.c \
 )
 
 $(OBJ): $(OBJ_PATH)

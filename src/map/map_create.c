@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2023/10/31 16:19:35 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:57:00 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_map	*map_new(char *file_path)
 	map->destroy_error = map_destroy_error;
 	map->destroy_cords = map_destroy_cords;
 	map_check(map);
-	// map_print(map);
 	return (map);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/07 10:15:52 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:00:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	player_prepare(void)
 {
 	player()->map_pos[X] = cub()->map->start_x + 1;
 	player()->map_pos[Y] = cub()->map->start_y + 1;
-	player()->pos[X] = itos(player()->map_pos[X]) + 0.5 * SCALE;
-	player()->pos[Y] = itos(player()->map_pos[Y]) + 0.5 * SCALE;
+	player()->pos[X] = (player()->map_pos[X] + 0.5) * SCALE;
+	player()->pos[Y] = (player()->map_pos[Y] + 0.5) * SCALE;
 	player_dir();
 	player()->vector[X] = cos(player()->angle);
 	player()->vector[Y] = sin(player()->angle);
@@ -44,7 +44,7 @@ void	load_textures(void)
 	{
 		cub()->map->textures[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
 			cub()->map->cords[i], &cub()->map->textures[i].width,
-		&cub()->map->textures[i].height);
+			&cub()->map->textures[i].height);
 		if (!cub()->map->textures[i].img)
 		{
 			err("Failed to load texturess\n", cub()->map);

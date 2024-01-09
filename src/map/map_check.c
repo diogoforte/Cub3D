@@ -6,15 +6,15 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/06 03:58:46 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:57:10 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-int	check_open_rooms(t_map	*map, int x, int y, char c, char *str);
-void matrix_char_to_char(char **matrix, char old, char new);
-int check_all_rooms(t_map *map);
 
+int		check_open_rooms(t_map *map, int x, int y, char c, char *str);
+void	matrix_char_to_char(char **matrix, char old, char new);
+int		check_all_rooms(t_map *map);
 
 void	map_add_outline(t_map *map, char c)
 {
@@ -71,7 +71,7 @@ int	map_invalid_char(t_map *map)
 		while (map->map && map->map[i][++j])
 		{
 			if (!ft_strchr(VALID_CHARS, map->map[i][j]))
-					return (err("Invalid map character", map));
+				return (err("Invalid map character", map));
 			if (ft_strchr(PLAYER_START, map->map[i][j]))
 			{
 				if (++k == 2)
@@ -87,10 +87,9 @@ int	map_invalid_char(t_map *map)
 	return (0);
 }
 
-int	check_open_rooms(t_map	*map, int x, int y, char c, char *str)
+int	check_open_rooms(t_map *map, int x, int y, char c, char *str)
 {
-	if ((x < 0 || y < 0)
-		|| (x > map->map_width + 1 || y > map->map_height + 1)
+	if ((x < 0 || y < 0) || (x > map->map_width + 1 || y > map->map_height + 1)
 		|| !map->playable)
 		return (0);
 	if (!map->map[y] || !map->map[y][x])
@@ -98,7 +97,7 @@ int	check_open_rooms(t_map	*map, int x, int y, char c, char *str)
 	if (ft_strchr(PLAYER_START, map->map[y][x]))
 		return (err(str, map));
 	if (map->map[y][x] == WALL || map->map[y][x] == c)
-			return (0);
+		return (0);
 	map->map[y][x] = c;
 	check_open_rooms(map, x + 1, y, c, str);
 	check_open_rooms(map, x - 1, y, c, str);
@@ -107,10 +106,10 @@ int	check_open_rooms(t_map	*map, int x, int y, char c, char *str)
 	return (0);
 }
 
-int check_all_rooms(t_map *map)
+int	check_all_rooms(t_map *map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map->map && map->map[i])
@@ -127,10 +126,10 @@ int check_all_rooms(t_map *map)
 	return (0);
 }
 
-void matrix_char_to_char(char **matrix, char old, char new)
+void	matrix_char_to_char(char **matrix, char old, char new)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (matrix && matrix[i])

@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/08 16:17:06 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:55:12 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	calculate_wall_height_and_draw_limits(t_tdata *data)
 	if (data->ray.drawend >= HEIGHT)
 		data->ray.drawend = HEIGHT - 1;
 	if (data->ray.side == 0)
-		data->ray.wallx = (cub()->player.pos[Y] / SCALE) + data->ray.correctdistance
-		* data->ray.dir[Y];
+		data->ray.wallx = (cub()->player.pos[Y] / SCALE)
+			+ data->ray.correctdistance * data->ray.dir[Y];
 	else
-		data->ray.wallx = (cub()->player.pos[X] / SCALE) + data->ray.correctdistance
-		* data->ray.dir[X];
+		data->ray.wallx = (cub()->player.pos[X] / SCALE)
+			+ data->ray.correctdistance * data->ray.dir[X];
 	data->ray.wallx -= floor(data->ray.wallx);
 	data->ray.tex[X] = (int)(data->ray.wallx * (double)TEX_WIDTH);
 	if (data->ray.side == 0 && data->ray.dir[X] > 0)
@@ -50,26 +50,26 @@ int	get_texture_number(t_tdata *data)
 		return (NO);
 }
 
-void	draw_wall(int x, t_tdata *data)
+void	draw_wall(int x, int y, t_tdata *data)
 {
-	int y;
-	int texnum;
-	int color;
-	int texheight;
-	double step;
-	double texpos;
+	int		texnum;
+	int		color;
+	int		texheight;
+	double	step;
+	double	texpos;
 
 	texnum = get_texture_number(data);
 	texheight = cub()->map->textures[texnum].height;
 	step = 1.0 * texheight / data->ray.wallheight;
-	texpos = (data->ray.drawstart - HEIGHT / 2 + data->ray.wallheight / 2) * step;
+	texpos = (data->ray.drawstart - HEIGHT / 2 + data->ray.wallheight / 2)
+		* step;
 	y = data->ray.drawstart - 1;
 	while (++y < data->ray.drawend)
 	{
 		data->ray.tex[Y] = (int)texpos & (texheight - 1);
 		texpos += step;
 		color = ((int *)cub()->map->textures[texnum].addr)[texheight
-		* data->ray.tex[Y] + data->ray.tex[X]];
+			* data->ray.tex[Y] + data->ray.tex[X]];
 		if (data->ray.side == 1)
 			color = (color >> 1) & 8355711;
 		buffer_mlx_pixel_put(x, y, color);

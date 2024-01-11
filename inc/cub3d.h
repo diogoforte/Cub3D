@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/09 11:55:41 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/10 23:16:54 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)
 # define TEX_WIDTH 64
-# define MOVE_SPEED 500
-# define ROT_SPEED 5
+# define MOVE_SPEED 75
+# define ROT_SPEED 0.05
 # define FPS 1000
 # define FRAME_TIME_NS (1000000000L / FPS)
 
@@ -142,6 +142,7 @@ struct						s_window
 	double					tile_size;
 	double					fps;
 	double					frame_time;
+	int						mid;
 };
 
 struct						s_ray

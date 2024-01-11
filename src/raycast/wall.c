@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/09 11:55:12 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/10 23:47:14 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 void	calculate_wall_height_and_draw_limits(t_tdata *data)
 {
 	data->ray.wallheight = (int)(HEIGHT / data->ray.correctdistance);
-	data->ray.drawstart = -(data->ray.wallheight) / 2 + HEIGHT / 2;
+	data->ray.drawstart = (-(data->ray.wallheight) / 2 + HEIGHT / 2) + cub()->window.mid;
 	if (data->ray.drawstart < 0)
 		data->ray.drawstart = 0;
-	data->ray.drawend = data->ray.wallheight / 2 + HEIGHT / 2;
+	data->ray.drawend = (data->ray.wallheight / 2 + HEIGHT / 2) + cub()->window.mid;
 	if (data->ray.drawend >= HEIGHT)
-		data->ray.drawend = HEIGHT - 1;
+		data->ray.drawend = HEIGHT;
 	if (data->ray.side == 0)
 		data->ray.wallx = (cub()->player.pos[Y] / SCALE)
-			+ data->ray.correctdistance * data->ray.dir[Y];
+			+ data->ray.distance * data->ray.dir[Y];
 	else
 		data->ray.wallx = (cub()->player.pos[X] / SCALE)
-			+ data->ray.correctdistance * data->ray.dir[X];
+			+ data->ray.distance * data->ray.dir[X];
 	data->ray.wallx -= floor(data->ray.wallx);
 	data->ray.tex[X] = (int)(data->ray.wallx * (double)TEX_WIDTH);
 	if (data->ray.side == 0 && data->ray.dir[X] > 0)
@@ -60,8 +60,8 @@ void	draw_wall(int x, int y, t_tdata *data)
 
 	texnum = get_texture_number(data);
 	texheight = cub()->map->textures[texnum].height;
-	step = 1.0 * texheight / data->ray.wallheight;
-	texpos = (data->ray.drawstart - HEIGHT / 2 + data->ray.wallheight / 2)
+	step = (double)texheight / (double)data->ray.wallheight;
+	texpos = (data->ray.drawstart - cub()->window.mid - HEIGHT / 2 + data->ray.wallheight / 2)
 		* step;
 	y = data->ray.drawstart - 1;
 	while (++y < data->ray.drawend)

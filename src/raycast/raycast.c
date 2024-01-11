@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/09 11:55:03 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/10 23:34:04 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*ceiling_floor(void *arg)
 	while (++x < data->fc_end)
 	{
 		y = -1;
-		while (++y < HEIGHT / 2)
+		while (++y < HEIGHT / 2 + cub()->window.mid)
 			buffer_mlx_pixel_put(x, y, cub()->map->FC[1]);
 		while (++y < HEIGHT)
 			buffer_mlx_pixel_put(x, y, cub()->map->FC[0]);

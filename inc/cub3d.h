@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/10 23:16:54 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/11 02:15:08 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define THERE write(1, "THERE\n", 6)
 # define HERE write(1, "HERE\n", 6)
 
-# define WIDTH 1080
-# define HEIGHT 1080
+# define WIDTH 1000
+# define HEIGHT 1000
 # define SCALE 50
 # define MM_SCALE (ft_min(HEIGHT, WIDTH) / 20)
 # define MM_WIDTH (WIDTH / 6)
@@ -35,12 +35,12 @@
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)
 # define TEX_WIDTH 64
-# define MOVE_SPEED 75
-# define ROT_SPEED 0.05
+# define MOVE_SPEED 40
+# define ROT_SPEED 0.001
 # define FPS 1000
 # define FRAME_TIME_NS (1000000000L / FPS)
 
-# define THREADS 8
+# define THREADS 10
 # define THREAD_WIDTH (WIDTH / THREADS)
 # define THREAD_HEIGHT (HEIGHT / THREADS)
 
@@ -142,7 +142,7 @@ struct						s_window
 	double					tile_size;
 	double					fps;
 	double					frame_time;
-	int						mid;
+	double					mid;
 };
 
 struct						s_ray

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/09 11:40:18 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/11 01:26:20 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	draw_empty_tile(int dx, int dy, int radius)
 			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
 			if (pixel_distance <= radius * MM_SCALE)
 				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
-					0x0);
+					0x00139);
 			++j;
 		}
 		++i;
@@ -84,7 +84,7 @@ void	draw_outside_map(int dx, int dy, int radius)
 			if (pixel_distance <= radius * MM_SCALE)
 			{
 				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
-					0x0);
+					0x139);
 			}
 			++j;
 		}

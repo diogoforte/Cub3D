@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/11 00:30:31 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/11 02:13:01 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	move_and_strafe(int move_key, int strafe_key)
 
 static void	rotate(int key)
 {
-	cub()->player.angle += key * ROT_SPEED * cub()->window.frame_time;
+	cub()->player.angle += key * ROT_SPEED;
 	if (cub()->player.angle < 0)
 		cub()->player.angle += 2 * PI;
 	if (cub()->player.angle > 2 * PI)
@@ -75,9 +75,8 @@ static void	rotate(int key)
 static void rotateY(int key)
 {
 	cub()->window.mid -= key;
-	if (cub()->window.mid <= -(HEIGHT / 2) || cub()->window.mid >= HEIGHT / 2)
+	if (cub()->window.mid <= -(HEIGHT / 2) || cub()->window.mid >= (HEIGHT / 2))
 		cub()->window.mid += key;
-	
 }
 
 void	movement(void)
@@ -104,7 +103,7 @@ void	movement(void)
 		&cub()->player.mouse_x, &cub()->player.mouse_y);
 	cub()->player.mouse_x -= (WIDTH / 2);
 	cub()->player.mouse_y -= (HEIGHT / 2);
-	rotate(cub()->player.mouse_x);
 	rotateY(cub()->player.mouse_y);
+	rotate(cub()->player.mouse_x);
 	mlx_mouse_move(cub()->window.mlx, cub()->window.win, WIDTH / 2, HEIGHT / 2);
 }

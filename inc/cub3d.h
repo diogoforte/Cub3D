@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/11 02:15:08 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:56:45 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <unistd.h>
 
 # define THERE write(1, "THERE\n", 6)
-# define HERE write(1, "HERE\n", 6)
+# define HERE printf("HERE\n")
 
 # define WIDTH 1000
 # define HEIGHT 1000
@@ -40,7 +40,7 @@
 # define FPS 1000
 # define FRAME_TIME_NS (1000000000L / FPS)
 
-# define THREADS 10
+# define THREADS 8
 # define THREAD_WIDTH (WIDTH / THREADS)
 # define THREAD_HEIGHT (HEIGHT / THREADS)
 
@@ -51,9 +51,10 @@
 # define OUTLINE 'a'
 # define FILLER 'b'
 # define PLAYER_START "NSEW"
-# define VALID_CHARS "01NSEW_ "
+# define VALID_CHARS "01NSEW_D "
 # define EMPTY '0'
 # define WALL '1'
+#define DOOR 'D'
 # define W 1
 # define S -1
 # define A 1
@@ -68,14 +69,17 @@
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2
 # define KEY_ESC 65307
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_Q 113
-# define KEY_E 101
+# define KEY_W 	119
+# define KEY_A 	97
+# define KEY_S 	115
+# define KEY_D 	100
+# define KEY_Q	113
+# define KEY_E 	101
 # define KEY_F1 65470
+# define KEY_F	102
 # define KEY_SPACE 32
+# define KEY_CTRL 65507
+# define KEY_SHIFT 65505
 # define EVENT_CLOSE_BTN 17
 
 typedef struct s_map		t_map;
@@ -178,6 +182,10 @@ struct						s_player
 	bool					d;
 	bool					q;
 	bool					e;
+	bool					f;
+	bool					control;
+	bool					space;
+	bool					shift;
 };
 
 struct						s_cub
@@ -250,6 +258,10 @@ void						minimap_player_angle(int color);
 void						minimap_player(int color);
 void						*ceiling_floor(void *arg);
 void						create_and_join_threads(pthread_t *threads,
-								t_tdata **data, void *(*func)(void *));
+t_tdata 					**data, void *(*func)(void *));
 void						draw_fov_threads(void);
+bool 						has_passed_x_seconds(double time_in_secs);
+bool						collision(double x, double y);
+
+
 #endif

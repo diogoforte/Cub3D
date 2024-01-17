@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:28:27 by plopes-c          #+#    #+#             */
-/*   Updated: 2023/12/04 14:28:44 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:33:30 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ int	key_press(int keycode)
 		cub()->player.q = true;
 	else if (keycode == KEY_E)
 		cub()->player.e = true;
+	else if (keycode == KEY_F)
+		cub()->player.f = true;
+	else if (keycode == KEY_CTRL)
+		cub()->player.control = true;
+	else if (keycode == KEY_SPACE)
+		cub()->player.space = true;
+	else if (keycode == KEY_SHIFT)
+		cub()->player.shift = true;
 	return (0);
 }
 
@@ -49,5 +57,13 @@ int	key_release(int keycode)
 		cub()->player.q = false;
 	else if (keycode == KEY_E)
 		cub()->player.e = false;
+	else if (keycode == KEY_F)
+		cub()->player.f = false;
+	else if (keycode == KEY_CTRL)
+		cub()->player.control = false;
+	else if (keycode == KEY_SPACE)
+		cub()->player.space = false;
+	else if (keycode == KEY_SHIFT)
+		cub()->player.shift = false;
 	return (0);
 }

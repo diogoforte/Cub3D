@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/09 12:00:39 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/17 16:48:22 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	player_prepare(void)
 	player_dir();
 	player()->vector[X] = cos(player()->angle);
 	player()->vector[Y] = sin(player()->angle);
+	player()->shift = false;
 }
 
 void	load_textures(void)
@@ -60,7 +61,7 @@ void	load_textures(void)
 void	window_prepare(void)
 {
 	window()->mlx = mlx_init();
-	window()->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
+	(window())->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
 	window()->img.img = mlx_new_image(window()->mlx, WIDTH, HEIGHT);
 	window()->img.addr = mlx_get_data_addr(window()->img.img,
 		&window()->img.bits_per_pixel, &window()->img.line_length,

@@ -46,6 +46,7 @@ SRC = $(addprefix $(SRC_PATH), \
 		raycast/raycast.c \
 		raycast/threads.c \
 		raycast/wall.c \
+		utils/time_utils.c \
 )
 
 $(OBJ): $(OBJ_PATH)

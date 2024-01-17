@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/10 23:47:14 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:58:06 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	calculate_wall_height_and_draw_limits(t_tdata *data)
 {
 	data->ray.wallheight = (int)(HEIGHT / data->ray.correctdistance);
-	data->ray.drawstart = (-(data->ray.wallheight) / 2 + HEIGHT / 2) + cub()->window.mid;
+	data->ray.drawstart = ((-(data->ray.wallheight) / 2 + HEIGHT / 2) + cub()->window.mid);
 	if (data->ray.drawstart < 0)
 		data->ray.drawstart = 0;
-	data->ray.drawend = (data->ray.wallheight / 2 + HEIGHT / 2) + cub()->window.mid;
+	data->ray.drawend = ((data->ray.wallheight / 2 + HEIGHT / 2) + cub()->window.mid);
 	if (data->ray.drawend >= HEIGHT)
 		data->ray.drawend = HEIGHT;
 	if (data->ray.side == 0)

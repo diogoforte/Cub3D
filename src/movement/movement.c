@@ -6,13 +6,13 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/11 02:13:01 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:56:35 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static bool	collision(double x, double y)
+bool	collision(double x, double y)
 {
 	int		x_arr[2];
 	int		y_arr[2];
@@ -21,13 +21,17 @@ static bool	collision(double x, double y)
 	x_arr[1] = (int)((x - (SCALE / 3)) / SCALE) + 1;
 	y_arr[0] = (int)((y + (SCALE / 3)) / SCALE) + 1;
 	y_arr[1] = (int)((y - (SCALE / 3)) / SCALE) + 1;
-	if (cub()->map->map[(int)y_arr[0]][(int)x_arr[0]] == '1')
+	if (cub()->map->map[(int)y_arr[0]][(int)x_arr[0]] == '1'
+		|| cub()->map->map[(int)y_arr[0]][(int)x_arr[0]] == 'D')
 		return (true);
-	if (cub()->map->map[(int)y_arr[0]][(int)x_arr[1]] == '1')
+	if (cub()->map->map[(int)y_arr[0]][(int)x_arr[1]] == '1'
+		|| cub()->map->map[(int)y_arr[0]][(int)x_arr[1]] == 'D')
 		return (true);
-	if (cub()->map->map[(int)y_arr[1]][(int)x_arr[0]] == '1')
+	if (cub()->map->map[(int)y_arr[1]][(int)x_arr[0]] == '1'
+		|| cub()->map->map[(int)y_arr[1]][(int)x_arr[0]] == 'D')
 		return (true);
-	if (cub()->map->map[(int)y_arr[1]][(int)x_arr[1]] == '1')
+	if (cub()->map->map[(int)y_arr[1]][(int)x_arr[1]] == '1'
+		|| cub()->map->map[(int)y_arr[1]][(int)x_arr[1]] == 'D')
 		return (true);
 	return (false);
 	// return (cub()->map->map[(int)y + 1][(int)x + 1] == '1');
@@ -51,8 +55,8 @@ static void	move_and_strafe(int move_key, int strafe_key)
 		dir_x /= norm;
 		dir_y /= norm;
 	}
-	x = cub()->player.pos[X] + dir_x * MOVE_SPEED * cub()->window.frame_time;
-	y = cub()->player.pos[Y] + dir_y * MOVE_SPEED * cub()->window.frame_time;
+	x = cub()->player.pos[X] + dir_x * MOVE_SPEED * cub()->window.frame_time * (1 + (cub()->player.shift));
+	y = cub()->player.pos[Y] + dir_y * MOVE_SPEED * cub()->window.frame_time * (1 + (cub()->player.shift));
 	if (!collision(x, cub()->player.pos[Y]))
 		cub()->player.pos[X] = x;
 	if (!collision(cub()->player.pos[X], y))
@@ -77,6 +81,7 @@ static void rotateY(int key)
 	cub()->window.mid -= key;
 	if (cub()->window.mid <= -(HEIGHT / 2) || cub()->window.mid >= (HEIGHT / 2))
 		cub()->window.mid += key;
+	
 }
 
 void	movement(void)

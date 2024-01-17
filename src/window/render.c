@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:57:22 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/11 01:49:33 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:34:51 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	render(void)
 		elapsed_ns = (end.tv_sec - start.tv_sec) * 1000000000L + (end.tv_nsec
 				- start.tv_nsec);
 	}
+	cub()->player.f = false;
 	return (0);
 }
 

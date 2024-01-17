@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/11 01:26:20 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:52:29 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	draw_minimap_tile(int dx, int dy, int radius)
 	}
 }
 
-void	draw_empty_tile(int dx, int dy, int radius)
+void	draw_empty_tile(int dx, int dy, int radius, int color)
 {
 	int	pixel_dx;
 	int	pixel_dy;
@@ -57,7 +57,7 @@ void	draw_empty_tile(int dx, int dy, int radius)
 			pixel_distance = sqrt(pixel_dx * pixel_dx + pixel_dy * pixel_dy);
 			if (pixel_distance <= radius * MM_SCALE)
 				buffer_mlx_pixel_put(MM_WIDTH + dx + i, MM_HEIGHT + dy + j,
-					0x00139);
+					color);
 			++j;
 		}
 		++i;
@@ -110,8 +110,10 @@ void	draw_minimap_tiles(int player_x, int player_y, int radius)
 			{
 				if (cub()->map->map[coord[Y]][coord[X]] == '1')
 					draw_minimap_tile(distance[X], distance[Y], radius);
+				else if (cub()->map->map[coord[Y]][coord[X]] == 'D')
+					draw_empty_tile(distance[X], distance[Y], radius, 0xFF0000);
 				else
-					draw_empty_tile(distance[X], distance[Y], radius);
+					draw_empty_tile(distance[X], distance[Y], radius, 0x00139);
 			}
 			else
 				draw_outside_map(distance[X], distance[Y], radius);

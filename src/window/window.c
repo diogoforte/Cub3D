@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/17 16:48:22 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/17 19:18:09 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	player_prepare(void)
 	player()->vector[X] = cos(player()->angle);
 	player()->vector[Y] = sin(player()->angle);
 	player()->shift = false;
+	player()->f = true;
 }
 
 void	load_textures(void)

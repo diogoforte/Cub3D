@@ -59,33 +59,7 @@ void	ray_side(t_tdata *data)
 	}
 }
 
-double	raycast(t_tdata *data)
-{
-	ray_side(data);
-	while (1)
-	{
-		if (data->ray.side_dist[X] < data->ray.side_dist[Y])
-		{
-			data->ray.side_dist[X] += data->ray.delta_dist[X];
-			data->ray.map_pos[X] += data->ray.step[X];
-			data->ray.side = 0;
-		}
-		else
-		{
-			data->ray.side_dist[Y] += data->ray.delta_dist[Y];
-			data->ray.map_pos[Y] += data->ray.step[Y];
-			data->ray.side = 1;
-		}
-		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
-				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D')
-			break ;
-	}
-	return (0);
-}
-
-double	raycast_door(t_tdata *data)
+double	raycast(t_tdata *data, bool flag)
 {
 	ray_side(data);
 	while (1)
@@ -106,14 +80,42 @@ double	raycast_door(t_tdata *data)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
 				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
-				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O')
+				|| (flag && cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'))
 			break ;
 	}
 	return (0);
 }
 
-void	calculate_distance(t_tdata *data)
+// double	raycast_door(t_tdata *data)
+// {
+// 	ray_side(data);
+// 	while (1)
+// 	{
+// 		if (data->ray.side_dist[X] < data->ray.side_dist[Y])
+// 		{
+// 			data->ray.side_dist[X] += data->ray.delta_dist[X];
+// 			data->ray.map_pos[X] += data->ray.step[X];
+// 			data->ray.side = 0;
+// 		}
+// 		else
+// 		{
+// 			data->ray.side_dist[Y] += data->ray.delta_dist[Y];
+// 			data->ray.map_pos[Y] += data->ray.step[Y];
+// 			data->ray.side = 1;
+// 		}
+// 		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+// 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
+// 				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+// 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
+// 				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+// 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O')
+// 			break ;
+// 	}
+// 	return (0);
+// }
+
+void	calculate_distance(t_tdata *data, bool flag)
 {
 	data->ray.dir[X] = cos(data->ray.angle);
 	data->ray.dir[Y] = sin(data->ray.angle);
@@ -121,14 +123,15 @@ void	calculate_distance(t_tdata *data)
 	data->ray.map_pos[Y] = (int)player()->pos[Y];
 	data->ray.delta_dist[X] = fabs(1 / data->ray.dir[X]);
 	data->ray.delta_dist[Y] = fabs(1 / data->ray.dir[Y]);
-	raycast(data);
+	raycast(data, flag);
 	if (!data->ray.side)
 		data->ray.distance = (data->ray.side_dist[X] - data->ray.delta_dist[X]);
 	else
 		data->ray.distance = (data->ray.side_dist[Y] - data->ray.delta_dist[Y]);
 	data->ray.distance /= SCALE;
-	data->ray.correctdistance = (data->ray.distance * cos(data->ray.angle
-			- player()->angle));
+	if (!flag)
+		data->ray.correctdistance = (data->ray.distance * cos(data->ray.angle
+				- player()->angle));
 }
 
 void check_door(t_tdata *data)
@@ -136,19 +139,7 @@ void check_door(t_tdata *data)
 	if (cub()->player.f && has_passed_x_seconds(0.5))
 	{
 		data->ray.angle = player()->angle;
-		data->ray.dir[X] = cos(data->ray.angle);
-		data->ray.dir[Y] = sin(data->ray.angle);
-		data->ray.map_pos[X] = (int)player()->pos[X];
-		data->ray.map_pos[Y] = (int)player()->pos[Y];
-		data->ray.delta_dist[X] = fabs(1 / data->ray.dir[X]);
-		data->ray.delta_dist[Y] = fabs(1 / data->ray.dir[Y]);
-		raycast_door(data);
-		if (!data->ray.side)
-		data->ray.distance = (data->ray.side_dist[X] - data->ray.delta_dist[X]);
-		else
-			data->ray.distance = (data->ray.side_dist[Y] - data->ray.delta_dist[Y]);
-		data->ray.distance /= SCALE;
-		// printf("distance: %f\n", data->ray.distance);
+		calculate_distance(data, 1);
 		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
 					+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O' && data->ray.distance < 1.5)
 		{
@@ -181,7 +172,7 @@ void	*draw_fov(void *arg)
 		* ANGLE;
 	while (++x < data->raycast_end)
 	{
-		calculate_distance(data);
+		calculate_distance(data, 0);
 		calculate_wall_height_and_draw_limits(data);
 		draw_wall(x, 0, data);
 		data->ray.angle += ANGLE;

@@ -247,7 +247,7 @@ void						movement(void);
 void						buffer_mlx_pixel_put(int x, int y, int color);
 void						fps(void);
 void						draw_minimap(void);
-double						raycast(t_tdata *data);
+double						raycast(t_tdata *data, bool flag);
 t_tdata						*tdata(int threadid);
 
 void						*draw_fov(void *arg);

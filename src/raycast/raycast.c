@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/17 19:09:27 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/23 19:05:11 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,38 +82,15 @@ double	raycast(t_tdata *data, bool flag)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
 				|| (flag && cub()->map->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'))
+		{
+			if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D')
+				data->ray.door = true;
 			break ;
+		}
 	}
 	return (0);
 }
-
-// double	raycast_door(t_tdata *data)
-// {
-// 	ray_side(data);
-// 	while (1)
-// 	{
-// 		if (data->ray.side_dist[X] < data->ray.side_dist[Y])
-// 		{
-// 			data->ray.side_dist[X] += data->ray.delta_dist[X];
-// 			data->ray.map_pos[X] += data->ray.step[X];
-// 			data->ray.side = 0;
-// 		}
-// 		else
-// 		{
-// 			data->ray.side_dist[Y] += data->ray.delta_dist[Y];
-// 			data->ray.map_pos[Y] += data->ray.step[Y];
-// 			data->ray.side = 1;
-// 		}
-// 		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-// 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
-// 				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-// 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
-// 				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-// 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O')
-// 			break ;
-// 	}
-// 	return (0);
-// }
 
 void	calculate_distance(t_tdata *data, bool flag)
 {
@@ -123,10 +100,11 @@ void	calculate_distance(t_tdata *data, bool flag)
 	data->ray.map_pos[Y] = (int)player()->pos[Y];
 	data->ray.delta_dist[X] = fabs(1 / data->ray.dir[X]);
 	data->ray.delta_dist[Y] = fabs(1 / data->ray.dir[Y]);
+	data->ray.door = false;
 	raycast(data, flag);
 	if (!data->ray.side)
 		data->ray.distance = (data->ray.side_dist[X] - data->ray.delta_dist[X]);
-	else
+	else if (data->ray.side == 1)
 		data->ray.distance = (data->ray.side_dist[Y] - data->ray.delta_dist[Y]);
 	data->ray.distance /= SCALE;
 	if (!flag)

@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/17 18:56:45 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/23 19:02:50 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@
 # define VALID_CHARS "01NSEW_D "
 # define EMPTY '0'
 # define WALL '1'
-#define DOOR 'D'
 # define W 1
 # define S -1
 # define A 1
@@ -65,6 +64,7 @@
 # define SO 1
 # define WE 2
 # define EA 3
+# define DOOR '4'
 
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2
@@ -165,6 +165,7 @@ struct						s_ray
 	double					correctdistance;
 	double					wallx;
 	int						tex[2];
+	bool					door;
 };
 
 struct						s_player

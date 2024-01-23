@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/16 18:58:06 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/23 19:06:04 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@ void	calculate_wall_height_and_draw_limits(t_tdata *data)
 		data->ray.tex[X] = TEX_WIDTH - data->ray.tex[X] - 1;
 	if (data->ray.side == 1 && data->ray.dir[Y] < 0)
 		data->ray.tex[X] = TEX_WIDTH - data->ray.tex[X] - 1;
+	if (data->ray.side == 2)
+		data->ray.tex[X] = TEX_WIDTH - data->ray.tex[X] - 1;
 }
 
 int	get_texture_number(t_tdata *data)
 {
+	if (data->ray.door == true)
+		return (4);
 	if (data->ray.side == 0)
 	{
 		if (data->ray.dir[0] > 0)

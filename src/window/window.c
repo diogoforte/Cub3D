@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/17 19:18:09 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:53:40 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,18 @@ void	load_textures(void)
 		&cub()->map->textures[i].line_length,
 		&cub()->map->textures[i].endian);
 	}
+	cub()->map->textures[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
+			"./textures/gate.xpm", &cub()->map->textures[i].width,
+			&cub()->map->textures[i].height);
+		if (!cub()->map->textures[i].img)
+		{
+			err("Failed to load texturess\n", cub()->map);
+			return ;
+		}
+		cub()->map->textures[i].addr = mlx_get_data_addr(cub()->map->textures[i].img,
+			&cub()->map->textures[i].bits_per_pixel,
+		&cub()->map->textures[i].line_length,
+		&cub()->map->textures[i].endian);
 }
 
 void	window_prepare(void)

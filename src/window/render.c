@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:57:22 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/17 18:34:51 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:38:15 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,13 @@ void	speed(void)
 	prev_pos[X] = curr_pos[X];
 	prev_pos[Y] = curr_pos[Y];
 	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - 50, 30,
-		0xFFFFFF, ft_itoa_address(tmp, (int)round(speed) / SCALE));
+		0xFFFFFF, ft_itoa_address(tmp, (int)round(speed)));
 }
 
 int	render(void)
 {
-	long int		elapsed_ns;
-	struct timespec	start;
-	struct timespec	end;
-
-	clock_gettime(CLOCK_MONOTONIC, &start);
+	if (!cub()->map->playable)
+		return (1);
 	draw_fov_threads();
 	draw_minimap();
 	movement();
@@ -61,26 +58,5 @@ int	render(void)
 		"@diogoforte & @chaleira");
 	speed();
 	fps();
-	clock_gettime(CLOCK_MONOTONIC, &end);
-	elapsed_ns = (end.tv_sec - start.tv_sec) * 1000000000L + (end.tv_nsec
-			- start.tv_nsec);
-	while (elapsed_ns < FRAME_TIME_NS)
-	{
-		clock_gettime(CLOCK_MONOTONIC, &end);
-		elapsed_ns = (end.tv_sec - start.tv_sec) * 1000000000L + (end.tv_nsec
-				- start.tv_nsec);
-	}
-	cub()->player.f = false;
 	return (0);
 }
-
-// int	render(void)
-// {
-// 	draw_fov_threads();
-// 	draw_minimap();
-// 	movement();
-// 	mlx_put_image_to_window(cub()->window.mlx, cub()->window.win,
-// 		cub()->window.img.img, 0, 0);
-// 	fps();
-// 	return (0);
-// }

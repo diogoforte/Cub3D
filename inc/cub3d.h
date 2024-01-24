@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/23 19:02:50 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:37:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)
 # define TEX_WIDTH 64
-# define MOVE_SPEED 40
+# define MOVE_SPEED 400
 # define ROT_SPEED 0.001
-# define FPS 1000
-# define FRAME_TIME_NS (1000000000L / FPS)
 
 # define THREADS 8
 # define THREAD_WIDTH (WIDTH / THREADS)

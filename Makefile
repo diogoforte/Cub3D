@@ -9,7 +9,7 @@ EMOJI_PACKAGE = \360\237\223\246
 EMOJI_HAMMER = \360\237\224\250
 EMOJI_TRASH = \360\237\227\221\357\270\217
 
-NAME = cub3d
+NAME = cub3D
 
 CC = cc
 CFLAGS = -Werror -Wextra -Wall -O3 #-fsanitize=address -g3

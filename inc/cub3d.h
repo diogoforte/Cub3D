@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/24 13:37:17 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:52:43 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define FOV (PI / 3)
 # define ANGLE (FOV / WIDTH)
 # define TEX_WIDTH 64
-# define MOVE_SPEED 400
+# define MOVE_SPEED 40
 # define ROT_SPEED 0.001
 
 # define THREADS 8
@@ -115,7 +115,9 @@ struct						s_map
 	int						start_x;
 	int						start_y;
 	char					start_dir;
-	t_texture				textures[5];
+	t_texture				textures[4];
+	t_texture				door_texture[2];
+	char					*door_texture_path[2];
 
 	void					(*print)();
 	void					(*destroy_file)(t_map *map);
@@ -261,6 +263,9 @@ t_tdata 					**data, void *(*func)(void *));
 void						draw_fov_threads(void);
 bool 						has_passed_x_seconds(double time_in_secs);
 bool						collision(double x, double y);
+void						check_door(t_tdata *data);
+bool 						texture_seconds(double time_in_secs);
+
 
 
 #endif

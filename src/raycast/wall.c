@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/23 19:06:04 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:29:22 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,54 @@ void	calculate_wall_height_and_draw_limits(t_tdata *data)
 		data->ray.tex[X] = TEX_WIDTH - data->ray.tex[X] - 1;
 }
 
-int	get_texture_number(t_tdata *data)
+int is_even_seconds(void)
 {
+	clock_t current_time;
+	int elapsed_time;
+	
+	current_time = clock();
+	elapsed_time = (double)(current_time) / CLOCKS_PER_SEC;
+	if (elapsed_time % 3)
+		return 0;
+	else
+		return 1;
+}
+
+t_texture	get_texture(t_tdata *data)
+{
+	static int texnum;
+
 	if (data->ray.door == true)
-		return (4);
+	{
+		if (is_even_seconds())
+			return (cub()->map->textures[0]);
+		else
+			return (cub()->map->textures[1]);
+	}
+	texnum++;
 	if (data->ray.side == 0)
 	{
 		if (data->ray.dir[0] > 0)
-			return (EA);
+			return (cub()->map->textures[EA]);
 		else
-			return (WE);
+			return (cub()->map->textures[WE]);
 	}
 	if (data->ray.dir[1] > 0)
-		return (SO);
+		return (cub()->map->textures[SO]);
 	else
-		return (NO);
+		return (cub()->map->textures[NO]);
 }
 
 void	draw_wall(int x, int y, t_tdata *data)
 {
-	int		texnum;
-	int		color;
-	int		texheight;
-	double	step;
-	double	texpos;
+	t_texture		tex;
+	int				color;
+	int				texheight;
+	double			step;
+	double			texpos;
 
-	texnum = get_texture_number(data);
-	texheight = cub()->map->textures[texnum].height;
+	tex = get_texture(data);
+	texheight = tex.height;
 	step = (double)texheight / (double)data->ray.wallheight;
 	texpos = (data->ray.drawstart - cub()->window.mid - HEIGHT / 2 + data->ray.wallheight / 2)
 		* step;
@@ -72,7 +93,7 @@ void	draw_wall(int x, int y, t_tdata *data)
 	{
 		data->ray.tex[Y] = (int)texpos & (texheight - 1);
 		texpos += step;
-		color = ((int *)cub()->map->textures[texnum].addr)[texheight
+		color = ((int *)tex.addr)[texheight
 			* data->ray.tex[Y] + data->ray.tex[X]];
 		if (data->ray.side == 1)
 			color = (color >> 1) & 8355711;

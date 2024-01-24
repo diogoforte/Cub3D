@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:57:22 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/24 13:38:15 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:13:31 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	speed(void)
 	prev_pos[X] = curr_pos[X];
 	prev_pos[Y] = curr_pos[Y];
 	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - 50, 30,
-		0xFFFFFF, ft_itoa_address(tmp, (int)round(speed)));
+		0xFFFFFF, ft_itoa_address(tmp, (int)round(speed) / SCALE));
 }
 
 int	render(void)

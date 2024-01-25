@@ -1,12 +1,11 @@
-NO ./textures/test2.xpm
-SO ./textures/test3.xpm
-EA ./textures/test1.xpm
-WE ./textures/test4.xpm
-F 145,255,51
-C 51,182,255
-11111111111
-10000010001
-10000010001
-10N000D0001
-100000D0001
-1111111111D
+NO textures/test2.xpm
+SO textures/test3.xpm
+WE textures/test4.xpm
+EA textures/test1.xpm
+F 220,100,0
+
+111
+1N1
+111
+
+C 225,30,0

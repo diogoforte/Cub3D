@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/06 03:58:28 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:33:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ void	rgb_to_hex(t_map *map)
 	while (++i < 2)
 	{
 		colors = ft_split(map->cords[i + 4], ',');
+		if ((!colors[0] || !colors[1] || !colors[2]))
+		{
+			err("Invalid color", map);
+			ft_freematrix(colors);
+			return ;
+		}
 		r = ft_atoi(colors[0]);
 		g = ft_atoi(colors[1]);
 		b = ft_atoi(colors[2]);
@@ -111,6 +117,6 @@ void	map_extract_data(t_map *map)
 		free(tmp);
 	}
 	rgb_to_hex(map);
-	if (all_filled(map) || err("Missing texture", map))
+	if (all_filled(map) || err("Missing parameter", map))
 		map_extract_map(&map->map[i[0]], map);
 }

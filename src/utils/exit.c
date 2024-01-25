@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 20:16:57 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/24 18:56:15 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:09:25 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int	exit_cub(char *str)
 	i = -1;
 	while (++i < 4 && cub()->map && cub()->map->textures[i].img)
 		mlx_destroy_image(cub()->window.mlx, cub()->map->textures[i].img);
+	i = -1;
+	while (++i < 2 && cub()->map && cub()->map->door_texture[0].img)
+		mlx_destroy_image(cub()->window.mlx, cub()->map->door_texture[i].img);
 	if (cub()->maps)
 		cub()->maps_destroy();
 	if (cub()->window.win)

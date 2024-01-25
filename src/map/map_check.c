@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/16 15:02:41 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:32:05 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	map_add_outline(t_map *map, char c)
 
 void	map_check(t_map *map)
 {
-	if (map_invalid_char(map))
+	if (map_invalid_char(map) || !map->playable)
 		return ;
 	map_add_outline(map, OUTLINE);
 	check_open_rooms(map, 0, 0, FILLER, "Map not closed");

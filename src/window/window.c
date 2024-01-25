@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/24 18:54:29 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:35:02 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void load_fixed_textures(void)
 	int	i;
 
 	i = -1;
-	cub()->maps->door_texture_path[0] = "./fixed_textures/gate1.xpm";
-	cub()->maps->door_texture_path[1] = "./fixed_textures/gate2.xpm";
+	cub()->maps->door_texture_path[0] = "./textures/fixed_textures/gate1.xpm";
+	cub()->maps->door_texture_path[1] = "./textures/fixed_textures/gate2.xpm";
 	while (++i < 2)
 	{
 		cub()->map->door_texture[i].img = mlx_xpm_file_to_image(cub()->window.mlx,

@@ -6,13 +6,11 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:04 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/09 13:22:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:05:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int		check_variables(void);
 
 int	main(int argc, char **argv)
 {

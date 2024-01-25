@@ -1,14 +1,13 @@
-EA ./path_to_the_east_texture
-EA ./path_to_the_east_texture
-WE ./path_to_the_west_texture
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-F 220,100,0
-C 225,30,0
+NO ./textures/test2.xpm
+SO ./textures/test3.xpm
+EA ./textures/test1.xpm
+WE ./textures/test4.xpm
+F  92,64, 51
+C 137,186 ,243 
 1111111111111111
 1000000000000001
 1000000100000001
-1000001W10000001
+1000001W00000001
 1000000100000001
 1000000000000001
 1000000000000001

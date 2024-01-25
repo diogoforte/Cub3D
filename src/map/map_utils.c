@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 20:00:30 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/25 17:34:35 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/25 19:09:43 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	matrix_biggest_string(char **str)
 
 	i = 0;
 	biggest = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		j = 0;
 		while (str[i][j])

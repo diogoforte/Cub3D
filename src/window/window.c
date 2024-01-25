@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/25 16:35:02 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/25 20:33:12 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ void load_fixed_textures(void)
 	int	i;
 
 	i = -1;
-	cub()->maps->door_texture_path[0] = "./textures/fixed_textures/gate1.xpm";
-	cub()->maps->door_texture_path[1] = "./textures/fixed_textures/gate2.xpm";
-	while (++i < 2)
+	cub()->map->door_texture_path[0] = "./textures/fixed_textures/gate_blue.xpm";
+	cub()->map->door_texture_path[1] = "./textures/fixed_textures/gate_red.xpm";
+	cub()->map->door_texture_path[2] = "./textures/fixed_textures/gate_green.xpm";
+	while (++i < 3)
 	{
 		cub()->map->door_texture[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
-			cub()->maps->door_texture_path[i], &cub()->map->door_texture[i].width,
+			cub()->map->door_texture_path[i], &cub()->map->door_texture[i].width,
 			&cub()->map->door_texture[i].height);
 		if (!cub()->map->door_texture[i].img && err("Failed to load textures\n", cub()->map))
 			return ;
@@ -85,7 +86,6 @@ void	window_prepare(void)
 	window()->img.addr = mlx_get_data_addr(window()->img.img,
 		&window()->img.bits_per_pixel, &window()->img.line_length,
 	&window()->img.endian);
-	cub()->map = cub()->maps;
 	load_textures();
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/25 17:33:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/25 19:48:42 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ void	map_extract_map(char **grid, t_map *map)
 	while (grid && *grid && !ft_strcmp(*grid, "\n"))
 		grid++;
 	if (grid && *grid)
-		err("Empty line in map", map);
+		exit_cub("Empty line in map");
 	map_destroy_map(map);
-	if (tmp_map)
-		map->map = tmp_map;
+	map->map = tmp_map;
+	if (!tmp_map)
+		exit_cub("Error in file configuration");
 }
 
 int	map_check_colors(t_map *map)
@@ -48,12 +49,12 @@ int	map_check_colors(t_map *map)
 	while (++i[0] < 6 && map->playable)
 	{
 		if (ft_charcount(map->cords[i[0]], ',') != 2)
-			return (err("Invalid color", map));
+			exit_cub("Invalid color");
 		tmp = ft_split(map->cords[i[0]], ',');
 		i[1] = -1;
 		while (tmp[++i[1]])
 			if (ft_atoi(tmp[i[1]]) < 0 || ft_atoi(tmp[i[1]]) > 255)
-				err("Invalid color", map);
+				exit_cub("Invalid color");
 		ft_freematrix(tmp);
 	}
 	return (0);
@@ -75,7 +76,7 @@ void	rgb_to_hex(t_map *map)
 		colors = ft_split(map->cords[i + 4], ',');
 		if ((!colors[0] || !colors[1] || !colors[2]))
 		{
-			err("Invalid color", map);
+			exit_cub("Invalid color");
 			ft_freematrix(colors);
 			return ;
 		}
@@ -117,6 +118,6 @@ void	map_extract_data(t_map *map)
 		free(tmp);
 	}
 	rgb_to_hex(map);
-	if (all_filled(map) || err("Missing parameter", map))
+	if (all_filled(map) || exit_cub("Missing parameter"))
 		map_extract_map(&map->map[i[0]], map);
 }

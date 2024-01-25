@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/24 18:52:43 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 20:33:29 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ struct						s_map
 	int						start_y;
 	char					start_dir;
 	t_texture				textures[4];
-	t_texture				door_texture[2];
-	char					*door_texture_path[2];
+	t_texture				door_texture[3];
+	char					*door_texture_path[3];
 
 	void					(*print)();
 	void					(*destroy_file)(t_map *map);
@@ -265,6 +265,8 @@ bool 						has_passed_x_seconds(double time_in_secs);
 bool						collision(double x, double y);
 void						check_door(t_tdata *data);
 bool 						texture_seconds(double time_in_secs);
+int 						print_matrix(char **matrix);
+
 
 
 

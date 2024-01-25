@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/09 11:57:00 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/25 19:57:17 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 
 t_map	*map_new(char *file_path)
 {
@@ -57,20 +58,36 @@ void	map_extract_file(t_map *map, char *file_path)
 	map->map_name = file_path;
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-		err("File not found", map);
+		exit_cub("File not found");
 	else if (ft_strncmp(file_path + ft_strlen(file_path) - 4, ".cub", 4))
-		err("File extension not supported", map);
+		exit_cub("File extension not supported");
 	else
 	{
 		load_files(fd, map, 0);
 		close(fd);
 		if (!map->map)
-			err("Empty file", map);
+			exit_cub("Empty file");
 	}
 }
 
 void	map_load(char **argv)
 {
-	while (++argv && *argv)
-		map_add_back(&cub()->maps, map_new(*argv));
+	cub()->map = map_new(argv[1]);
+	// while (++argv && *argv)
+	// 	map_add_back(&cub()->maps, map_new(*argv));
+}
+
+int print_matrix(char **matrix)
+{
+	int i;
+
+	i = 0;
+	if (!matrix)
+		return (printf("Matrix is empty\n"));
+	while (matrix[i])
+	{
+		printf("%s\n", matrix[i]);
+		i++;
+	}
+	return (0);
 }

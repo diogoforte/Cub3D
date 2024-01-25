@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/24 19:29:22 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 21:02:01 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,36 @@ void	calculate_wall_height_and_draw_limits(t_tdata *data)
 		data->ray.tex[X] = TEX_WIDTH - data->ray.tex[X] - 1;
 }
 
-int is_even_seconds(void)
+bool texture_seconds(double time_in_secs)
 {
-	clock_t current_time;
-	int elapsed_time;
-	
+    static clock_t start_time;
+    clock_t current_time;
+    double elapsed_time;
+
 	current_time = clock();
-	elapsed_time = (double)(current_time) / CLOCKS_PER_SEC;
-	if (elapsed_time % 3)
-		return 0;
+	elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+    if (start_time == 0) {
+        start_time = clock();
+        return 0;
+    }
+    if (elapsed_time >= time_in_secs)
+	{
+        start_time = 0;
+        return 1;
+    }
 	else
-		return 1;
+        return 0;
 }
 
 t_texture	get_texture(t_tdata *data)
 {
 	static int texnum;
 
+	if (texture_seconds(0.6))
+		texnum++;
+	texnum = texnum % 3;
 	if (data->ray.door == true)
-	{
-		if (is_even_seconds())
-			return (cub()->map->textures[0]);
-		else
-			return (cub()->map->textures[1]);
-	}
-	texnum++;
+		return (cub()->map->door_texture[texnum]);
 	if (data->ray.side == 0)
 	{
 		if (data->ray.dir[0] > 0)

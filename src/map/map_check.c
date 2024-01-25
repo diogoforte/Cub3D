@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/25 16:32:05 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/25 19:46:10 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	map_add_outline(t_map *map, char c)
 
 void	map_check(t_map *map)
 {
-	if (map_invalid_char(map) || !map->playable)
+	if (!map->playable || map_invalid_char(map))
 		return ;
 	map_add_outline(map, OUTLINE);
 	check_open_rooms(map, 0, 0, FILLER, "Map not closed");
@@ -71,11 +71,11 @@ int	map_invalid_char(t_map *map)
 		while (map->map && map->map[i][++j])
 		{
 			if (!ft_strchr(VALID_CHARS, map->map[i][j]))
-				return (err("Invalid map character", map));
+				exit_cub("Invalid map character");
 			if (ft_strchr(PLAYER_START, map->map[i][j]))
 			{
 				if (++k == 2)
-					return (err("Multiple starting positions", map));
+					exit_cub("Multiple starting positions");
 				map->start_dir = map->map[i][j];
 				map->start_x = j - 1;
 				map->start_y = i - 1;
@@ -83,7 +83,7 @@ int	map_invalid_char(t_map *map)
 		}
 	}
 	if (k == 0)
-		return (err("No starting position", map));
+		exit_cub("No starting position");
 	return (0);
 }
 
@@ -95,7 +95,7 @@ int	check_open_rooms(t_map *map, int x, int y, char c, char *str)
 	if (!map->map[y] || !map->map[y][x])
 		return (0);
 	if (ft_strchr(PLAYER_START, map->map[y][x]))
-		return (err(str, map));
+		exit_cub(str);
 	if (map->map[y][x] == WALL || map->map[y][x] == c)
 		return (0);
 	map->map[y][x] = c;

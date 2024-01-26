@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/26 08:27:08 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 11:03:26 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,31 @@ void	draw_outside_map(int dx, int dy, int radius)
 	}
 }
 
-void	draw_minimap_tiles(int player_x, int player_y, int radius)
+void	draw_tile(int coord[], int player_x, int player_y, int radius)
 {
 	int	distance[2];
+
+	distance[X] = coord[X] * MM_SCALE - player_x;
+	distance[Y] = coord[Y] * MM_SCALE - player_y;
+	if (coord[Y] >= 0 && coord[Y] < cub()->map->map_height && coord[X] >= 0
+		&& coord[X] < cub()->map->map_width)
+	{
+		if (cub()->map->map[coord[Y]][coord[X]] == '1')
+			draw_empty_tile(distance[X], distance[Y], radius, 0x3386FF);
+		else if (cub()->map->map[coord[Y]][coord[X]] == 'D')
+			draw_empty_tile(distance[X], distance[Y], radius, 0xFF0000);
+		else if (cub()->map->map[coord[Y]][coord[X]] == 'O')
+			draw_empty_tile(distance[X], distance[Y], radius,
+				(0x00139 >> 1) & 8355711);
+		else
+			draw_empty_tile(distance[X], distance[Y], radius, 0x00139);
+	}
+	else
+		draw_outside_map(distance[X], distance[Y], radius);
+}
+
+void	draw_minimap_tiles(int player_x, int player_y, int radius)
+{
 	int	coord[2];
 
 	coord[Y] = player_y / MM_SCALE - radius;
@@ -77,23 +99,7 @@ void	draw_minimap_tiles(int player_x, int player_y, int radius)
 		coord[X] = player_x / MM_SCALE - radius;
 		while (coord[X] <= player_x / MM_SCALE + radius)
 		{
-			distance[X] = coord[X] * MM_SCALE - player_x;
-			distance[Y] = coord[Y] * MM_SCALE - player_y;
-			if (coord[Y] >= 0 && coord[Y] < cub()->map->map_height
-				&& coord[X] >= 0 && coord[X] < cub()->map->map_width)
-			{
-				if (cub()->map->map[coord[Y]][coord[X]] == '1')
-					draw_empty_tile(distance[X], distance[Y], radius, 0x3386FF);
-				else if (cub()->map->map[coord[Y]][coord[X]] == 'D')
-					draw_empty_tile(distance[X], distance[Y], radius, 0xFF0000);
-				else if (cub()->map->map[coord[Y]][coord[X]] == 'O')
-					draw_empty_tile(distance[X], distance[Y], radius,
-						(0x00139 >> 1) & 8355711);
-				else
-					draw_empty_tile(distance[X], distance[Y], radius, 0x00139);
-			}
-			else
-				draw_outside_map(distance[X], distance[Y], radius);
+			draw_tile(coord, player_x, player_y, radius);
 			++coord[X];
 		}
 		++coord[Y];

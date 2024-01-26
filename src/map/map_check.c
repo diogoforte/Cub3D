@@ -6,53 +6,22 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/26 08:20:06 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:51:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		check_open_rooms(t_map *map, int x, int y, char c, char *str);
+int		check_open_rooms(t_map *map, int x, int y, char *str);
 void	matrix_char_to_char(char **matrix, char old, char new);
 int		check_all_rooms(t_map *map);
-
-void	map_add_outline(t_map *map, char c)
-{
-	char	**new_map;
-	char	*tmp;
-	int		i[3];
-
-	new_map = ft_calloc(map->map_height + 3, sizeof(char *));
-	tmp = ft_calloc(map->map_width + 3, sizeof(char));
-	ft_memset(tmp, c, map->map_width + 2);
-	new_map[0] = ft_strdup(tmp);
-	new_map[map->map_height + 1] = ft_strdup(tmp);
-	free(tmp);
-	i[0] = -1;
-	i[2] = 0;
-	while (++i[0] < map->map_height)
-	{
-		i[2] = ft_strlen(map->map[i[0]]);
-		tmp = ft_calloc(map->map_width + 3, sizeof(char));
-		ft_memset(tmp, c, map->map_width + 2);
-		i[1] = -1;
-		while (++i[1] < i[2])
-			if (map->map[i[0]][i[1]] != c)
-				tmp[i[1] + 1] = map->map[i[0]][i[1]];
-		new_map[i[0] + 1] = tmp;
-	}
-	map->destroy_map(map);
-	map->map = new_map;
-	map->map_height += 2;
-	map->map_width += 2;
-}
 
 void	map_check(t_map *map)
 {
 	if (!map->playable || map_invalid_char(map))
 		return ;
 	map_add_outline(map, OUTLINE);
-	check_open_rooms(map, 0, 0, FILLER, "Map not closed");
+	check_open_rooms(map, 0, 0, "Map not closed");
 	check_all_rooms(map);
 	matrix_char_to_char(map->map, FILLER, ' ');
 }
@@ -85,7 +54,7 @@ int	map_invalid_char(t_map *map)
 	return (0);
 }
 
-int	check_open_rooms(t_map *map, int x, int y, char c, char *str)
+int	check_open_rooms(t_map *map, int x, int y, char *str)
 {
 	if ((x < 0 || y < 0) || (x > map->map_width + 1 || y > map->map_height + 1)
 		|| !map->playable)
@@ -94,13 +63,13 @@ int	check_open_rooms(t_map *map, int x, int y, char c, char *str)
 		return (0);
 	if (ft_strchr(PLAYER_START, map->map[y][x]))
 		exit_cub(str);
-	if (map->map[y][x] == WALL || map->map[y][x] == c)
+	if (map->map[y][x] == WALL || map->map[y][x] == FILLER)
 		return (0);
-	map->map[y][x] = c;
-	check_open_rooms(map, x + 1, y, c, str);
-	check_open_rooms(map, x - 1, y, c, str);
-	check_open_rooms(map, x, y + 1, c, str);
-	check_open_rooms(map, x, y - 1, c, str);
+	map->map[y][x] = FILLER;
+	check_open_rooms(map, x + 1, y, str);
+	check_open_rooms(map, x - 1, y, str);
+	check_open_rooms(map, x, y + 1, str);
+	check_open_rooms(map, x, y - 1, str);
 	return (0);
 }
 
@@ -116,29 +85,10 @@ int	check_all_rooms(t_map *map)
 		while (map->map[i][j])
 		{
 			if (map->map[i][j] == ' ')
-				check_open_rooms(map, j, i, FILLER, "Empty space in map");
+				check_open_rooms(map, j, i, "Empty space in map");
 			j++;
 		}
 		i++;
 	}
 	return (0);
-}
-
-void	matrix_char_to_char(char **matrix, char old, char new)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (matrix && matrix[i])
-	{
-		j = 0;
-		while (matrix[i][j])
-		{
-			if (matrix[i][j] == old)
-				matrix[i][j] = new;
-			j++;
-		}
-		i++;
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 20:00:30 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/25 19:09:43 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:50:03 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,6 @@ int	all_filled(t_map *map)
 	return (1);
 }
 
-void	map_print(t_map *map)
-{
-	static char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
-	int			i;
-
-	printf("Map number: %d\n", map->map_number);
-	printf("Map name: %s\n", map->map_name);
-	if (map->playable)
-	{
-		printf("Playeable: Yes\n");
-		printf("Cords:\n");
-		i = -1;
-		while (++i < 6)
-			printf("%s: (%s)\n", arr[i], map->cords[i]);
-		i = -1;
-		printf("Map:\n");
-		while (map->map && map->map[++i])
-			printf("%s\n", map->map[i]);
-	}
-	else
-	{
-		printf("Playeable: No");
-		if (map->error)
-			printf(" - %s\n", map->error);
-	}
-}
-
 void	map_clear(t_map *map)
 {
 	if (map && !map->playable)
@@ -83,19 +56,21 @@ void	map_clear(t_map *map)
 	}
 }
 
-void	map_add_back(t_map **map, t_map *new_map)
+void	matrix_char_to_char(char **matrix, char old, char new)
 {
-	t_map	*last;
+	int	i;
+	int	j;
 
-	if (!map || !new_map)
-		return ;
-	if (!*map)
+	i = 0;
+	while (matrix && matrix[i])
 	{
-		*map = new_map;
-		return ;
+		j = 0;
+		while (matrix[i][j])
+		{
+			if (matrix[i][j] == old)
+				matrix[i][j] = new;
+			j++;
+		}
+		i++;
 	}
-	last = *map;
-	while (last->next)
-		last = last->next;
-	last->next = new_map;
 }

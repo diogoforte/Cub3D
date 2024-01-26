@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/25 19:48:42 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:47:19 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,10 @@ void	rgb_to_hex(t_map *map)
 	}
 }
 
-void	map_extract_data(t_map *map)
+void	map_data(t_map *map, int i[3], char *arr[7])
 {
-	static char	*arr[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", 0};
-	int			i[3];
-	char		*tmp;
+	char	*tmp;
 
-	if (!map->playable)
-		return ;
-	i[0] = -1;
-	i[2] = 0;
 	while (map->map[++i[0]] && i[2] < 6)
 	{
 		tmp = ft_strtrim(map->map[i[0]], SPACERS);
@@ -117,6 +111,16 @@ void	map_extract_data(t_map *map)
 		}
 		free(tmp);
 	}
+}
+
+void	map_extract_data(t_map *map)
+{
+	static char	*arr[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", 0};
+	int			i[3];
+
+	i[0] = -1;
+	i[2] = 0;
+	map_data(map, i, arr);
 	rgb_to_hex(map);
 	if (all_filled(map) || exit_cub("Missing parameter"))
 		map_extract_map(&map->map[i[0]], map);

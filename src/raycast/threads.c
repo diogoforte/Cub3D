@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 11:50:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/09 11:56:23 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:19:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,26 @@ void	draw_fov_threads(void)
 
 	create_and_join_threads(threads, data, ceiling_floor);
 	create_and_join_threads(threads, data, draw_fov);
+}
+
+void	*draw_fov(void *arg)
+{
+	t_tdata	*data;
+	int		x;
+
+	data = (t_tdata *)arg;
+	x = data->raycast_start - 1;
+	if (!cub()->map->playable)
+		return (NULL);
+	check_door(data);
+	data->ray.angle = -(FOV / 2) + player()->angle + data->raycast_start
+		* ANGLE;
+	while (++x < data->raycast_end)
+	{
+		calculate_distance(data, 0);
+		calculate_wall_height_and_draw_limits(data);
+		draw_wall(x, 0, data);
+		data->ray.angle += ANGLE;
+	}
+	return (NULL);
 }

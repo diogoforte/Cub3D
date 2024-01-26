@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/26 08:58:21 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:52:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,5 +264,7 @@ void						check_door(t_tdata *data);
 bool						texture_seconds(double time_in_secs);
 int							print_matrix(char **matrix);
 void						load_textures(void);
+void						calculate_distance(t_tdata *data, bool flag);
+void						map_add_outline(t_map *map, char c);
 
 #endif

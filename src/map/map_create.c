@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/26 08:16:11 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:53:43 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_map	*map_new(char *file_path)
 		map->map_width = matrix_biggest_string(map->map);
 	map->start_x = 0;
 	map->start_y = 0;
-	map->print = map_print;
 	map->destroy_map = map_destroy_map;
 	map->destroy_error = map_destroy_error;
 	map->destroy_cords = map_destroy_cords;

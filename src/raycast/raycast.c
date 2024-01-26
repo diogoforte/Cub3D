@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/26 08:13:47 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:20:09 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,35 +40,47 @@ void	ray_side(t_tdata *data)
 	}
 }
 
+void	update_ray_position(t_tdata *data)
+{
+	if (data->ray.side_dist[X] < data->ray.side_dist[Y])
+	{
+		data->ray.side_dist[X] += data->ray.delta_dist[X];
+		data->ray.map_pos[X] += data->ray.step[X];
+		data->ray.side = 0;
+	}
+	else
+	{
+		data->ray.side_dist[Y] += data->ray.delta_dist[Y];
+		data->ray.map_pos[Y] += data->ray.step[Y];
+		data->ray.side = 1;
+	}
+}
+
+bool	check_map(t_tdata *data, bool flag)
+{
+	if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+			+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
+		|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+		+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D' || (flag
+			&& cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+			+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'))
+	{
+		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D')
+			data->ray.door = true;
+		return (true);
+	}
+	return (false);
+}
+
 double	raycast(t_tdata *data, bool flag)
 {
 	ray_side(data);
 	while (1)
 	{
-		if (data->ray.side_dist[X] < data->ray.side_dist[Y])
-		{
-			data->ray.side_dist[X] += data->ray.delta_dist[X];
-			data->ray.map_pos[X] += data->ray.step[X];
-			data->ray.side = 0;
-		}
-		else
-		{
-			data->ray.side_dist[Y] += data->ray.delta_dist[Y];
-			data->ray.map_pos[Y] += data->ray.step[Y];
-			data->ray.side = 1;
-		}
-		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
-			|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-			+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D' || (flag
-				&& cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'))
-		{
-			if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-					+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D')
-				data->ray.door = true;
+		update_ray_position(data);
+		if (check_map(data, flag))
 			break ;
-		}
 	}
 	return (0);
 }
@@ -91,52 +103,4 @@ void	calculate_distance(t_tdata *data, bool flag)
 	if (!flag)
 		data->ray.correctdistance = (data->ray.distance * cos(data->ray.angle
 					- player()->angle));
-}
-
-void	check_door(t_tdata *data)
-{
-	if (cub()->player.f && has_passed_x_seconds(0.5))
-	{
-		data->ray.angle = player()->angle;
-		calculate_distance(data, 1);
-		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'
-			&& data->ray.distance < 1.5)
-		{
-			cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-			+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'D';
-			if (collision(player()->pos[X], player()->pos[Y]))
-				cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
-		}
-		else if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
-			&& data->ray.distance < 1.5)
-		{
-			cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-			+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
-		}
-	}
-}
-
-void	*draw_fov(void *arg)
-{
-	t_tdata	*data;
-	int		x;
-
-	data = (t_tdata *)arg;
-	x = data->raycast_start - 1;
-	if (!cub()->map->playable)
-		return (NULL);
-	check_door(data);
-	data->ray.angle = -(FOV / 2) + player()->angle + data->raycast_start
-		* ANGLE;
-	while (++x < data->raycast_end)
-	{
-		calculate_distance(data, 0);
-		calculate_wall_height_and_draw_limits(data);
-		draw_wall(x, 0, data);
-		data->ray.angle += ANGLE;
-	}
-	return (NULL);
 }

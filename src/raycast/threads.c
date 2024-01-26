@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 11:50:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/26 12:20:02 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:43:41 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*draw_fov(void *arg)
 	while (++x < data->raycast_end)
 	{
 		calculate_distance(data, 0);
-		calculate_wall_height_and_draw_limits(data);
+		draw_limits(data);
 		draw_wall(x, 0, data);
 		data->ray.angle += ANGLE;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/26 12:27:22 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:53:51 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,21 @@
 # include <time.h>
 # include <unistd.h>
 
-# define THERE write(1, "THERE\n", 6)
-# define HERE printf("HERE\n")
-
 # define WIDTH 1000
 # define HEIGHT 1000
 # define SCALE 50
-# define MM_SCALE (ft_min(HEIGHT, WIDTH) / 20)
-# define MM_WIDTH (WIDTH / 6)
-# define MM_HEIGHT (HEIGHT * 0.83)
-# define FOV (PI / 3)
-# define ANGLE (FOV / WIDTH)
+# define MM_SCALE 50 // (HEIGHT / 20)
+# define MM_WIDTH 166.6666666667 // (WIDTH / 6)
+# define MM_HEIGHT 830 // (HEIGHT * 0.83)
+# define FOV 1.0471975512 // (PI / 3)
+# define ANGLE 0.0010471976 // (FOV / WIDTH)
 # define TEX_WIDTH 64
 # define MOVE_SPEED 40
 # define ROT_SPEED 0.001
 
 # define THREADS 8
-# define THREAD_WIDTH (WIDTH / THREADS)
-# define THREAD_HEIGHT (HEIGHT / THREADS)
+# define THREAD_WIDTH 125 // (WIDTH / THREADS)
+# define THREAD_HEIGHT 125 // (HEIGHT / THREADS)
 
 # define X 0
 # define Y 1
@@ -56,8 +53,8 @@
 # define S -1
 # define A 1
 # define D -1
-# define E 1
-# define Q -1
+# define E 10
+# define Q -10
 # define NO 0
 # define SO 1
 # define WE 2
@@ -88,7 +85,7 @@ typedef struct s_player		t_player;
 typedef struct s_image		t_image;
 typedef struct s_ray		t_ray;
 typedef struct s_tdata		t_tdata;
-typedef void				(*array_func)();
+typedef void				(*t_array_func)();
 
 struct						s_texture
 {
@@ -109,7 +106,7 @@ struct						s_map
 	char					*error;
 	char					**map;
 	char					*cords[6];
-	int						FC[2];
+	int						fc[2];
 	int						map_width;
 	int						map_height;
 	int						start_x;
@@ -224,10 +221,8 @@ void						map_extract_file(t_map *map, char *file_path);
 int							err(char *str, t_map *map);
 int							exit_cub(char *str);
 void						maps_destroy(void);
-void						map_add_back(t_map **map, t_map *new_map);
 void						map_load(char **argv);
 void						map_extract_data(t_map *map);
-void						map_print(t_map *map);
 int							all_filled(t_map *map);
 void						map_extract_map(char **grid, t_map *map);
 t_map						*map_new(char *file_path);
@@ -250,7 +245,7 @@ double						raycast(t_tdata *data, bool flag);
 t_tdata						*tdata(int threadid);
 void						*draw_fov(void *arg);
 void						draw_fov_threads(void);
-void						calculate_wall_height_and_draw_limits(t_tdata *data);
+void						draw_limits(t_tdata *data);
 void						draw_wall(int x, int y, t_tdata *data);
 void						minimap_player_angle(int color);
 void						minimap_player(int color);

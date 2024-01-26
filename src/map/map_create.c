@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:56:50 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/25 19:57:17 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 08:16:11 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 t_map	*map_new(char *file_path)
 {
@@ -73,13 +72,11 @@ void	map_extract_file(t_map *map, char *file_path)
 void	map_load(char **argv)
 {
 	cub()->map = map_new(argv[1]);
-	// while (++argv && *argv)
-	// 	map_add_back(&cub()->maps, map_new(*argv));
 }
 
-int print_matrix(char **matrix)
+int	print_matrix(char **matrix)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!matrix)

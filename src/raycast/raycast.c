@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:40:19 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/24 18:21:15 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 08:13:47 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	*ceiling_floor(void *arg)
-{
-	int		x;
-	int		y;
-	t_tdata	*data;
-
-	data = (t_tdata *)arg;
-	x = data->fc_start - 1;
-	while (++x < data->fc_end)
-	{
-		y = -1;
-		while (++y < (HEIGHT / 2 + cub()->window.mid))
-			buffer_mlx_pixel_put(x, y, cub()->map->FC[1]);
-		while (++y < HEIGHT)
-			buffer_mlx_pixel_put(x, y, cub()->map->FC[0]);
-	}
-	return (NULL);
-}
 
 void	ray_side(t_tdata *data)
 {
@@ -78,13 +59,13 @@ double	raycast(t_tdata *data, bool flag)
 		}
 		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
-				|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
-				|| (flag && cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+			|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+			+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D' || (flag
+				&& cub()->map->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'))
 		{
 			if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D')
+					+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D')
 				data->ray.door = true;
 			break ;
 		}
@@ -109,32 +90,34 @@ void	calculate_distance(t_tdata *data, bool flag)
 	data->ray.distance /= SCALE;
 	if (!flag)
 		data->ray.correctdistance = (data->ray.distance * cos(data->ray.angle
-				- player()->angle));
+					- player()->angle));
 }
 
-void check_door(t_tdata *data)
+void	check_door(t_tdata *data)
 {
 	if (cub()->player.f && has_passed_x_seconds(0.5))
 	{
 		data->ray.angle = player()->angle;
 		calculate_distance(data, 1);
 		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-					+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O' && data->ray.distance < 1.5)
+				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'
+			&& data->ray.distance < 1.5)
 		{
 			cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-					+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'D';
+			+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'D';
 			if (collision(player()->pos[X], player()->pos[Y]))
 				cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-					+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
+				+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
 		}
 		else if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-					+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D' && data->ray.distance < 1.5)
+				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
+			&& data->ray.distance < 1.5)
 		{
 			cub()->map->map[(data->ray.map_pos[Y] / SCALE)
-					+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
+			+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
 		}
 	}
-}		
+}
 
 void	*draw_fov(void *arg)
 {

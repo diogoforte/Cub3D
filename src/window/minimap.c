@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:05:44 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/25 20:06:08 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 08:27:08 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	draw_minimap_tiles(int player_x, int player_y, int radius)
 				else if (cub()->map->map[coord[Y]][coord[X]] == 'D')
 					draw_empty_tile(distance[X], distance[Y], radius, 0xFF0000);
 				else if (cub()->map->map[coord[Y]][coord[X]] == 'O')
-					draw_empty_tile(distance[X], distance[Y], radius, (0x00139 >> 1) & 8355711);
+					draw_empty_tile(distance[X], distance[Y], radius,
+						(0x00139 >> 1) & 8355711);
 				else
 					draw_empty_tile(distance[X], distance[Y], radius, 0x00139);
 			}

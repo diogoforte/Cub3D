@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/25 22:03:15 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 08:58:21 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2
 # define KEY_ESC 65307
-# define KEY_W 	119
-# define KEY_A 	97
-# define KEY_S 	115
-# define KEY_D 	100
-# define KEY_Q	113
-# define KEY_E 	101
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_Q 113
+# define KEY_E 101
 # define KEY_F1 65470
-# define KEY_F	102
+# define KEY_F 102
 # define KEY_SPACE 32
 # define KEY_CTRL 65507
 # define KEY_SHIFT 65505
@@ -238,19 +238,16 @@ void						map_clear(t_map *map);
 void						map_check(t_map *map);
 int							map_invalid_char(t_map *map);
 int							matrix_biggest_string(char **str);
-
-void						window_create(void);
+void						window_loop(void);
 int							key_press(int keycode);
 int							key_release(int keycode);
 int							render(void);
 void						movement(void);
-
 void						buffer_mlx_pixel_put(int x, int y, int color);
 void						fps(void);
 void						draw_minimap(void);
 double						raycast(t_tdata *data, bool flag);
 t_tdata						*tdata(int threadid);
-
 void						*draw_fov(void *arg);
 void						draw_fov_threads(void);
 void						calculate_wall_height_and_draw_limits(t_tdata *data);
@@ -259,15 +256,13 @@ void						minimap_player_angle(int color);
 void						minimap_player(int color);
 void						*ceiling_floor(void *arg);
 void						create_and_join_threads(pthread_t *threads,
-t_tdata 					**data, void *(*func)(void *));
+								t_tdata **data, void *(*func)(void *));
 void						draw_fov_threads(void);
-bool 						has_passed_x_seconds(double time_in_secs);
+bool						has_passed_x_seconds(double time_in_secs);
 bool						collision(double x, double y);
 void						check_door(t_tdata *data);
-bool 						texture_seconds(double time_in_secs);
-int 						print_matrix(char **matrix);
-
-
-
+bool						texture_seconds(double time_in_secs);
+int							print_matrix(char **matrix);
+void						load_textures(void);
 
 #endif

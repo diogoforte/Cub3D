@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/25 22:10:27 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 09:04:44 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,67 +35,21 @@ void	player_prepare(void)
 	player()->vector[Y] = sin(player()->angle);
 }
 
-void load_fixed_textures(void)
-{
-	int	i;
-
-	i = -1;
-	cub()->map->door_texture_path[0] = "./textures/fixed_textures/planet1.xpm";
-	cub()->map->door_texture_path[1] = "./textures/fixed_textures/planet2.xpm";
-	cub()->map->door_texture_path[2] = "./textures/fixed_textures/planet3.xpm";
-	cub()->map->door_texture_path[3] = "./textures/fixed_textures/planet4.xpm";
-	cub()->map->door_texture_path[4] = "./textures/fixed_textures/planet5.xpm";
-	cub()->map->door_texture_path[5] = "./textures/fixed_textures/planet6.xpm";
-	while (++i < 5)
-	{
-		cub()->map->door_texture[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
-			cub()->map->door_texture_path[i], &cub()->map->door_texture[i].width,
-			&cub()->map->door_texture[i].height);
-		if (!cub()->map->door_texture[i].img && exit_cub("Failed to load textures"))
-			return ;
-		cub()->map->door_texture[i].addr = mlx_get_data_addr(cub()->map->door_texture[i].img,
-			&cub()->map->door_texture[i].bits_per_pixel,
-		&cub()->map->door_texture[i].line_length,
-			&cub()->map->door_texture[i].endian);
-	}
-}
-
-void	load_textures(void)
-{
-	int	i;
-
-	i = -1;
-	while (++i < 4)
-	{
-		cub()->map->textures[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
-			cub()->map->cords[i], &cub()->map->textures[i].width,
-			&cub()->map->textures[i].height);
-		if (!cub()->map->textures[i].img && exit_cub("Failed to load textures"))
-			return ;
-		cub()->map->textures[i].addr = mlx_get_data_addr(cub()->map->textures[i].img,
-			&cub()->map->textures[i].bits_per_pixel,
-		&cub()->map->textures[i].line_length,
-		&cub()->map->textures[i].endian);
-	}
-	load_fixed_textures();
-}
-
-
-void	window_prepare(void)
+void	window_create(void)
 {
 	window()->mlx = mlx_init();
 	load_textures();
-	(window())->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
+	window()->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
 	window()->img.img = mlx_new_image(window()->mlx, WIDTH, HEIGHT);
 	window()->img.addr = mlx_get_data_addr(window()->img.img,
 		&window()->img.bits_per_pixel, &window()->img.line_length,
-	&window()->img.endian);
+		&window()->img.endian);
 }
 
-void	window_create(void)
+void	window_loop(void)
 {
 	has_passed_x_seconds(0);
-	window_prepare();
+	window_create();
 	player_prepare();
 	mlx_hook(window()->win, EVENT_CLOSE_BTN, 0, cub()->exit, NULL);
 	if (cub()->map->playable)

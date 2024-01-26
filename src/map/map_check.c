@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 12:45:33 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/26 01:47:23 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 08:20:06 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,28 @@ void	map_check(t_map *map)
 
 int	map_invalid_char(t_map *map)
 {
-	int	i;
-	int	j;
-	int	k;
+	int	i[3];
 
-	i = -1;
-	k = 0;
-	while (map->map && map->map[++i])
+	i[0] = -1;
+	i[2] = 0;
+	while (map->map && map->map[++i[0]])
 	{
-		j = -1;
-		while (map->map && map->map[i][++j])
+		i[1] = -1;
+		while (map->map && map->map[i[0]][++i[1]])
 		{
-			if (!ft_strchr(VALID_CHARS, map->map[i][j]))
+			if (!ft_strchr(VALID_CHARS, map->map[i[0]][i[1]]))
 				exit_cub("Invalid map character");
-			if (ft_strchr(PLAYER_START, map->map[i][j]))
+			if (ft_strchr(PLAYER_START, map->map[i[0]][i[1]]))
 			{
-				if (++k == 2)
+				if (++i[2] == 2)
 					exit_cub("Multiple starting positions");
-				map->start_dir = map->map[i][j];
-				map->start_x = j - 1;
-				map->start_y = i - 1;
+				map->start_dir = map->map[i[0]][i[1]];
+				map->start_x = i[1] - 1;
+				map->start_y = i[0] - 1;
 			}
 		}
 	}
-	if (k == 0)
+	if (!i[2])
 		exit_cub("No starting position");
 	return (0);
 }

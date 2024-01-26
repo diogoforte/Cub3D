@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:29:41 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/17 18:56:35 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/26 08:25:34 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	collision(double x, double y)
 {
-	int		x_arr[2];
-	int		y_arr[2];
+	int	x_arr[2];
+	int	y_arr[2];
 
 	x_arr[0] = (int)((x + (SCALE / 3)) / SCALE) + 1;
 	x_arr[1] = (int)((x - (SCALE / 3)) / SCALE) + 1;
@@ -34,7 +34,6 @@ bool	collision(double x, double y)
 		|| cub()->map->map[(int)y_arr[1]][(int)x_arr[1]] == 'D')
 		return (true);
 	return (false);
-	// return (cub()->map->map[(int)y + 1][(int)x + 1] == '1');
 }
 
 static void	move_and_strafe(int move_key, int strafe_key)
@@ -42,21 +41,22 @@ static void	move_and_strafe(int move_key, int strafe_key)
 	float	x;
 	float	y;
 	float	norm;
-	float	dir_x;
-	float	dir_y;
+	float	dir[2];
 
-	dir_x = move_key * cub()->player.vector[X] + strafe_key
+	dir[X] = move_key * cub()->player.vector[X] + strafe_key
 		* cos(cub()->player.angle - (PI / 2));
-	dir_y = move_key * cub()->player.vector[Y] + strafe_key
+	dir[Y] = move_key * cub()->player.vector[Y] + strafe_key
 		* sin(cub()->player.angle - (PI / 2));
-	norm = sqrt(pow(dir_x, 2) + pow(dir_y, 2));
+	norm = sqrt(pow(dir[X], 2) + pow(dir[Y], 2));
 	if (norm != 0)
 	{
-		dir_x /= norm;
-		dir_y /= norm;
+		dir[X] /= norm;
+		dir[Y] /= norm;
 	}
-	x = cub()->player.pos[X] + dir_x * MOVE_SPEED * cub()->window.frame_time * (1 + (cub()->player.shift));
-	y = cub()->player.pos[Y] + dir_y * MOVE_SPEED * cub()->window.frame_time * (1 + (cub()->player.shift));
+	x = cub()->player.pos[X] + dir[X] * MOVE_SPEED * cub()->window.frame_time
+		* (1 + (cub()->player.shift));
+	y = cub()->player.pos[Y] + dir[Y] * MOVE_SPEED * cub()->window.frame_time
+		* (1 + (cub()->player.shift));
 	if (!collision(x, cub()->player.pos[Y]))
 		cub()->player.pos[X] = x;
 	if (!collision(cub()->player.pos[X], y))
@@ -76,12 +76,11 @@ static void	rotate(int key)
 	cub()->player.vector[Y] = sin(cub()->player.angle);
 }
 
-static void rotateY(int key)
+static void	rotate_pitch(int key)
 {
 	cub()->window.mid -= key;
 	if (cub()->window.mid <= -(HEIGHT / 2) || cub()->window.mid >= (HEIGHT / 2))
 		cub()->window.mid += key;
-	
 }
 
 void	movement(void)
@@ -108,7 +107,7 @@ void	movement(void)
 		&cub()->player.mouse_x, &cub()->player.mouse_y);
 	cub()->player.mouse_x -= (WIDTH / 2);
 	cub()->player.mouse_y -= (HEIGHT / 2);
-	rotateY(cub()->player.mouse_y);
+	rotate_pitch(cub()->player.mouse_y);
 	rotate(cub()->player.mouse_x);
 	mlx_mouse_move(cub()->window.mlx, cub()->window.win, WIDTH / 2, HEIGHT / 2);
 }

@@ -2,9 +2,10 @@ NO ./textures/test2.xpm
 SO ./textures/test3.xpm
 EA ./textures/test1.xpm
 WE ./textures/test4.xpm
+S  ./textures/test5.xpm
 F  92,64, 51
-C 137,186 ,243 
+C 137,186 ,243
 
 1111111111111
-1N000000001
+1N00000000D1
 1111111111111

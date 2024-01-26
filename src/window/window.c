@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:45 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:07:16 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ void	player_prepare(void)
 
 void	window_create(void)
 {
-	window()->mlx = mlx_init();
+	t_window	*win;
+
+	win = window();
+	win->mlx = mlx_init();
 	load_textures();
-	window()->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
-	window()->img.img = mlx_new_image(window()->mlx, WIDTH, HEIGHT);
-	window()->img.addr = mlx_get_data_addr(window()->img.img,
-			&window()->img.bits_per_pixel, &window()->img.line_length,
-			&window()->img.endian);
+	win->win = mlx_new_window(win->mlx, WIDTH, HEIGHT, "cub3D");
+	win->img.img = mlx_new_image(win->mlx, WIDTH, HEIGHT);
+	win->img.addr = mlx_get_data_addr(win->img.img, &win->img.bits_per_pixel,
+			&win->img.line_length, &win->img.endian);
 }
 
 void	window_loop(void)

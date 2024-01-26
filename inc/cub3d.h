@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:53:38 by chaleira          #+#    #+#             */
-/*   Updated: 2024/01/25 20:33:29 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 22:03:15 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ struct						s_map
 	int						start_y;
 	char					start_dir;
 	t_texture				textures[4];
-	t_texture				door_texture[3];
-	char					*door_texture_path[3];
+	t_texture				door_texture[6];
+	char					*door_texture_path[6];
 
 	void					(*print)();
 	void					(*destroy_file)(t_map *map);

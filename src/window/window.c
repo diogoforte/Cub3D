@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/25 20:33:12 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 22:10:27 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,18 @@ void load_fixed_textures(void)
 	int	i;
 
 	i = -1;
-	cub()->map->door_texture_path[0] = "./textures/fixed_textures/gate_blue.xpm";
-	cub()->map->door_texture_path[1] = "./textures/fixed_textures/gate_red.xpm";
-	cub()->map->door_texture_path[2] = "./textures/fixed_textures/gate_green.xpm";
-	while (++i < 3)
+	cub()->map->door_texture_path[0] = "./textures/fixed_textures/planet1.xpm";
+	cub()->map->door_texture_path[1] = "./textures/fixed_textures/planet2.xpm";
+	cub()->map->door_texture_path[2] = "./textures/fixed_textures/planet3.xpm";
+	cub()->map->door_texture_path[3] = "./textures/fixed_textures/planet4.xpm";
+	cub()->map->door_texture_path[4] = "./textures/fixed_textures/planet5.xpm";
+	cub()->map->door_texture_path[5] = "./textures/fixed_textures/planet6.xpm";
+	while (++i < 5)
 	{
 		cub()->map->door_texture[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
 			cub()->map->door_texture_path[i], &cub()->map->door_texture[i].width,
 			&cub()->map->door_texture[i].height);
-		if (!cub()->map->door_texture[i].img && err("Failed to load textures\n", cub()->map))
+		if (!cub()->map->door_texture[i].img && exit_cub("Failed to load textures"))
 			return ;
 		cub()->map->door_texture[i].addr = mlx_get_data_addr(cub()->map->door_texture[i].img,
 			&cub()->map->door_texture[i].bits_per_pixel,
@@ -67,7 +70,7 @@ void	load_textures(void)
 		cub()->map->textures[i].img = mlx_xpm_file_to_image(cub()->window.mlx,
 			cub()->map->cords[i], &cub()->map->textures[i].width,
 			&cub()->map->textures[i].height);
-		if (!cub()->map->textures[i].img && err("Failed to load textures\n", cub()->map))
+		if (!cub()->map->textures[i].img && exit_cub("Failed to load textures"))
 			return ;
 		cub()->map->textures[i].addr = mlx_get_data_addr(cub()->map->textures[i].img,
 			&cub()->map->textures[i].bits_per_pixel,
@@ -81,12 +84,12 @@ void	load_textures(void)
 void	window_prepare(void)
 {
 	window()->mlx = mlx_init();
+	load_textures();
 	(window())->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
 	window()->img.img = mlx_new_image(window()->mlx, WIDTH, HEIGHT);
 	window()->img.addr = mlx_get_data_addr(window()->img.img,
 		&window()->img.bits_per_pixel, &window()->img.line_length,
 	&window()->img.endian);
-	load_textures();
 }
 
 void	window_create(void)

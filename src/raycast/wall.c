@@ -6,7 +6,7 @@
 /*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/25 21:02:01 by plopes-c         ###   ########.fr       */
+/*   Updated: 2024/01/25 21:56:57 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ t_texture	get_texture(t_tdata *data)
 {
 	static int texnum;
 
-	if (texture_seconds(0.6))
+	if (texture_seconds(.6))
 		texnum++;
-	texnum = texnum % 3;
+	texnum = texnum % 5;
 	if (data->ray.door == true)
 		return (cub()->map->door_texture[texnum]);
 	if (data->ray.side == 0)

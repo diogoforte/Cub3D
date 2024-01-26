@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:05:14 by plopes-c          #+#    #+#             */
-/*   Updated: 2024/01/26 09:04:44 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 12:22:45 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	window_create(void)
 	window()->win = mlx_new_window(window()->mlx, WIDTH, HEIGHT, "cub3D");
 	window()->img.img = mlx_new_image(window()->mlx, WIDTH, HEIGHT);
 	window()->img.addr = mlx_get_data_addr(window()->img.img,
-		&window()->img.bits_per_pixel, &window()->img.line_length,
-		&window()->img.endian);
+			&window()->img.bits_per_pixel, &window()->img.line_length,
+			&window()->img.endian);
 }
 
 void	window_loop(void)

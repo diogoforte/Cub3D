@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 23:50:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/26 10:47:19 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:40:20 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	rgb_to_hex(t_map *map)
 		g = ft_atoi(colors[1]);
 		b = ft_atoi(colors[2]);
 		ft_freematrix(colors);
-		map->FC[i] = (r << 16) | (g << 8) | b;
+		map->fc[i] = (r << 16) | (g << 8) | b;
 	}
 }
 

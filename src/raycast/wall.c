@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: plopes-c <plopes-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:12:18 by dinunes-          #+#    #+#             */
-/*   Updated: 2024/01/26 08:13:33 by dinunes-         ###   ########.fr       */
+/*   Updated: 2024/01/26 13:43:47 by plopes-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	calculate_wall_height_and_draw_limits(t_tdata *data)
+void	draw_limits(t_tdata *data)
 {
 	data->ray.wallheight = (int)(HEIGHT / data->ray.correctdistance);
 	data->ray.drawstart = ((-(data->ray.wallheight) / 2 + HEIGHT / 2)
@@ -121,9 +121,9 @@ void	*ceiling_floor(void *arg)
 	{
 		y = -1;
 		while (++y < (HEIGHT / 2 + cub()->window.mid))
-			buffer_mlx_pixel_put(x, y, cub()->map->FC[1]);
+			buffer_mlx_pixel_put(x, y, cub()->map->fc[1]);
 		while (++y < HEIGHT)
-			buffer_mlx_pixel_put(x, y, cub()->map->FC[0]);
+			buffer_mlx_pixel_put(x, y, cub()->map->fc[0]);
 	}
 	return (NULL);
 }

@@ -100,7 +100,6 @@ struct						s_texture
 
 struct						s_map
 {
-	int						map_number;
 	char					*map_name;
 	bool					playable;
 	char					*error;
@@ -188,17 +187,16 @@ struct						s_player
 
 struct						s_cub
 {
-	t_map					*map;
-	t_map					*maps;
 	int						status;
 	void					(*map_load)(char **av);
 	int						(*exit)(char *str);
 	void					(*maps_destroy)();
-	t_map					*(*map_new)(char *file_path);
+	t_map					*(*map_new)(char *file_path, t_map *map);
 	void					(*map_extract_data)(t_map *map);
 	void					(*draw_screen)();
 	void					(*draw_minimap)();
 	void					(*move)();
+	t_map					map;
 	t_window				window;
 	t_player				player;
 };
@@ -216,20 +214,19 @@ typedef struct s_tdata
 t_cub						*cub(void);
 t_window					*window(void);
 t_player					*player(void);
-t_map						*map_new(char *file_path);
+t_map						*map(void);
+t_map						*map_new(char *file_path, t_map *map);
 void						map_extract_file(t_map *map, char *file_path);
 int							err(char *str, t_map *map);
 int							exit_cub(char *str);
-void						maps_destroy(void);
+void						map_destroy(t_map *map);
 void						map_load(char **argv);
 void						map_extract_data(t_map *map);
 int							all_filled(t_map *map);
 void						map_extract_map(char **grid, t_map *map);
-t_map						*map_new(char *file_path);
 void						map_destroy_map(t_map *map);
 void						map_destroy_error(t_map *map);
 void						map_destroy_cords(t_map *map);
-void						map_clear(t_map *map);
 void						map_check(t_map *map);
 int							map_invalid_char(t_map *map);
 int							matrix_biggest_string(char **str);

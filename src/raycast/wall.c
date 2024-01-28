@@ -69,18 +69,18 @@ t_texture	get_texture(t_tdata *data)
 		texnum++;
 	texnum = texnum % 5;
 	if (data->ray.door == true)
-		return (cub()->map->door_texture[texnum]);
+		return (map()->door_texture[texnum]);
 	if (data->ray.side == 0)
 	{
 		if (data->ray.dir[0] > 0)
-			return (cub()->map->textures[EA]);
+			return (map()->textures[EA]);
 		else
-			return (cub()->map->textures[WE]);
+			return (map()->textures[WE]);
 	}
 	if (data->ray.dir[1] > 0)
-		return (cub()->map->textures[SO]);
+		return (map()->textures[SO]);
 	else
-		return (cub()->map->textures[NO]);
+		return (map()->textures[NO]);
 }
 
 void	draw_wall(int x, int y, t_tdata *data)
@@ -121,9 +121,9 @@ void	*ceiling_floor(void *arg)
 	{
 		y = -1;
 		while (++y < (HEIGHT / 2 + cub()->window.mid))
-			buffer_mlx_pixel_put(x, y, cub()->map->fc[1]);
+			buffer_mlx_pixel_put(x, y, map()->fc[1]);
 		while (++y < HEIGHT)
-			buffer_mlx_pixel_put(x, y, cub()->map->fc[0]);
+			buffer_mlx_pixel_put(x, y, map()->fc[0]);
 	}
 	return (NULL);
 }

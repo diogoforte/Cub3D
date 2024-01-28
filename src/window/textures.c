@@ -35,9 +35,9 @@ void	load_door_textures(void)
 	i = -1;
 	while (++i < 5)
 	{
-		cub()->map->door_texture_path[i] = paths[i];
-		load_texture(cub()->map->door_texture_path[i],
-			&cub()->map->door_texture[i]);
+		map()->door_texture_path[i] = paths[i];
+		load_texture(map()->door_texture_path[i],
+			&map()->door_texture[i]);
 	}
 }
 
@@ -47,6 +47,6 @@ void	load_textures(void)
 
 	i = -1;
 	while (++i < 4)
-		load_texture(cub()->map->cords[i], &cub()->map->textures[i]);
+		load_texture(map()->cords[i], &map()->textures[i]);
 	load_door_textures();
 }

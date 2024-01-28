@@ -18,21 +18,21 @@ void	check_door(t_tdata *data)
 	{
 		data->ray.angle = player()->angle;
 		calculate_distance(data, 1);
-		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+		if (map()->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'
 			&& data->ray.distance < 1.5)
 		{
-			cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+			map()->map[(data->ray.map_pos[Y] / SCALE)
 			+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'D';
 			if (collision(player()->pos[X], player()->pos[Y]))
-				cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+				map()->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
 		}
-		else if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+		else if (map()->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D'
 			&& data->ray.distance < 1.5)
 		{
-			cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+			map()->map[(data->ray.map_pos[Y] / SCALE)
 			+ 1][(data->ray.map_pos[X] / SCALE) + 1] = 'O';
 		}
 	}

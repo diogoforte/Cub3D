@@ -12,16 +12,11 @@
 
 #include "cub3d.h"
 
-t_map	*map_new(char *file_path)
+t_map	*map_new(char *file_path, t_map *map)
 {
-	t_map		*map;
-	static int	number_of_maps;
-
 	if (!file_path)
 		return (NULL);
-	map = ft_calloc(1, sizeof(t_map));
 	map->playable = 1;
-	map->map_number = ++number_of_maps;
 	map_extract_file(map, file_path);
 	map_extract_data(map);
 	map->map_height = ft_matrix_len(map->map);
@@ -70,7 +65,7 @@ void	map_extract_file(t_map *map, char *file_path)
 
 void	map_load(char **argv)
 {
-	cub()->map = map_new(argv[1]);
+	map_new(argv[1], map());
 }
 
 int	print_matrix(char **matrix)

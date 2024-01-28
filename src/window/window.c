@@ -14,20 +14,20 @@
 
 void	player_dir(void)
 {
-	if (cub()->map->start_dir == 'N')
+	if (map()->start_dir == 'N')
 		player()->angle = 3 * PI / 2;
-	else if (cub()->map->start_dir == 'S')
+	else if (map()->start_dir == 'S')
 		player()->angle = PI / 2;
-	else if (cub()->map->start_dir == 'E')
+	else if (map()->start_dir == 'E')
 		player()->angle = 0;
-	else if (cub()->map->start_dir == 'W')
+	else if (map()->start_dir == 'W')
 		player()->angle = PI;
 }
 
 void	player_prepare(void)
 {
-	player()->map_pos[X] = cub()->map->start_x + 1;
-	player()->map_pos[Y] = cub()->map->start_y + 1;
+	player()->map_pos[X] = map()->start_x + 1;
+	player()->map_pos[Y] = map()->start_y + 1;
 	player()->pos[X] = (player()->map_pos[X] + 0.5) * SCALE;
 	player()->pos[Y] = (player()->map_pos[Y] + 0.5) * SCALE;
 	player_dir();
@@ -54,7 +54,7 @@ void	window_loop(void)
 	window_create();
 	player_prepare();
 	mlx_hook(window()->win, EVENT_CLOSE_BTN, 0, cub()->exit, NULL);
-	if (cub()->map->playable)
+	if (map()->playable)
 		mlx_loop_hook(window()->mlx, render, NULL);
 	mlx_loop_hook(window()->mlx, render, NULL);
 	mlx_hook(window()->win, 2, 1L << 0, (void *)key_press, NULL);

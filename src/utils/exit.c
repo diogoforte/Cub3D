@@ -33,13 +33,12 @@ int	exit_cub(char *str)
 	int	i;
 
 	i = -1;
-	while (++i < 4 && cub()->map && cub()->map->textures[i].img)
-		mlx_destroy_image(cub()->window.mlx, cub()->map->textures[i].img);
+	while (++i < 4 && map()->textures[i].img)
+		mlx_destroy_image(cub()->window.mlx, map()->textures[i].img);
 	i = -1;
-	while (++i < 2 && cub()->map && cub()->map->door_texture[0].img)
-		mlx_destroy_image(cub()->window.mlx, cub()->map->door_texture[i].img);
-	if (cub()->maps)
-		cub()->maps_destroy();
+	while (++i < 6 && map()->door_texture[i].img)
+		mlx_destroy_image(cub()->window.mlx, map()->door_texture[i].img);
+	map_destroy(map());
 	if (cub()->window.win)
 		mlx_destroy_window(cub()->window.mlx, cub()->window.win);
 	if (cub()->window.img.img)
@@ -54,23 +53,4 @@ int	exit_cub(char *str)
 	else
 		exit(cub()->status);
 	return (0);
-}
-
-void	maps_destroy(void)
-{
-	t_map	*tmp;
-	t_map	*map;
-
-	map = cub()->maps;
-	while (map)
-	{
-		tmp = map->next;
-		map->destroy_map(map);
-		map->destroy_error(map);
-		map->destroy_cords(map);
-		if (map)
-			free(map);
-		map = tmp;
-	}
-	map = NULL;
 }

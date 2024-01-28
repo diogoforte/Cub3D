@@ -22,20 +22,24 @@ t_window	*window(void)
 	return (&cub()->window);
 }
 
+t_map	*map(void)
+{
+	return (&cub()->map);
+}
+
 t_cub	*cub(void)
 {
 	static t_cub	cub = {
-		NULL,
-		NULL,
 		0,
 		map_load,
 		exit_cub,
-		maps_destroy,
+		map_destroy,
 		map_new,
 		NULL,
 		NULL,
 		draw_minimap,
 		movement,
+	{},
 	{},
 	{}
 	};

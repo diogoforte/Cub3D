@@ -43,12 +43,12 @@
 # define Y 1
 # define PI 3.14159265359
 # define SPACERS " \t\n\v\f\r"
-# define OUTLINE 'a'
-# define FILLER 'b'
+# define OUTLINE 97
+# define FILLER 98
 # define PLAYER_START "NSEW"
 # define VALID_CHARS "01NSEW_D "
-# define EMPTY '0'
-# define WALL '1'
+# define EMPTY 48
+# define WALL 49
 # define W 1
 # define S -1
 # define A 1
@@ -59,7 +59,7 @@
 # define SO 1
 # define WE 2
 # define EA 3
-# define DOOR '4'
+# define DOOR 52
 
 # define MOUSE_LEFT 1
 # define MOUSE_RIGHT 2

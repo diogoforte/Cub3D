@@ -48,8 +48,6 @@ void	*draw_fov(void *arg)
 
 	data = (t_tdata *)arg;
 	x = data->raycast_start - 1;
-	if (!cub()->map->playable)
-		return (NULL);
 	check_door(data);
 	data->ray.angle = -(FOV / 2) + player()->angle + data->raycast_start
 		* ANGLE;

@@ -28,9 +28,9 @@ void	fps(void)
 
 void	speed(void)
 {
-	char			tmp[12];
-	double			curr_pos[2];
 	static double	prev_pos[2] = {0, 0};
+	double			curr_pos[2];
+	char			tmp[12];
 	double			distance;
 	double			speed;
 
@@ -42,13 +42,11 @@ void	speed(void)
 	prev_pos[X] = curr_pos[X];
 	prev_pos[Y] = curr_pos[Y];
 	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - 50, 30,
-		0xFFFFFF, ft_itoa_address(tmp, (int)round(speed) / SCALE));
+		0xFFFFFF, ft_itoa_address(tmp, (int)round(speed)));
 }
 
 int	render(void)
 {
-	if (!cub()->map->playable)
-		return (1);
 	draw_fov_threads();
 	draw_minimap();
 	movement();

@@ -46,16 +46,6 @@ int	all_filled(t_map *map)
 	return (1);
 }
 
-void	map_clear(t_map *map)
-{
-	if (map && !map->playable)
-	{
-		map->destroy_cords(map);
-		map->destroy_map(map);
-		map->destroy_file(map);
-	}
-}
-
 void	matrix_char_to_char(char **matrix, char old, char new)
 {
 	int	i;

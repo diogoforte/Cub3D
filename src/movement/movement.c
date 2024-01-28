@@ -21,17 +21,17 @@ bool	collision(double x, double y)
 	x_arr[1] = (int)((x - (SCALE / 3)) / SCALE) + 1;
 	y_arr[0] = (int)((y + (SCALE / 3)) / SCALE) + 1;
 	y_arr[1] = (int)((y - (SCALE / 3)) / SCALE) + 1;
-	if (cub()->map->map[(int)y_arr[0]][(int)x_arr[0]] == '1'
-		|| cub()->map->map[(int)y_arr[0]][(int)x_arr[0]] == 'D')
+	if (map()->map[(int)y_arr[0]][(int)x_arr[0]] == '1'
+		|| map()->map[(int)y_arr[0]][(int)x_arr[0]] == 'D')
 		return (true);
-	if (cub()->map->map[(int)y_arr[0]][(int)x_arr[1]] == '1'
-		|| cub()->map->map[(int)y_arr[0]][(int)x_arr[1]] == 'D')
+	if (map()->map[(int)y_arr[0]][(int)x_arr[1]] == '1'
+		|| map()->map[(int)y_arr[0]][(int)x_arr[1]] == 'D')
 		return (true);
-	if (cub()->map->map[(int)y_arr[1]][(int)x_arr[0]] == '1'
-		|| cub()->map->map[(int)y_arr[1]][(int)x_arr[0]] == 'D')
+	if (map()->map[(int)y_arr[1]][(int)x_arr[0]] == '1'
+		|| map()->map[(int)y_arr[1]][(int)x_arr[0]] == 'D')
 		return (true);
-	if (cub()->map->map[(int)y_arr[1]][(int)x_arr[1]] == '1'
-		|| cub()->map->map[(int)y_arr[1]][(int)x_arr[1]] == 'D')
+	if (map()->map[(int)y_arr[1]][(int)x_arr[1]] == '1'
+		|| map()->map[(int)y_arr[1]][(int)x_arr[1]] == 'D')
 		return (true);
 	return (false);
 }

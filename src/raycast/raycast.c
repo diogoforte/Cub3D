@@ -58,14 +58,14 @@ void	update_ray_position(t_tdata *data)
 
 bool	check_map(t_tdata *data, bool flag)
 {
-	if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+	if (map()->map[(data->ray.map_pos[Y] / SCALE)
 			+ 1][(data->ray.map_pos[X] / SCALE) + 1] == '1'
-		|| cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+		|| map()->map[(data->ray.map_pos[Y] / SCALE)
 		+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D' || (flag
-			&& cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+			&& map()->map[(data->ray.map_pos[Y] / SCALE)
 			+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'O'))
 	{
-		if (cub()->map->map[(data->ray.map_pos[Y] / SCALE)
+		if (map()->map[(data->ray.map_pos[Y] / SCALE)
 				+ 1][(data->ray.map_pos[X] / SCALE) + 1] == 'D')
 			data->ray.door = true;
 		return (true);

@@ -72,14 +72,14 @@ void	draw_tile(int coord[], int player_x, int player_y, int radius)
 
 	distance[X] = coord[X] * MM_SCALE - player_x;
 	distance[Y] = coord[Y] * MM_SCALE - player_y;
-	if (coord[Y] >= 0 && coord[Y] < cub()->map->map_height && coord[X] >= 0
-		&& coord[X] < cub()->map->map_width)
+	if (coord[Y] >= 0 && coord[Y] < map()->map_height && coord[X] >= 0
+		&& coord[X] < map()->map_width)
 	{
-		if (cub()->map->map[coord[Y]][coord[X]] == '1')
+		if (map()->map[coord[Y]][coord[X]] == '1')
 			draw_empty_tile(distance[X], distance[Y], radius, 0x3386FF);
-		else if (cub()->map->map[coord[Y]][coord[X]] == 'D')
+		else if (map()->map[coord[Y]][coord[X]] == 'D')
 			draw_empty_tile(distance[X], distance[Y], radius, 0xFF0000);
-		else if (cub()->map->map[coord[Y]][coord[X]] == 'O')
+		else if (map()->map[coord[Y]][coord[X]] == 'O')
 			draw_empty_tile(distance[X], distance[Y], radius,
 				(0x00139 >> 1) & 8355711);
 		else

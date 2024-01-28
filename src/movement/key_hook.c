@@ -14,7 +14,7 @@
 
 int	key_press(int keycode)
 {
-	if (!cub()->map)
+	if (!map())
 		return (0);
 	if (keycode == KEY_ESC)
 		cub()->exit(NULL);
@@ -43,7 +43,7 @@ int	key_press(int keycode)
 
 int	key_release(int keycode)
 {
-	if (!cub()->map)
+	if (!map())
 		return (0);
 	if (keycode == KEY_W)
 		cub()->player.w = false;

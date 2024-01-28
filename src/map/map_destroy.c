@@ -15,15 +15,19 @@
 void	map_destroy_map(t_map *map)
 {
 	if (map->map)
+	{
 		ft_freematrix(map->map);
-	map->map = NULL;
+		map->map = NULL;
+	}
 }
 
 void	map_destroy_error(t_map *map)
 {
 	if (map->error)
+	{
 		free(map->error);
-	map->error = NULL;
+		map->error = NULL;
+	}
 }
 
 void	map_destroy_cords(t_map *map)
@@ -39,4 +43,11 @@ void	map_destroy_cords(t_map *map)
 			map->cords[i] = NULL;
 		}
 	}
+}
+
+void	map_destroy(t_map *map)
+{
+	map_destroy_map(map);
+	map_destroy_error(map);
+	map_destroy_cords(map);
 }

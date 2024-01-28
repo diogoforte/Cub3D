@@ -22,6 +22,8 @@ void	fps(void)
 	cub()->window.frame_time = (double)(curr_time - prev_time) / CLOCKS_PER_SEC;
 	prev_time = curr_time;
 	cub()->window.fps = 1.0 / cub()->window.frame_time;
+	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - 100, 10,
+		0xFFFFFF, "fps");
 	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - 50, 10,
 		0xFFFFFF, ft_itoa_address(tmp, (int)cub()->window.fps));
 }
@@ -41,6 +43,8 @@ void	speed(void)
 	speed = distance / cub()->window.frame_time;
 	prev_pos[X] = curr_pos[X];
 	prev_pos[Y] = curr_pos[Y];
+	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - 100, 30,
+		0xFFFFFF, "speed");
 	mlx_string_put(cub()->window.mlx, cub()->window.win, WIDTH - 50, 30,
 		0xFFFFFF, ft_itoa_address(tmp, (int)round(speed)));
 }
@@ -52,7 +56,7 @@ int	render(void)
 	movement();
 	mlx_put_image_to_window(cub()->window.mlx, cub()->window.win,
 		cub()->window.img.img, 0, 0);
-	mlx_string_put(cub()->window.mlx, cub()->window.win, 10, 1070, 0xFFFFFF,
+	mlx_string_put(cub()->window.mlx, cub()->window.win, 5, 10, 0xFFFFFF,
 		"@diogoforte & @chaleira");
 	speed();
 	fps();

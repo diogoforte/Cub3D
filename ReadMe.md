@@ -1,6 +1,6 @@
-# cub_3d
+# Cub3D
 
-**cub_3d** is a project developed as part of the 42 curriculum, aimed at creating a basic raycasting engine reminiscent of the classic game Wolfenstein 3D.
+**Cub3D** is a project developed as part of the 42 curriculum, aimed at creating a basic raycasting engine reminiscent of the classic game Wolfenstein 3D.
 
 ## Introduction
 

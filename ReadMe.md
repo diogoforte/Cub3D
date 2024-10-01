@@ -13,3 +13,5 @@ In this project, you will find the source code for a simple raycasting engine im
 - Player movement and collision detection
 - Minimap display
 - Configurable map layout using a simple file format
+
+![Gameplay Preview](cub3dDemo.gif)
